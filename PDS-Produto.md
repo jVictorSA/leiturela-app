@@ -46,16 +46,6 @@ Acreditamos que esse `Marco` vai conseguir `facilitar o processo neonatal das ge
 - [x] Funcionalidade 2. Desenvolvimento de um recurso visual para que a gestante acompanhe o tamanho do feto em cada período da gestação.
 - [x] Funcionalidade 3. Criação de páginas para que os profissionais publiquem artigos e informações, sejam eles gratuitos ou pagos.
 
-### Marco 2 - Finalização do módulo de Comunidade da plataforma 20/01/2023
-
-Acreditamos que esse `Marco` vai conseguir `criar uma rede de apoio para as gestantes da plataforma`. Saberemos que isso aconteceu com base na `interação dos usuários na plataforma`.
-
-#### Funcionalidades 
-
-- [ ] Funcionalidade 1.
-- [ ] Funcionalidade 2.
-- [ ] Funcionalidade 3.
-
 ### Marco 2 - Iremos resolver a carência de informações de especialistas da área da saúde.
 
 Acreditamos que esse `Marco` vai conseguir `trazer informações confiáveis às gestantes da plataforma`. Saberemos que isso aconteceu com base nos `artigos publicados por especialistas dentro da plataforma`.
