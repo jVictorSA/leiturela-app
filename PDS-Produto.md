@@ -1,6 +1,6 @@
 # Projeto
 
-Para a gestante, cuja necessidade é ter seu acompanhamento neonatal, o nosso aplicativo especializado é um serviço de ajuda focado em gestantes, que diferentemente do Sprout oferece uma rede de apoio e de informação verificada, o nosso produto oferece uma plataforma focada e amigável para a mulher gestante, visando ajudá-la no processo tão dificultoso que é a gestação
+Nosso público alvo são gestantes, cuja necessidade é ter seu acompanhamento neonatal, o nosso aplicativo especializado é um serviço de ajuda focado em gestantes, que diferentemente do Sprout oferece uma rede de apoio e de informação verificada, o nosso produto oferece uma plataforma focada no acompanhamento neonatal, onde as gestantes poderão observar sua agenda de consultas de diversas especialidades médicas; participar de fóruns com outras usuárias e profissionais da saúde para troca de informações; acesso a conteúdo neonatal gerado pelos profissionais da plataforma
 
 ### Problemas
 
@@ -36,55 +36,66 @@ Devemos entregar **pequenas versões frequentes**. A equipe deve definir os marc
 
 Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable product*). MVP é a versão mais simples de um produto que pode ser disponibilizada para a validação de um pequeno conjunto de hipóteses sobre o negócio. Após ser **construído,** o MVP é colocado à prova. Com isso, teremos dados que possibilitam **medir** o seu uso e, portanto, gerar o **aprendizado** desejado (Caroli, 2018).
 
-### Marco 1 - 20/12/2022
+### Marco 1 - Finalização do módulo de acompanhamento de consultas Neonatais 20/12/2022
 
-Acreditamos que esse `Marco 1` vai conseguir `resultado esperado`. Saberemos que isso aconteceu com base em `métricas para validar a hipótese do negócio`.
+Acreditamos que esse `Marco` vai conseguir `facilitar o processo neonatal das gestantes`. Saberemos que isso aconteceu com base no `uso da plataform pelas gestantes para acompanhar sua agenda de consultas`.
 
 #### Funcionalidades
 
-- [x] Funcionalidade 1.
-- [x] Funcionalidade 2.
-- [x] Funcionalidade 3.
+- [ ] Funcionalidade 1.
+- [ ] Funcionalidade 2.
+- [ ] Funcionalidade 3.
 
-[Release Notes ](release_notes_1.md)
+### Marco 2 - Finalização do módulo de Comunidade da plataforma 20/01/2023
 
-### Marco 2 - 20/01/2023
-
-Acreditamos que esse `Marco 1` vai conseguir `resultado esperado`. Saberemos que isso aconteceu com base em `métricas para validar a hipótese do negócio`.
+Acreditamos que esse `Marco` vai conseguir `criar uma rede de apoio para as gestantes da plataforma`. Saberemos que isso aconteceu com base na `interação dos usuários na plataforma`.
 
 #### Funcionalidades 
 
-- [x] Funcionalidade 1.
-- [x] Funcionalidade 2.
+- [ ] Funcionalidade 1.
+- [ ] Funcionalidade 2.
 - [ ] Funcionalidade 3.
+
+### Marco 3 - Finalização do módulo artigos neonatais publicados por especialistas 20/01/2023
+
+Acreditamos que esse `Marco` vai conseguir `trazer informações confiáveis às gestantes da plataforma`. Saberemos que isso aconteceu com base nos `artigos publicados por especialistas dentro da plataforma`.
+
+#### Funcionalidades 
+
+- [ ] Funcionalidade 1.
+- [ ] Funcionalidade 2.
+- [ ] Funcionalidade 3.
+
 
 [Release Notes ](release_notes_1.md)
 
 ## Riscos
 
-1. **Risco 1** descrição do risco. *Severidade Baixa e Probabilidade Alta*.
+1. **Checar inscrição no Conselho Regional da área de atuação do profissional** Devemos verificar todos especialistas da saúde para saber se são de fato profissionais credenciados. *Severidade Alta e Probabilidade Média*.
 
    Ações para mitigação do risco:
 
-   * Ação de mitigação 1.1.
+   * Verificar junto aos Conselhos Regionais se o profissional diz quem é ser, por meio de: APIs dos Conselhos ou via Web Crawling nos sites dos mesmos.
 
-2. **Risco 2** descrição do risco. *Severidade Média e Probabilidade Alta*.
+2. **Disseminação de informação falsa dentro dos fóruns** Algumas gestantes podem disseminar informações falsas sobre os mais diversos tópicos de gravidez. *Severidade Média e Probabilidade Alta*.
 
    Ações para mitigação do risco:
 
-   * Ação de mitigação 2.1.
-   * Ação de mitigação 2.2.
+   * Adicionar um selo de verificação (sinal de autoridade nos temas discutidos) dentro do fórum nos usuários profissionais da saúde.
+   * Ranquear as interações do fórum com base no selo de verificação (usuários com autoridade podem ser mostrados acima dentro das interações do fórum)
+  
+3. **Baixa adesão de profissionais da saúde** Profissionais da saúde podem não utilizar a plataforma por não identificar valor na utilização da mesma. *Severidade Média e Probabilidade Média*.
+
+   Ações para mitigação do risco:
+
+   * Facilitar o contato entre as gestantes e os profissionais da saúde
+   * Promover a exposição de profissionais na plataforma (para conseguirem agendar suas consultas com as gestantes da plataforma)
 
 ## Componentes
 
 ### Aplicativo Web 
 [descrição breve]
 https://github.com/edgebr/templates-artefatos
-
-### Aplicativo Mobile
-[descrição breve]
-https://github.com/edgebr/templates-artefatos
-
 
 ## Stakeholders
 
