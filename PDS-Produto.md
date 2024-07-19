@@ -32,19 +32,19 @@ Um especialista de saúde (médico, psicólogo, nutricionista, fisioterapeuta) q
 
 ## Marcos
 
-Devemos entregar **pequenas versões frequentes**. A equipe deve definir os marcos do projeto (*milestones)*, definindo os prazos de entrega e quais funcionalidades serão implementados até o final de cada marco. No final de cada marco devemos distribuir uma nova versão do produto, pronta para produção.
+<!-- Devemos entregar **pequenas versões frequentes**. A equipe deve definir os marcos do projeto (*milestones)*, definindo os prazos de entrega e quais funcionalidades serão implementados até o final de cada marco. No final de cada marco devemos distribuir uma nova versão do produto, pronta para produção.
 
-Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable product*). MVP é a versão mais simples de um produto que pode ser disponibilizada para a validação de um pequeno conjunto de hipóteses sobre o negócio. Após ser **construído,** o MVP é colocado à prova. Com isso, teremos dados que possibilitam **medir** o seu uso e, portanto, gerar o **aprendizado** desejado (Caroli, 2018).
+Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable product*). MVP é a versão mais simples de um produto que pode ser disponibilizada para a validação de um pequeno conjunto de hipóteses sobre o negócio. Após ser **construído,** o MVP é colocado à prova. Com isso, teremos dados que possibilitam **medir** o seu uso e, portanto, gerar o **aprendizado** desejado (Caroli, 2018). -->
 
-### Marco 1 - Finalização do módulo de acompanhamento de consultas Neonatais 20/12/2022
+### Marco 1 - Iremos solucionar a falta de informações para gestantes, incluindo início da gestação, procedimentos necessários e orientações médicas.
 
 Acreditamos que esse `Marco` vai conseguir `facilitar o processo neonatal das gestantes`. Saberemos que isso aconteceu com base no `uso da plataform pelas gestantes para acompanhar sua agenda de consultas`.
 
 #### Funcionalidades
 
-- [ ] Funcionalidade 1.
-- [ ] Funcionalidade 2.
-- [ ] Funcionalidade 3.
+- [x] Funcionalidade 1: Criação de páginas com textos sobre saúde da gestante e informações sobre o processo de gravidez.
+- [x] Funcionalidade 2. Desenvolvimento de um recurso visual para que a gestante acompanhe o tamanho do feto em cada período da gestação.
+- [x] Funcionalidade 3. Criação de páginas para que os profissionais publiquem artigos e informações, sejam eles gratuitos ou pagos.
 
 ### Marco 2 - Finalização do módulo de Comunidade da plataforma 20/01/2023
 
@@ -56,15 +56,25 @@ Acreditamos que esse `Marco` vai conseguir `criar uma rede de apoio para as gest
 - [ ] Funcionalidade 2.
 - [ ] Funcionalidade 3.
 
-### Marco 3 - Finalização do módulo artigos neonatais publicados por especialistas 20/01/2023
+### Marco 2 - Iremos resolver a carência de informações de especialistas da área da saúde.
 
 Acreditamos que esse `Marco` vai conseguir `trazer informações confiáveis às gestantes da plataforma`. Saberemos que isso aconteceu com base nos `artigos publicados por especialistas dentro da plataforma`.
 
 #### Funcionalidades 
 
-- [ ] Funcionalidade 1.
-- [ ] Funcionalidade 2.
-- [ ] Funcionalidade 3.
+- [x] Funcionalidade 1: Criação de um fórum para que as gestantes que utilizam o aplicativo possam se comunicar com outras gestantes e obter a opinião de especialistas sobre o assunto.
+- [x] Funcionalidade 2: Implementação de um sistema de verificação dos especialistas para garantir que apenas profissionais qualificados possam compartilhar informações.
+- [ ] Funcionalidade 3: 
+
+### Marco 3 - Iremos abordar o problema da ausência de uma rede de apoio para as gestantes.
+
+Acreditamos que esse `Marco` vai conseguir `criar uma rede de apoio para as gestantes da plataforma`. Saberemos que isso aconteceu com base na `interação dos usuários na plataforma`.
+
+#### Funcionalidades 
+
+- [x] Funcionalidade 1: Implementação de um fórum para as gestantes poderem interagir sobre as dúvidas, vivências e demais aspectos da gestação.
+- [x] Funcionalidade 2: Interações nos fóruns serão ranqueadas com base utilidade das informações, tendo informações falsas sendo penalizadas ou passíveis de exclusão.
+- [x] Funcionalidade 3: Implementação do selo de verificação nos perfis dos profissionais de saúde, rankeando positivamente suas interações no fórum.
 
 
 [Release Notes ](release_notes_1.md)
@@ -112,9 +122,11 @@ Stakeholder 2 <br />
 ## Equipe
 
 Membro 1 <br />
-*Gerente de Projeto* <br />
+*Desenvolvedor Back-End* <br />
 *E-mail* <br />
-https://github.com/edgebr
+djs@ic.ufal.br
+*Github* <br />
+https://github.com/silvadaniell
 
 Membro 2 <br />
 *Desenvolvedor Sênior* <br />
