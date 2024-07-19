@@ -5,36 +5,30 @@ Para a gestante, cuja necessidade é ter seu acompanhamento neonatal, o nosso ap
 ### Problemas
 
 1) Problema 1
-   Consultas Médicas: Agendamento e tempo de espera reduzidos para gestantes, garantindo que recebam atendimento médico regular e necessário.
+   Durante o processo de gestação, as grávidas precisam realizar diversas consultas, o que pode ser um processo árduo e complicado. Para uma gestante de primeira viagem, pode ser difícil saber quais consultas são necessárias e quais profissionais devem ser contatados.
 2) Problema 2
-   Redes de Apoio: Desenvolvimento de redes de apoio comunitárias para gestantes, como grupos de suporte e workshops.
+   Muitas gestantes enfrentam a falta de comunidades ou grupos de suporte que possam oferecer ajuda e orientação durante o período de gestação.
 3) Problema 3
-   Informações Online: Recursos online confiáveis sobre saúde e bem-estar durante a gravidez.
+   Gestantes podem ter dificuldades de encontrar fontes confiáveis sobre saúde e bem-estar durante a gravidez.
 
 ### Expectativas
 
 1) Expectativa 1  
-   Telemedicina, agendamento online e acompanhamento das saúdes das gestantes.  
+   Facilitar o processo de agendamento de consultas e acompanhamento da saúde das gestantes.
 2) Expectativa 2  
-   Redes Sociais e Fóruns. Conectar gestantes a redes de apoio locais e serviços comunitários
+   Conectar gestantes entre si e com redes de apoio por meio de fóruns.
 3) Expectativa 3  
-   Artigos que ofereçam conhecimentos sobre cuidados durante a gravidez (estilo medium)  
+   Fornecer artigos confiáveis que ofereçam conhecimentos sobre cuidados durante a gravidez (estilo medium).
 
 ## Personas
 
-Uma persona representa um usuário do produto e essa descrição deve falar não só o papel, mas também suas necessidades e seus objetivos. Isso cria uma representação realista dos usuários, auxiliando a equipe a descrever funcionalidades a partir do ponto de vista de quem vai usar o produto (Aguiar, 2021).
-
 ### Persona 1: Gestante
 
-Marcar consultas, acompanhar o progresso do processo da gestação, consumir conteúdos disponibilizados pelos profissionais da plataforma...  
-
-Ser ajudada no processo de gestação  
+Uma gestante de primeira viagem solteira que não tem muito conhecimento sobre o processo de gestação. Ela está preocupada com o processo de gestação e busca informações sobre pela internet, mas tem dificuldade em identificar informações falsas. Ela busca uma forma fácil de se manter informada sobre tudo que deve saber sobre a gestação e receber ajuda durante todo o processo.
 
 ### Persona 2: Especialista da Saúde
 
-Especialista verificado da saúde (Médico, Psicólogo, Nutricionista, Fisioterapeuta). Ele tem o papel de alimentar a plataforma via perfil próprio com informações úteis para a gestante.
-
-Promoção do seu trabalho, assim como apps de medicina e telemedicina (Doctoralia)
+Um especialista de saúde (médico, psicólogo, nutricionista, fisioterapeuta) que deseja promover seu trabalho e ajudar gestantes de primeira viagem. Seu papel é fornecer informações sobre o processo gestacional, recomendações alimentares, acompanhamento psicológico, entre outros. Ele busca alimentar a plataforma com um perfil próprio, compartilhando informações úteis para as gestantes, de modo a promover seu trabalho.
 
 ## Marcos
 
