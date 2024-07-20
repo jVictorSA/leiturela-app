@@ -4,11 +4,11 @@ Nosso público alvo são gestantes, cuja necessidade é ter seu acompanhamento n
 
 ### Problemas
 
-1) Problema 1
+1) Problema 1  
    Durante o processo de gestação, as grávidas precisam realizar diversas consultas, o que pode ser um processo árduo e complicado. Para uma gestante de primeira viagem, pode ser difícil saber quais consultas são necessárias e quais profissionais devem ser contatados.
-2) Problema 2
+2) Problema 2  
    Muitas gestantes enfrentam a falta de comunidades ou grupos de suporte que possam oferecer ajuda e orientação durante o período de gestação.
-3) Problema 3
+3) Problema 3  
    Gestantes podem ter dificuldades de encontrar fontes confiáveis sobre saúde e bem-estar durante a gravidez.
 
 ### Expectativas
