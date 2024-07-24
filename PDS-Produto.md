@@ -114,19 +114,30 @@ Stakeholder 2 <br />
 Membro 1 <br />
 *Desenvolvedor Back-End* <br />
 *E-mail* <br />
-djs@ic.ufal.br
+djs@ic.ufal.br  
 *Github* <br />
 https://github.com/silvadaniell
 
 Membro 2 <br />
-*Desenvolvedor Sênior* <br />
+*Desenvolvedor Front-End* <br />
 *E-mail* <br />
-https://github.com/edgebr
+gdo@ic.ufal.br  
+*Github* <br />
+https://github.com/GustavoDomingosO
 
 Membro 3 <br />
 *Analista de Qualidade Pleno* <br />
 *E-mail* <br />
-https://github.com/edgebr
+jvsa@ic.ufal.br 
+*Github* <bt />
+https://github.com/jVictorSA
+
+Membro 4 <br />
+*Gestor de Projetos* <br />
+*E-mail* <br />
+pvafs@ic.ufal.br  
+*Github* <br />
+https://github.com/pedrovictor48
 
 ## Status Reports
 
