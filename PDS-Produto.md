@@ -1,40 +1,34 @@
 # Projeto
 
-Para a gestante, cuja necessidade é ter seu acompanhamento neonatal, o nosso aplicativo especializado é um serviço de ajuda focado em gestantes, que diferentemente do Sprout oferece uma rede de apoio e de informação verificada, o nosso produto oferece uma plataforma focada e amigável para a mulher gestante, visando ajudá-la no processo tão dificultoso que é a gestação
+Nosso público alvo são gestantes, cuja necessidade é ter seu acompanhamento neonatal, o nosso aplicativo especializado é um serviço de ajuda focado em gestantes, que diferentemente do Sprout oferece uma rede de apoio e de informação verificada, o nosso produto oferece uma plataforma focada no acompanhamento neonatal, onde as gestantes poderão observar sua agenda de consultas de diversas especialidades médicas; participar de fóruns com outras usuárias e profissionais da saúde para troca de informações; acesso a conteúdo neonatal gerado pelos profissionais da plataforma
 
 ### Problemas
 
-1) Problema 1
-   Consultas Médicas: Agendamento e tempo de espera reduzidos para gestantes, garantindo que recebam atendimento médico regular e necessário.
-2) Problema 2
-   Redes de Apoio: Desenvolvimento de redes de apoio comunitárias para gestantes, como grupos de suporte e workshops.
-3) Problema 3
-   Informações Online: Recursos online confiáveis sobre saúde e bem-estar durante a gravidez.
+1) Problema 1  
+   Durante o processo de gestação, as grávidas precisam realizar diversas consultas, o que pode ser um processo árduo e complicado. Para uma gestante de primeira viagem, pode ser difícil saber quais consultas são necessárias e quais profissionais devem ser contatados.
+2) Problema 2  
+   Muitas gestantes enfrentam a falta de comunidades ou grupos de suporte que possam oferecer ajuda e orientação durante o período de gestação.
+3) Problema 3  
+   Gestantes podem ter dificuldades de encontrar fontes confiáveis sobre saúde e bem-estar durante a gravidez.
 
 ### Expectativas
 
 1) Expectativa 1  
-   Telemedicina, agendamento online e acompanhamento das saúdes das gestantes.  
+   Facilitar o processo de agendamento de consultas e acompanhamento da saúde das gestantes.
 2) Expectativa 2  
-   Redes Sociais e Fóruns. Conectar gestantes a redes de apoio locais e serviços comunitários
+   Conectar gestantes entre si e com redes de apoio por meio de fóruns.
 3) Expectativa 3  
-   Artigos que ofereçam conhecimentos sobre cuidados durante a gravidez (estilo medium)  
+   Fornecer artigos confiáveis que ofereçam conhecimentos sobre cuidados durante a gravidez (estilo medium).
 
 ## Personas
 
-Uma persona representa um usuário do produto e essa descrição deve falar não só o papel, mas também suas necessidades e seus objetivos. Isso cria uma representação realista dos usuários, auxiliando a equipe a descrever funcionalidades a partir do ponto de vista de quem vai usar o produto (Aguiar, 2021).
-
 ### Persona 1: Gestante
 
-Marcar consultas, acompanhar o progresso do processo da gestação, consumir conteúdos disponibilizados pelos profissionais da plataforma...  
-
-Ser ajudada no processo de gestação  
+Uma gestante de primeira viagem solteira que não tem muito conhecimento sobre o processo de gestação. Ela está preocupada com o processo de gestação e busca informações sobre pela internet, mas tem dificuldade em identificar informações falsas. Ela busca uma forma fácil de se manter informada sobre tudo que deve saber sobre a gestação e receber ajuda durante todo o processo.
 
 ### Persona 2: Especialista da Saúde
 
-Especialista verificado da saúde (Médico, Psicólogo, Nutricionista, Fisioterapeuta). Ele tem o papel de alimentar a plataforma via perfil próprio com informações úteis para a gestante.
-
-Promoção do seu trabalho, assim como apps de medicina e telemedicina (Doctoralia)
+Um especialista de saúde (médico, psicólogo, nutricionista, fisioterapeuta) que deseja promover seu trabalho e ajudar gestantes de primeira viagem. Seu papel é fornecer informações sobre o processo gestacional, recomendações alimentares, acompanhamento psicológico, entre outros. Ele busca alimentar a plataforma com um perfil próprio, compartilhando informações úteis para as gestantes, de modo a promover seu trabalho.
 
 ## Marcos
 
@@ -44,7 +38,7 @@ Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable p
 
 ### Marco 1 - Iremos solucionar a falta de entendimento de grafema.
 
-<!-- Acreditamos que esse `Marco 1` vai conseguir `resultado esperado`. Saberemos que isso aconteceu com base em `métricas para validar a hipótese do negócio`. -->
+Acreditamos que esse `Marco` vai conseguir `facilitar o processo neonatal das gestantes`. Saberemos que isso aconteceu com base no `uso da plataform pelas gestantes para acompanhar sua agenda de consultas`.
 
 #### Funcionalidades
 
@@ -61,12 +55,12 @@ Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable p
    - Um personagem da história auxiliar lendo alguma informação para o usuário, mas ele lê de maneira errada e o usuário tem que identificar qual
   seria a informação certa. 
 
-
 [Release Notes ](release_notes_1.md)
 
 ### Marco 2 - Iremos resolver o falta de entendimento pelo som
 
-<!-- Acreditamos que esse `Marco 1` vai conseguir `resultado esperado`. Saberemos que isso aconteceu com base em `métricas para validar a hipótese do negócio`. -->
+
+Acreditamos que esse `Marco` vai conseguir `trazer informações confiáveis às gestantes da plataforma`. Saberemos que isso aconteceu com base nos `artigos publicados por especialistas dentro da plataforma`.
 
 #### Funcionalidades 
 
@@ -81,7 +75,7 @@ Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable p
 ### Marco 3 - Relatórios de desempenho do usuário e Níveis de dificuldade
 
 
-<!-- Acreditamos que esse `Marco 1` vai conseguir `resultado esperado`. Saberemos que isso aconteceu com base em `métricas para validar a hipótese do negócio`. -->
+Acreditamos que esse `Marco` vai conseguir `criar uma rede de apoio para as gestantes da plataforma`. Saberemos que isso aconteceu com base na `interação dos usuários na plataforma`.
 
 #### Funcionalidades 
 
@@ -108,29 +102,31 @@ Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable p
 
 ## Riscos
 
-1. **Risco 1** descrição do risco. *Severidade Baixa e Probabilidade Alta*.
+1. **Checar inscrição no Conselho Regional da área de atuação do profissional** Devemos verificar todos especialistas da saúde para saber se são de fato profissionais credenciados. *Severidade Alta e Probabilidade Média*.
 
    Ações para mitigação do risco:
 
-   * Ação de mitigação 1.1.
+   * Verificar junto aos Conselhos Regionais se o profissional diz quem é ser, por meio de: APIs dos Conselhos ou via Web Crawling nos sites dos mesmos.
 
-2. **Risco 2** descrição do risco. *Severidade Média e Probabilidade Alta*.
+2. **Disseminação de informação falsa dentro dos fóruns** Algumas gestantes podem disseminar informações falsas sobre os mais diversos tópicos de gravidez. *Severidade Média e Probabilidade Alta*.
 
    Ações para mitigação do risco:
 
-   * Ação de mitigação 2.1.
-   * Ação de mitigação 2.2.
+   * Adicionar um selo de verificação (sinal de autoridade nos temas discutidos) dentro do fórum nos usuários profissionais da saúde.
+   * Ranquear as interações do fórum com base no selo de verificação (usuários com autoridade podem ser mostrados acima dentro das interações do fórum)
+  
+3. **Baixa adesão de profissionais da saúde** Profissionais da saúde podem não utilizar a plataforma por não identificar valor na utilização da mesma. *Severidade Média e Probabilidade Média*.
+
+   Ações para mitigação do risco:
+
+   * Facilitar o contato entre as gestantes e os profissionais da saúde
+   * Promover a exposição de profissionais na plataforma (para conseguirem agendar suas consultas com as gestantes da plataforma)
 
 ## Componentes
 
 ### Aplicativo Web 
 [descrição breve]
 https://github.com/edgebr/templates-artefatos
-
-### Aplicativo Mobile
-[descrição breve]
-https://github.com/edgebr/templates-artefatos
-
 
 ## Stakeholders
 
@@ -149,19 +145,30 @@ Stakeholder 2 <br />
 Membro 1 <br />
 *Desenvolvedor Back-End* <br />
 *E-mail* <br />
-djs@ic.ufal.br
+djs@ic.ufal.br  
 *Github* <br />
 https://github.com/silvadaniell
 
 Membro 2 <br />
-*Desenvolvedor Sênior* <br />
+*Desenvolvedor Front-End* <br />
 *E-mail* <br />
-https://github.com/edgebr
+gdo@ic.ufal.br  
+*Github* <br />
+https://github.com/GustavoDomingosO
 
 Membro 3 <br />
 *Analista de Qualidade Pleno* <br />
 *E-mail* <br />
-https://github.com/edgebr
+jvsa@ic.ufal.br 
+*Github* <bt />
+https://github.com/jVictorSA
+
+Membro 4 <br />
+*Gestor de Projetos* <br />
+*E-mail* <br />
+pvafs@ic.ufal.br  
+*Github* <br />
+https://github.com/pedrovictor48
 
 ## Status Reports
 
