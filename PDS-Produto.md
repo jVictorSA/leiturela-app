@@ -42,38 +42,69 @@ Promoção do seu trabalho, assim como apps de medicina e telemedicina (Doctoral
 
 Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable product*). MVP é a versão mais simples de um produto que pode ser disponibilizada para a validação de um pequeno conjunto de hipóteses sobre o negócio. Após ser **construído,** o MVP é colocado à prova. Com isso, teremos dados que possibilitam **medir** o seu uso e, portanto, gerar o **aprendizado** desejado (Caroli, 2018). -->
 
-### Marco 1 - Iremos solucionar a falta de informações para gestantes, incluindo início da gestação, procedimentos necessários e orientações médicas.
+### Marco 1 - Iremos solucionar a falta de entendimento de grafema.
 
 <!-- Acreditamos que esse `Marco 1` vai conseguir `resultado esperado`. Saberemos que isso aconteceu com base em `métricas para validar a hipótese do negócio`. -->
 
 #### Funcionalidades
 
-- [x] Funcionalidade 1: Criação de páginas com textos sobre saúde da gestante e informações sobre o processo de gravidez.
-- [x] Funcionalidade 2. Desenvolvimento de um recurso visual para que a gestante acompanhe o tamanho do feto em cada período da gestação.
-- [x] Funcionalidade 3. Criação de páginas para que os profissionais publiquem artigos e informações, sejam eles gratuitos ou pagos.
+- [x] Funcionalidade 1: Reconhecimento de letras pelo grafema
+   - Ao longo da história, as crianças devem identificar as letras que faltam em palavras-chave. Cada identificação realizada ganha pontos;
+   - Reorganizar as letras nas palavras que precisa ser identificada (palavra correta);
+   - Associar as letras com as imagens corretas, reforçando o reconhecimento do grafema;
+   - A palavra está dividida em sílabas, e a criança deve selecionar as sílabas corretas para formar a palavra.
+   - As sílabas das palavras estarão flutuando na tela, e o usuário deve selecionar os fonemas existentes nas palavras faladas
+   - O usuário deve montar um conjunto de palavras que são necessárias para avançar na história ( seria a senhas de acesso a algum lugar na aventura; objetos a obter; nomes de personagens e afins)
+   - Ordenação de letras / sílabas
+     
+- [x] Funcionalidade 2: Reconhecimento de palavras e informações erradas 
+   - Um personagem da história auxiliar lendo alguma informação para o usuário, mas ele lê de maneira errada e o usuário tem que identificar qual
+  seria a informação certa. 
+
 
 [Release Notes ](release_notes_1.md)
 
-### Marco 2 - Iremos resolver a carência de informações de especialistas da área da saúde.
+### Marco 2 - Iremos resolver o falta de entendimento pelo som
 
 <!-- Acreditamos que esse `Marco 1` vai conseguir `resultado esperado`. Saberemos que isso aconteceu com base em `métricas para validar a hipótese do negócio`. -->
 
 #### Funcionalidades 
 
-- [x] Funcionalidade 1: Criação de um fórum para que as gestantes que utilizam o aplicativo possam se comunicar com outras gestantes e obter a opinião de especialistas sobre o assunto.
-- [x] Funcionalidade 2: Implementação de um sistema de verificação dos especialistas para garantir que apenas profissionais qualificados possam compartilhar informações.
-- [ ] Funcionalidade 3: 
+- [x] Funcionalidade 1. Reconhecimento de letras  e  palavras pelo som
+   - Usuário relaciona letras com o som que está sendo falado no momento.
+   - A criança ouve o som de algo relacionado a história e deve selecionar a palavra correta que corresponde ao som.
+   - O usuário deve ouvir uma palavra e consertar a grafia da mesma, que é apresentada de modo incorreto
+     
+- [x] Funcionalidade 2: Reconhecimento de voz
+   - Reconhecimento de voz pode ser aplicado em Minigames para fazer uma avaliação se o usuário está lendo corretamente. Seja na fala de fonemas, grafemas, sílabas ou palavras
 
-### Marco 3 - Iremos abordar o problema de profissionais de saúde não credenciados.
+### Marco 3 - Relatórios de desempenho do usuário e Níveis de dificuldade
+
 
 <!-- Acreditamos que esse `Marco 1` vai conseguir `resultado esperado`. Saberemos que isso aconteceu com base em `métricas para validar a hipótese do negócio`. -->
 
 #### Funcionalidades 
 
-- [x] Funcionalidade 1: Implementação de verificação para verificar as credenciais do especialista
-- [x] Funcionalidade 2: 
+- [x] Funcionalidade 1: Dashboard
+   - Gráficos para mostrar o desempenho do usuário ao próprio usuário 
+   - Relatório geral para todos os usuários que usa o App
+     
+- [x] Funcionalidade 2: Desafios ao longo do Minigame
+   - Para concluir a história vai ter aplicado o marco 1 e 2 como desafios.
+   - Contagem de pontuação ao passar pelos obstáculos ao logo do minigrame 
+   - Ranking geral para incetivar aos usuários
+     
+### Marco 4 - Além dos Minigames de história
 
+<!-- Acreditamos que esse `Marco 1` vai conseguir `resultado esperado`. Saberemos que isso aconteceu com base em `métricas para validar a hipótese do negócio`. -->
+
+#### Funcionalidades 
+
+- [x] Funcionalidade 1: Minigames avulso
+   - Parte de história para o usuário treinar dificuldades específicas, como grafema, som e voz. 
+   - Aplicar repetição espaçada aos erros mais frequentes cometidos durante o minigame.
 [Release Notes ](release_notes_1.md)
+
 
 ## Riscos
 
