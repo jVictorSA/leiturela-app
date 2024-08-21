@@ -100,31 +100,39 @@ Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable p
 [Release Notes ](release_notes_1.md)
 
 
-## Riscos
+## Riscos 
 
-1. **Checar inscrição no Conselho Regional da área de atuação do profissional** Devemos verificar todos especialistas da saúde para saber se são de fato profissionais credenciados. *Severidade Alta e Probabilidade Média*.
-
-   Ações para mitigação do risco:
-
-   * Verificar junto aos Conselhos Regionais se o profissional diz quem é ser, por meio de: APIs dos Conselhos ou via Web Crawling nos sites dos mesmos.
-
-2. **Disseminação de informação falsa dentro dos fóruns** Algumas gestantes podem disseminar informações falsas sobre os mais diversos tópicos de gravidez. *Severidade Média e Probabilidade Alta*.
+1. **Minigames que não melhoram o desempenho da leitura dos usuários** Os minigames podem não melhorar a leitura dos usuários. *Severidade Alta e Probabilidade Média*.
 
    Ações para mitigação do risco:
 
-   * Adicionar um selo de verificação (sinal de autoridade nos temas discutidos) dentro do fórum nos usuários profissionais da saúde.
-   * Ranquear as interações do fórum com base no selo de verificação (usuários com autoridade podem ser mostrados acima dentro das interações do fórum)
+   * Criar minigames que trabalhem as dificuldades dos usuários, com base em estudos previamente publicados.
+   * Utilizar a abordagem multissensorial para a aprendizagem da leitura, método que já fora comprovadamente efetivo na resolução do problema.
+
+2. **Minigames que não engajam os usuários** Os minigames podem não ser interessantes ao usuários, fazendo com que os usuários não sintam vontade de usar o aplicativo. *Severidade Alta e Probabilidade Média*.
+
+   Ações para mitigação do risco:
+
+   * Criar minigames com contextos que interessem aos usuários. e.g. Dinossauros, Fábulas, Animais e etc.
+   * Criar minigames com "Game Juice". Animações, efeitos sonoros, e feedback ativo durante os minigames, a fim de prender a atenção dos usuários.
+
+3. **Relatórios pouco informativos** As métricas presentes no relatório devem mensurar objetivamente a melhora ou piora do desempenho dos usuários. *Severidade Média e Probabilidade Alta*.
+
+   Ações para mitigação do risco:
+
+   * Pesquisar métricas de avaliação da leitura de crianças disléxicas e mensurar isto dentro do aplicativo.
+   * Prover visualizações claras e objetivas, tornando a assimilação do desempenho dos usuários o mais fácil possível.
   
-3. **Baixa adesão de profissionais da saúde** Profissionais da saúde podem não utilizar a plataforma por não identificar valor na utilização da mesma. *Severidade Média e Probabilidade Média*.
+4. **Reconhecimento de voz ser falho** O modelo de reconhecimento de voz pode apresentar problemas na trascrição da fala dos usuários. *Severidade Média e Probabilidade Média*.
 
    Ações para mitigação do risco:
 
-   * Facilitar o contato entre as gestantes e os profissionais da saúde
-   * Promover a exposição de profissionais na plataforma (para conseguirem agendar suas consultas com as gestantes da plataforma)
+   * Utilização de modelos mais recentes.
+   * Utilizar modelos melhores (treinados com uma base de dados maior e mais diversificada), aplicando a técnica de quantização, buscando um tradeoff entre bons resultados e baixa latência.
 
 ## Componentes
 
-### Aplicativo Web 
+### Aplicativo Mobile 
 [descrição breve]
 https://github.com/edgebr/templates-artefatos
 
