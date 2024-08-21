@@ -38,7 +38,7 @@ Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable p
 
 ### Marco 1 - Iremos solucionar a falta de entendimento de grafema.
 
-Acreditamos que esse `Marco` vai conseguir `facilitar o processo neonatal das gestantes`. Saberemos que isso aconteceu com base no `uso da plataform pelas gestantes para acompanhar sua agenda de consultas`.
+<!--Acreditamos que esse `Marco` vai conseguir ``.-->
 
 #### Funcionalidades
 
@@ -60,7 +60,7 @@ Acreditamos que esse `Marco` vai conseguir `facilitar o processo neonatal das ge
 ### Marco 2 - Iremos resolver o falta de entendimento pelo som
 
 
-Acreditamos que esse `Marco` vai conseguir `trazer informações confiáveis às gestantes da plataforma`. Saberemos que isso aconteceu com base nos `artigos publicados por especialistas dentro da plataforma`.
+<!--Acreditamos que esse `Marco` vai conseguir `-->
 
 #### Funcionalidades 
 
@@ -75,7 +75,7 @@ Acreditamos que esse `Marco` vai conseguir `trazer informações confiáveis às
 ### Marco 3 - Relatórios de desempenho do usuário e Níveis de dificuldade
 
 
-Acreditamos que esse `Marco` vai conseguir `criar uma rede de apoio para as gestantes da plataforma`. Saberemos que isso aconteceu com base na `interação dos usuários na plataforma`.
+<!--Acreditamos que esse `Marco` vai conseguir `-->
 
 #### Funcionalidades 
 
