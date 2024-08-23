@@ -22,13 +22,17 @@ Nosso público alvo são gestantes, cuja necessidade é ter seu acompanhamento n
 
 ## Personas
 
-### Persona 1: Gestante
+### Persona 1: Crianças
 
-Uma gestante de primeira viagem solteira que não tem muito conhecimento sobre o processo de gestação. Ela está preocupada com o processo de gestação e busca informações sobre pela internet, mas tem dificuldade em identificar informações falsas. Ela busca uma forma fácil de se manter informada sobre tudo que deve saber sobre a gestação e receber ajuda durante todo o processo.
+São crianças de 6 a 14 anos de idade com dislexia que enfrentam desafios na leitura e escrita. Podem apresentar dificuldade em associar sons às letras, inversão de palavras e letras, e problemas com a memorização de palavras. Elas têm necessidade de apoio personalizado na alfabetização, recursos visuais e interativos que facilitem o aprendizado, jogos educativos que incentivem a prática sem frustração, feedback imediato e positivo, além de um ambiente digital que respeite o ritmo individual. O objetivo é desenvolver habilidades de leitura e escrita de forma lúdica e eficiente, ganhando confiança e autonomia no aprendizado.
 
-### Persona 2: Especialista da Saúde
+### Persona 2: Responsável
 
-Um especialista de saúde (médico, psicólogo, nutricionista, fisioterapeuta) que deseja promover seu trabalho e ajudar gestantes de primeira viagem. Seu papel é fornecer informações sobre o processo gestacional, recomendações alimentares, acompanhamento psicológico, entre outros. Ele busca alimentar a plataforma com um perfil próprio, compartilhando informações úteis para as gestantes, de modo a promover seu trabalho.
+Tem acima de 20 anos, são pais ou cuidadores das crianças, preocupados com o desenvolvimento acadêmico e emocional de seus filhos. Podem ter conhecimento limitado sobre dislexia e suas implicações, mas estão dispostos a apoiar e se engajar no processo de aprendizado. Tem necessidade de ferramentas para monitorar o progresso da criança, informações claras e acessíveis sobre dislexia e estratégias de apoio, além de orientações sobre como utilizar o aplicativo para maximizar os benefícios.
+
+### Persona 3: Professor
+
+Tem de 25 a 60 anos de idade, são educadores com experiência no ensino fundamental, que podem ou não ter formação específica em educação especial. Estão comprometidos em ajudar todos os alunos a alcançar o sucesso acadêmico, mas podem enfrentar desafios ao lidar com necessidades individuais como a dislexia. 
 
 ## Marcos
 
