@@ -1,6 +1,6 @@
 # Projeto
 
-Nosso público alvo são gestantes, cuja necessidade é ter seu acompanhamento neonatal, o nosso aplicativo especializado é um serviço de ajuda focado em gestantes, que diferentemente do Sprout oferece uma rede de apoio e de informação verificada, o nosso produto oferece uma plataforma focada no acompanhamento neonatal, onde as gestantes poderão observar sua agenda de consultas de diversas especialidades médicas; participar de fóruns com outras usuárias e profissionais da saúde para troca de informações; acesso a conteúdo neonatal gerado pelos profissionais da plataforma
+Nosso público alvo são crianças de 6 a 14 anos de idade com dislexia que enfrentam desafios na leitura e escrita, cuja necessidade é ter apoio personalizado na alfabetização, recursos visuais e interativos que facilitem o aprendizado, jogos educativos que incentivem a prática sem frustração, feedback imediato e positivo, além de um ambiente digital que respeite o ritmo individual, [...]
 
 ### Problemas
 
