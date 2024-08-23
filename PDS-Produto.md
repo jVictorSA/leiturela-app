@@ -88,15 +88,15 @@ Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable p
    - Contagem de pontuação ao passar pelos obstáculos ao logo do minigrame 
    - Ranking geral para incetivar aos usuários
      
+<!--
 ### Marco 4 - Além dos Minigames de história
-
-<!-- Acreditamos que esse `Marco 1` vai conseguir `resultado esperado`. Saberemos que isso aconteceu com base em `métricas para validar a hipótese do negócio`. -->
 
 #### Funcionalidades 
 
 - [x] Funcionalidade 1: Minigames avulso
    - Parte de história para o usuário treinar dificuldades específicas, como grafema, som e voz. 
    - Aplicar repetição espaçada aos erros mais frequentes cometidos durante o minigame.
+   -->
 [Release Notes ](release_notes_1.md)
 
 
