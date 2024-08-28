@@ -36,71 +36,74 @@ Tem de 25 a 60 anos de idade, são educadores com experiência no ensino fundame
 
 ## Marcos
 
-<!-- Devemos entregar **pequenas versões frequentes**. A equipe deve definir os marcos do projeto (*milestones)*, definindo os prazos de entrega e quais funcionalidades serão implementados até o final de cada marco. No final de cada marco devemos distribuir uma nova versão do produto, pronta para produção.
-
-Podemos pensar nessas pequenas versões como MVPs (do inglês, *minimum viable product*). MVP é a versão mais simples de um produto que pode ser disponibilizada para a validação de um pequeno conjunto de hipóteses sobre o negócio. Após ser **construído,** o MVP é colocado à prova. Com isso, teremos dados que possibilitam **medir** o seu uso e, portanto, gerar o **aprendizado** desejado (Caroli, 2018). -->
+Devemos entregar **pequenas versões frequentes** para garantir o progresso contínuo e a validação das funcionalidades ao longo do desenvolvimento. A equipe deve definir marcos do projeto (*milestones)*, estabelecendo prazos de entrega e as funcionalidades que serão implementadas até o final de cada marco. No final de cada marco, uma nova versão do produto será distribuída, pronta para produção. Essas pequenas versões podem ser vistas como MVPs (do inglês, *minimum viable product*). O MVP é a versão mais simples de um produto que pode ser disponibilizada para validar um conjunto específico de hipóteses sobre o negócio. Após ser **construído**, o MVP é colocado em uso, gerando dados que permitem **medir** sua eficácia e, assim, proporcionar o **aprendizado** necessário para aperfeiçoamentos futuros (Caroli, 2018). Embora todas as funcionalidades planejadas estejam detalhadas, vale destacar que algumas delas são mais complexas e podem não ser implementadas em sua totalidade dentro do prazo estabelecido. A priorização das funcionalidades será feita de acordo com sua viabilidade e impacto, visando sempre a entrega de um produto funcional e útil ao usuário.
 
 ### Marco 1 - Iremos solucionar a falta de entendimento de grafema.
 
-<!--Acreditamos que esse `Marco` vai conseguir ``.-->
+Acreditamos que esse Marco vai conseguir reforçar o entendimento e reconhecimento de grafemas, melhorar a habilidade de leitura e escrita das crianças, além de promover a correção de informações erradas de forma interativa e divertida.
 
 #### Funcionalidades
-
-- [x] Funcionalidade 1: Reconhecimento de letras pelo grafema
-   - Ao longo da história, as crianças devem identificar as letras que faltam em palavras-chave. Cada identificação realizada ganha pontos;
-   - Reorganizar as letras nas palavras que precisa ser identificada (palavra correta);
-   - Associar as letras com as imagens corretas, reforçando o reconhecimento do grafema;
-   - A palavra está dividida em sílabas, e a criança deve selecionar as sílabas corretas para formar a palavra.
-   - As sílabas das palavras estarão flutuando na tela, e o usuário deve selecionar os fonemas existentes nas palavras faladas
-   - O usuário deve montar um conjunto de palavras que são necessárias para avançar na história ( seria a senhas de acesso a algum lugar na aventura; objetos a obter; nomes de personagens e afins)
-   - Ordenação de letras / sílabas
+- [x] Funcionalidade 1: Reconhecimento de letras pelo grafema ( Essa funcionalidade foca em reforçar a associação entre grafemas (letras e sílabas) e seus respectivos fonemas, de forma lúdica e interativa)
+   - Identificação de Letras em Palavras-Chave: Ao longo da história, as crianças devem identificar as letras que faltam em palavras-chave. Cada identificação realizada ganha pontos;
+        - Exemplo: A palavra "gato" é mostrada como "_ato", e a criança deve selecionar a letra "g" para completar a palavra.
+   - Reorganização de Letras: As letras de uma palavra são embaralhadas, e a criança deve reorganizá-las para formar a palavra correta. Isso reforça o reconhecimento visual das letras e a formação das palavras.
+        - Exemplo: A palavra "casa" aparece como "saca", e a criança deve reorganizar as letras para formar "casa".
+   - Associação de letras ou palavra com Imagens: As crianças associam letras ou palavra a imagens correspondentes. Isso pode incluir selecionar a letra inicial da imagem ou escolher a imagem correspondente à palavra dada.
+        - Exemplo: A letra "b" é exibida, e a criança deve escolher entre imagens de uma bola, uma casa e um gato. A escolha correta é a bola.
+   - Formação de Palavras com Sílabas: A palavra é apresentada dividida em sílabas, e a criança deve selecionar as sílabas corretas na ordem correta para formar a palavra completa.
+        - Exemplo: Para formar a palavra "banana", as sílabas "ba", "na", "na" estão disponíveis, e a criança deve clicar nas sílabas na sequência correta.
+   - Seleção de Fonemas em Palavras Faladas: As sílabas das palavras flutuam na tela enquanto a palavra é falada. A criança deve identificar e selecionar os fonemas que correspondem às sílabas faladas.
+        - Exemplo: A palavra "bola" é pronunciada, e as sílabas "bo", "la" flutuam na tela. A criança precisa clicar nas sílabas corretas para completar a palavra.
+   - Montagem de Palavras para Avançar na História: Certas palavras precisam ser formadas para que a criança possa avançar na narrativa. Essas palavras podem ser senhas, nomes de personagens ou objetos necessários para progredir na aventura.
+        - Exemplo: Para abrir uma imagem e nela tem informações da palavra chave, a criança deve montar a palavra "chave" usando as sílabas disponíveis na tela e a imagem.
+   - Ordenação de Letras/Sílabas: As letras ou sílabas de uma palavra são exibidas fora de ordem, e a criança deve reorganizá-las corretamente.
+        - Exemplo: Para formar a palavra "livro", as letras "l", "i", "v", "r", "o" estão fora de ordem e devem ser arranjadas corretamente.
      
-- [x] Funcionalidade 2: Reconhecimento de palavras e informações erradas 
-   - Um personagem da história auxiliar lendo alguma informação para o usuário, mas ele lê de maneira errada e o usuário tem que identificar qual
-  seria a informação certa. 
+- [x] Funcionalidade 2: Reconhecimento de palavras e Informações erradas (Essa funcionalidade ensina a criança a identificar e corrigir erros em palavras e frases, melhorando sua atenção aos detalhes).
+   - Correção de Erros em Informações Lidas por Personagens: Um personagem auxiliar da história lê uma informação incorreta para o usuário, que deve identificar e corrigir o erro.
+       - Exemplo: O personagem lê "A vaca come capim", mas a frase exibida é "A vaca come sapo". A criança deve corrigir a palavra "sapo" para "capim".
 
 [Release Notes ](release_notes_1.md)
 
-### Marco 2 - Iremos resolver o falta de entendimento pelo som
+### Marco 2 - Solução para a Falta de Entendimento pelo Som
 
-
-<!--Acreditamos que esse `Marco` vai conseguir `-->
-
-#### Funcionalidades 
-
-- [x] Funcionalidade 1. Reconhecimento de letras  e  palavras pelo som
-   - Usuário relaciona letras com o som que está sendo falado no momento.
-   - A criança ouve o som de algo relacionado a história e deve selecionar a palavra correta que corresponde ao som.
-   - O usuário deve ouvir uma palavra e consertar a grafia da mesma, que é apresentada de modo incorreto
-     
-- [x] Funcionalidade 2: Reconhecimento de voz
-   - Reconhecimento de voz pode ser aplicado em Minigames para fazer uma avaliação se o usuário está lendo corretamente. Seja na fala de fonemas, grafemas, sílabas ou palavras
-
-### Marco 3 - Relatórios de desempenho do usuário e Níveis de dificuldade
-
-
-<!--Acreditamos que esse `Marco` vai conseguir `-->
+Acreditamos que esse Marco vai conseguir reforçar o entendimento e reconhecimento de sons, aprimorando a habilidade de leitura, escuta e pronúncia das crianças, além de corrigir a grafia de palavras com base no som e oferecer feedback sobre a leitura oral de forma interativa e educativa.
 
 #### Funcionalidades 
 
-- [x] Funcionalidade 1: Dashboard
-   - Gráficos para mostrar o desempenho do usuário ao próprio usuário 
-   - Relatório geral para todos os usuários que usa o App
-     
-- [x] Funcionalidade 2: Desafios ao longo do Minigame
-   - Para concluir a história vai ter aplicado o marco 1 e 2 como desafios.
-   - Contagem de pontuação ao passar pelos obstáculos ao logo do minigrame 
-   - Ranking geral para incetivar aos usuários
-     
-<!--
-### Marco 4 - Além dos Minigames de história
+- [x] Funcionalidade 1. Reconhecimento de letras  e  palavras pelo som (Essa funcionalidade tem como objetivo melhorar a associação entre os sons (fonemas) e suas representações escritas (grafemas), além de corrigir a grafia com base na audição)
+
+   - Relação de Letras com Sons: O usuário escuta um som correspondente a uma letra específica e deve selecionar a letra correta que representa esse som. Essa atividade reforça a conexão entre o som e sua representação escrita.
+       - Exemplo: O som /m/ é reproduzido, e a criança deve selecionar a letra "m" entre outras opções como "n" ou "b".
+   - Identificação de Palavras a Partir de Sons: A criança ouve um som relacionado à história (como o barulho de um animal ou de um objeto) e deve escolher a palavra correta que corresponde ao som. Isso ajuda a desenvolver a capacidade de associar sons a palavras escritas.
+       - Exemplo: A criança ouve o som de um cachorro latindo e deve escolher a palavra "cachorro" entre opções como "gato", "pássaro" ou "cavalo".
+   - Correção de Grafia com Base no Som: O usuário ouve uma palavra e, em seguida, vê sua versão escrita de forma incorreta. Ele deve corrigir a grafia da palavra para a forma correta com base no som que ouviu.
+       - Exemplo: A palavra "pássaro" é ouvida, mas aparece escrita como "passsaro". A criança precisa corrigir a grafia, removendo a letra extra "s" e adicionando o acento.
+- [x] Funcionalidade 2: Reconhecimento de voz (Esta funcionalidade aplica o reconhecimento de voz para avaliar a leitura e pronúncia do usuário, oferecendo feedback sobre sua performance).
+   - Avaliação de Leitura em Minigames: O reconhecimento de voz é utilizado em minigames onde o usuário precisa ler em voz alta fonemas, grafemas, sílabas ou palavras. O sistema avalia se a leitura foi correta, ajudando a criança a melhorar sua pronúncia e compreensão auditiva.
+      - Exemplo: A criança deve ler a palavra "maçã" em voz alta. O sistema reconhece a leitura e fornece feedback sobre a correção da pronúncia.
+### Marco 3 - Relatórios de Desempenho do Usuário e Níveis de Dificuldade
+
+Acreditamos que esse Marco vai conseguir fornecer uma análise detalhada do progresso dos usuários, além de aumentar o engajamento e motivação através de desafios e rankings. Isso ajudará a monitorar o desenvolvimento das habilidades linguísticas das crianças e incentivará a melhoria contínua de forma divertida e interativa.
 
 #### Funcionalidades 
 
-- [x] Funcionalidade 1: Minigames avulso
-   - Parte de história para o usuário treinar dificuldades específicas, como grafema, som e voz. 
-   - Aplicar repetição espaçada aos erros mais frequentes cometidos durante o minigame.
-   -->
+- [x] Funcionalidade 1: Dashboard (Essa funcionalidade fornece uma interface visual e informativa para que os usuários acompanhem seu desempenho e progresso ao longo do uso do aplicativo)
+      
+   - Gráficos de Desempenho Individual: Um dashboard personalizado exibirá gráficos que mostram o desempenho do usuário em diferentes atividades, como reconhecimento de grafemas e fonemas, correção de grafia, e leitura. Isso permite que o usuário visualize seu progresso ao longo do tempo, identificando áreas de melhora e celebrando conquistas.
+      - Exemplo: Um gráfico de barras que mostra o número de palavras corretamente identificadas pelo som em cada sessão de jogo, permitindo que o usuário veja sua evolução.
+   - Relatório Geral para Todos os Usuários: Um relatório consolidado para administradores ou educadores, que fornece uma visão geral do desempenho de todos os usuários que utilizam o aplicativo. Esse relatório pode incluir métricas como média de pontuação, taxa de sucesso em diferentes tipos de desafios, e progresso ao longo do tempo.
+      - Exemplo: Um relatório que mostra que 80% dos usuários melhoraram no reconhecimento de palavras pelo som após cinco sessões de jogo, com gráficos e tabelas para detalhar as estatísticas.
+     
+- [x] Funcionalidade 2: Desafios ao Longo do Minigame (Essa funcionalidade introduz desafios progressivos ao longo da história do minigame, utilizando as habilidades desenvolvidas nos Marcos 1 e 2, com o objetivo de manter os usuários engajados e motivados)
+      
+   - Aplicação dos Marcos 1 e 2 como Desafios: Ao longo da história, os usuários enfrentarão desafios que exigem a aplicação das habilidades desenvolvidas nos Marcos 1 e 2, como reconhecimento de letras, palavras pelo som, e correção de grafia. Esses desafios são integrados à narrativa, tornando o aprendizado parte da aventura.
+      - Exemplo: Em uma parte da história, o usuário precisa corrigir a grafia de palavras ou identificar fonemas corretamente para avançar para a próxima fase do jogo.
+   - Contagem de Pontuação: A cada obstáculo superado, o usuário acumula pontos. Esses pontos podem ser utilizados para desbloquear novos níveis ou itens dentro do jogo, incentivando a progressão contínua.
+      - O usuário recebe 10 pontos por cada palavra corretamente identificada pelo som, e ao acumular 100 pontos, desbloqueia um novo item.
+   - Ranking Geral: Um sistema de ranking geral é implementado para fomentar uma competição saudável entre os usuários. O ranking pode ser baseado em pontuações acumuladas, tempo de conclusão dos desafios, ou precisão nas atividades. Isso incentiva os usuários a melhorar constantemente suas habilidades.
+      - Um ranking semanal que mostra os 10 usuários com as maiores pontuações no jogo, com recompensas simbólicas para os três primeiros colocados.
+
 [Release Notes ](release_notes_1.md)
 
 
