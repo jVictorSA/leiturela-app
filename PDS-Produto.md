@@ -1,38 +1,34 @@
 # Projeto
 
-Nosso público alvo são crianças de 6 a 14 anos de idade com dislexia que enfrentam desafios na leitura e escrita, cuja necessidade é ter apoio personalizado na alfabetização, recursos visuais e interativos que facilitem o aprendizado, jogos educativos que incentivem a prática sem frustração, feedback imediato e positivo, além de um ambiente digital que respeite o ritmo individual, [...]
+Nosso público alvo são crianças de 5 a 9 anos de idade com dislexia que enfrentam desafios na leitura e escrita, cuja necessidade é ter apoio personalizado na alfabetização, recursos visuais e interativos que facilitem o aprendizado, jogos educativos que incentivem a prática sem frustração, feedback imediato e positivo, além de um ambiente digital que respeite o ritmo individual, [...]
 
 ### Problemas
 
 1) Problema 1  
-   Durante o processo de gestação, as grávidas precisam realizar diversas consultas, o que pode ser um processo árduo e complicado. Para uma gestante de primeira viagem, pode ser difícil saber quais consultas são necessárias e quais profissionais devem ser contatados.
+   Crianças com dislexia enfrentam dificuldades na leitura devido a problemas na identificação de grafemas (letras) presentes nos textos, o que faz com que a leitura de tais crianças seja mais lenta ou até errônea.
 2) Problema 2  
-   Muitas gestantes enfrentam a falta de comunidades ou grupos de suporte que possam oferecer ajuda e orientação durante o período de gestação.
+   Crianças com dislexia possuem dificuldades na associação de fonemas (sons) com grafemas (letras).
 3) Problema 3  
-   Gestantes podem ter dificuldades de encontrar fontes confiáveis sobre saúde e bem-estar durante a gravidez.
+   Crianças com dislexia podem "confundir" grafemas presentes em palavras. Exemplos incluem: troca, omissão, inserção ou remoção de grafemas presentes nas palavras.
 
 ### Expectativas
 
 1) Expectativa 1  
-   Facilitar o processo de agendamento de consultas e acompanhamento da saúde das gestantes.
+   Melhorar as capacidades de leitura das crianças com dislexia, ajudando-as a reconhecer melhor os grafemas, sílabas e palavras presentes em textos.
 2) Expectativa 2  
-   Conectar gestantes entre si e com redes de apoio por meio de fóruns.
+   Melhorar as capacidades de associação entre fonemas e grafemas das crianças com dislexia.
 3) Expectativa 3  
-   Fornecer artigos confiáveis que ofereçam conhecimentos sobre cuidados durante a gravidez (estilo medium).
+   Fornecer relatórios que evidenciem o desempenho dos usuários.
 
 ## Personas
 
 ### Persona 1: Crianças
 
-São crianças de 6 a 14 anos de idade com dislexia que enfrentam desafios na leitura e escrita. Podem apresentar dificuldade em associar sons às letras, inversão de palavras e letras, e problemas com a memorização de palavras. Elas têm necessidade de apoio personalizado na alfabetização, recursos visuais e interativos que facilitem o aprendizado, jogos educativos que incentivem a prática sem frustração, feedback imediato e positivo, além de um ambiente digital que respeite o ritmo individual. O objetivo é desenvolver habilidades de leitura e escrita de forma lúdica e eficiente, ganhando confiança e autonomia no aprendizado.
+São crianças de 5 a 8 anos de idade com dislexia que enfrentam desafios na leitura e escrita. Podem apresentar dificuldade em associar sons às letras, inversão de palavras e letras, e problemas com a memorização de palavras. Elas têm necessidade de apoio personalizado na alfabetização, recursos visuais e interativos que facilitem o aprendizado, jogos educativos que incentivem a prática sem frustração, feedback imediato e positivo, além de um ambiente digital que respeite o ritmo individual. O objetivo é desenvolver habilidades de leitura e escrita de forma lúdica e eficiente, ganhando confiança e autonomia no aprendizado.
 
 ### Persona 2: Responsável
 
-Tem acima de 20 anos, são pais ou cuidadores das crianças, preocupados com o desenvolvimento acadêmico e emocional de seus filhos. Podem ter conhecimento limitado sobre dislexia e suas implicações, mas estão dispostos a apoiar e se engajar no processo de aprendizado. Tem necessidade de ferramentas para monitorar o progresso da criança, informações claras e acessíveis sobre dislexia e estratégias de apoio, além de orientações sobre como utilizar o aplicativo para maximizar os benefícios.
-
-### Persona 3: Professor
-
-Tem de 25 a 60 anos de idade, são educadores com experiência no ensino fundamental, que podem ou não ter formação específica em educação especial. Estão comprometidos em ajudar todos os alunos a alcançar o sucesso acadêmico, mas podem enfrentar desafios ao lidar com necessidades individuais como a dislexia. 
+São pais ou cuidadores das crianças, preocupados com o desenvolvimento acadêmico e emocional de seus filhos. Podem ter conhecimento limitado sobre dislexia e suas implicações, mas estão dispostos a apoiar e se engajar no processo de aprendizado. Tem necessidade de ferramentas para monitorar o progresso da criança, informações claras e acessíveis sobre dislexia e estratégias de apoio, além de orientações sobre como utilizar o aplicativo para maximizar os benefícios.
 
 ## Marcos
 
