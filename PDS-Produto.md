@@ -113,8 +113,8 @@ Acreditamos que esse Marco vai conseguir fornecer uma análise detalhada do prog
 
    Ações para mitigação do risco:
 
-   * Criar minigames que trabalhem as dificuldades dos usuários, com base em estudos previamente publicados.
-   * Utilizar a abordagem multissensorial para a aprendizagem da leitura, método que já fora comprovadamente efetivo na resolução do problema.
+   * Com base em estudos previamente publicados, devemos criar minigames que trabalhem as dificuldades dos usuários, dentro do escopo de sub-problemas que definimos.
+   * Por meio de métodos que já foram comprovadamente efetivos na resolução do problema, podemos utilizar, por exemplo, a abordagem multissensorial para a aprendizagem da leitura, que já se mostrou eficaz no problema de leitura para crianças disléxicas.
 
 2. **Minigames que não engajam os usuários** Os minigames podem não ser interessantes ao usuários, fazendo com que os usuários não sintam vontade de usar o aplicativo. *Severidade Alta e Probabilidade Média*.
 
@@ -127,8 +127,8 @@ Acreditamos que esse Marco vai conseguir fornecer uma análise detalhada do prog
 
    Ações para mitigação do risco:
 
-   * Pesquisar métricas de avaliação da leitura de crianças disléxicas e mensurar isto dentro do aplicativo.
-   * Prover visualizações claras e objetivas, tornando a assimilação do desempenho dos usuários o mais fácil possível.
+   * Com base na literatura acerca do problema, utilizar métricas quali e quantitavias de avaliação da leitura de crianças disléxicas e mensurar isto dentro do aplicativo.
+   * Prover visualizações claras e objetivas, tornando a assimilação dos relatórios de desempenho dos usuários o mais fácil possível.
   
 4. **Reconhecimento de voz ser falho** O modelo de reconhecimento de voz pode apresentar problemas na trascrição da fala dos usuários. *Severidade Média e Probabilidade Média*.
 
@@ -142,18 +142,6 @@ Acreditamos que esse Marco vai conseguir fornecer uma análise detalhada do prog
 ### Aplicativo Mobile 
 [descrição breve]
 https://github.com/edgebr/templates-artefatos
-
-## Stakeholders
-
-Stakeholder 1 <br />
-*Key User - Cargo na Empresa X* <br />
-*E-mail* <br />
-(xx) xxxxx-xxxx
-
-Stakeholder 2 <br />
-*Key User - Cargo na Empresa X* <br />
-*E-mail* <br />
-(xx) xxxxx-xxxx
 
 ## Equipe
 
