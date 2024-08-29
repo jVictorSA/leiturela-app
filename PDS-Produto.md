@@ -5,18 +5,18 @@ Nosso público alvo são crianças de 5 a 8 anos de idade com dislexia que enfre
 ### Problemas
 
 1) Problema 1  
-   Crianças com dislexia enfrentam dificuldades na leitura devido a problemas na identificação de grafemas (letras) presentes nos textos, o que faz com que a leitura de tais crianças seja mais lenta ou até errônea.
+   Crianças com dislexia enfrentam dificuldades na leitura devido a problemas na identificação de grafemas (letras) presentes nos textos, o que faz com que a leitura de tais crianças seja mais lenta ou até errônea. [1]
 2) Problema 2  
-   Crianças com dislexia possuem dificuldades na associação de fonemas (sons) com grafemas (letras).
+   Crianças com dislexia possuem dificuldades na associação de fonemas (sons) com grafemas (letras). [3]
 3) Problema 3  
-   Crianças com dislexia podem "confundir" grafemas presentes em palavras. Exemplos incluem: troca, omissão, inserção ou remoção de grafemas presentes nas palavras.
+   Crianças com dislexia podem "confundir" grafemas presentes em palavras. Exemplos incluem: troca, omissão, inserção ou remoção de grafemas presentes nas palavras. [2]
 
 ### Expectativas
 
 1) Expectativa 1  
-   Melhorar as capacidades de leitura das crianças com dislexia, ajudando-as a reconhecer melhor os grafemas, sílabas e palavras presentes em textos.
+   Melhorar as capacidades de leitura das crianças com dislexia, ajudando-as a reconhecer melhor os grafemas, sílabas e palavras presentes em textos. [4]
 2) Expectativa 2  
-   Melhorar as capacidades de associação entre fonemas e grafemas das crianças com dislexia.
+   Melhorar as capacidades de associação entre fonemas e grafemas das crianças com dislexia.  [3]
 3) Expectativa 3  
    Fornecer relatórios que evidenciem o desempenho dos usuários.
 
@@ -37,7 +37,7 @@ Devemos entregar **pequenas versões frequentes** para garantir o progresso cont
 # Marco 1 - Iremos solucionar a falta de entendimento de grafema.
 
 ## Resumo do Marco
-Acreditamos que esse Marco vai conseguir reforçar o entendimento e reconhecimento de grafemas, melhorar a habilidade de leitura e escrita das crianças, além de promover a correção de informações erradas de forma interativa e divertida.
+Acreditamos que esse Marco vai conseguir reforçar o entendimento e reconhecimento de grafemas, melhorar a habilidade de leitura e escrita das crianças, além de promover a correção de informações erradas de forma interativa e divertida. [1]
 
 ## Funcionalidades
 
@@ -72,7 +72,7 @@ Acreditamos que esse Marco vai conseguir reforçar o entendimento e reconhecimen
 ## Funcionalidades 
 
 ### Funcionalidade 1. Reconhecimento de letras  e  palavras pelo som
-Essa funcionalidade tem como objetivo melhorar a associação entre os sons (fonemas) e suas representações escritas (grafemas), além de corrigir a grafia com base na audição.
+Essa funcionalidade tem como objetivo melhorar a associação entre os sons (fonemas) e suas representações escritas (grafemas), além de corrigir a grafia com base na audição. [3]
 
 - **Relação de Letras com Sons:** O usuário escuta um som correspondente a uma letra específica e deve selecionar a letra correta que representa esse som. Essa atividade reforça a conexão entre o som e sua representação escrita.
   - *Exemplo:* O som /m/ é reproduzido, e a criança deve selecionar a letra "m" entre outras opções como "n" ou "b".
@@ -215,6 +215,9 @@ pvafs@ic.ufal.br
 *Github* <br />
 https://github.com/pedrovictor48
 
-## Status Reports
+## Referências
+[1] Madeira, Jorge, et al. "Assistive mobile applications for dyslexia." Procedia computer science 64 (2015): 417-424.
+[2] Rello, Luz, et al. "A computer-based method to improve the spelling of children with dyslexia." Proceedings of the 16th international ACM SIGACCESS conference on Computers & accessibility. 2014.
+[3] Lyytinen, Heikki, et al. "Early identification of dyslexia and the use of computer game-based practice to support reading acquisition." Nordic Psychology 59.2 (2007): 109-126.
+[4] Heisler, Nadine, and Sabrina Vieira da Luz. "Uso de Jogo Online no Apoio ao Processo de Alfabetização Infantil: Programa Domlexia." Anais do IV Congresso sobre Tecnologias na Educação. SBC, 2019.
 
-[Status Report 1 (20/12/2022)](status_report_1.md)
