@@ -1,6 +1,6 @@
 # Projeto
 
-Nosso público alvo são crianças de 5 a 9 anos de idade com dislexia que enfrentam desafios na leitura e escrita, cuja necessidade é ter apoio personalizado na alfabetização, recursos visuais e interativos que facilitem o aprendizado, jogos educativos que incentivem a prática sem frustração, feedback imediato e positivo, além de um ambiente digital que respeite o ritmo individual, [...]
+Nosso público alvo são crianças de 5 a 8 anos de idade com dislexia que enfrentam desafios na leitura e escrita, cuja necessidade é ter apoio personalizado na alfabetização, recursos visuais e interativos que facilitem o aprendizado, jogos educativos que incentivem a prática sem frustração, feedback imediato e positivo, além de um ambiente digital que respeite o ritmo individual, [...]
 
 ### Problemas
 
