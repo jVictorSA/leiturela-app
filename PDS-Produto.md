@@ -158,7 +158,7 @@ https://github.com/GustavoDomingosO
 Membro 3 <br />
 *Analista de Qualidade Pleno* <br />
 *E-mail* <br />
-jvsa@ic.ufal.br 
+jvsa@ic.ufal.br  
 *Github* <bt />
 https://github.com/jVictorSA
 
