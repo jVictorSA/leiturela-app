@@ -7,16 +7,24 @@ class Leaderboard extends StatelessWidget{
   @override
   Widget build(BuildContext context){    
       return Scaffold(        
-        body: Column(
-          children: [
-            Row(children: 
-              [ReturnButton(parentContext: context)]
+        body: Container(
+          decoration: const BoxDecoration( 
+            image: DecorationImage(
+              image: AssetImage("assets/imgs/background.png"),
+              fit: BoxFit.contain,
             ),
-            const Center(
-              child: Text("Tela de Ranking"),
-            )
-          ],        
-      )
+          ),
+          child: Column(
+            children: [
+              Row(children: 
+                [ReturnButton(parentContext: context)]
+              ),
+              const Center(
+                child: Text("Tela de Ranking"),
+              )
+            ],        
+          )
+        ),
     );
   }
 }

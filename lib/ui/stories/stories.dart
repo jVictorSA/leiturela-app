@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../custom_widgets/return_button.dart';
 
-class Settings extends StatelessWidget{
-  const Settings({super.key});
+class Stories extends StatelessWidget{
+  const Stories({super.key});
 
   @override
-  Widget build(BuildContext context){
-    return  Scaffold(        
+  Widget build(BuildContext context){    
+      return Scaffold(        
         body: Container(
           decoration: const BoxDecoration( 
             image: DecorationImage(
@@ -20,11 +20,11 @@ class Settings extends StatelessWidget{
                 [ReturnButton(parentContext: context)]
               ),
               const Center(
-                child: Text("Tela de Configurações"),
+                child: Text("Tela de Histórias"),
               )
             ],        
           )
         ),
-      );
+    );
   }
 }
