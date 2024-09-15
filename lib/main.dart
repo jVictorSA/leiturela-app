@@ -22,10 +22,11 @@ class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return MaterialApp(
+      theme: ThemeData(scaffoldBackgroundColor: primaryColor),
       debugShowCheckedModeBanner: false,
       home: Builder(
         builder: (context) => Scaffold(        
-          backgroundColor: primaryColor,
+          // backgroundColor: primaryColor,
           body: Container(
           decoration: const BoxDecoration( 
             image: DecorationImage(
