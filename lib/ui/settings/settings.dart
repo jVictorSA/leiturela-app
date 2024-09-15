@@ -1,32 +1,22 @@
 import 'package:flutter/material.dart';
+import '../custom_widgets/return_button.dart';
 
 class Settings extends StatelessWidget{
-  const Settings({Key? key}) : super(key: key);
+  const Settings({super.key});
 
   @override
   Widget build(BuildContext context){
-    return  MaterialApp(
-      debugShowCheckedModeBanner: false,      
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Configurações"),
-          leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-                    color: Colors.black
-                    ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        ) ,
+    return  Scaffold(        
         body: Column(
           children: [
-            Center(
+            Row(children: 
+              [ReturnButton(parentContext: context)]
+            ),
+            const Center(
               child: Text("Tela de Configuração"),
             )
           ],
         ),
-      )
-    );
+      );
   }
 }

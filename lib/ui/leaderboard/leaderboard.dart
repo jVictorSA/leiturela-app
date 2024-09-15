@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
+import '../custom_widgets/return_button.dart';
 
 class Leaderboard extends StatelessWidget{
-  const Leaderboard({Key? key}) : super(key: key);
+  const Leaderboard({super.key});
 
   @override
-  Widget build(BuildContext context){
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Ranking"),
-          leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-                    color: Colors.black
-                    ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        ) ,
+  Widget build(BuildContext context){    
+      return Scaffold(        
         body: Column(
           children: [
-            Center(
+            Row(children: 
+              [ReturnButton(parentContext: context)]
+            ),
+            const Center(
               child: Text("Tela de Ranking"),
             )
-          ],
-        ),
+          ],        
       )
     );
   }
