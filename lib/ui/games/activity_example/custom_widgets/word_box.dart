@@ -3,10 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class WordBox extends StatelessWidget {
   final List<String> text; // The letter this box represents
+  final List<bool> correctText; // List of booleans for color decision
 
   const WordBox({
     super.key,
     required this.text,
+    required this.correctText,
   });
 
   @override
@@ -15,8 +17,8 @@ class WordBox extends StatelessWidget {
       borderRadius: BorderRadius.circular(15.0),
       child: Container(
         padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          color: const Color(0xFFD1E9F6),
+        decoration: const BoxDecoration(
+          color: Color(0xFFD1E9F6),
         ),
         // Background color
         width: 137,
@@ -24,18 +26,17 @@ class WordBox extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: text
-                .map(
-                  (word) => Text(
-                    word,
-                    style: GoogleFonts.playpenSans(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                )
-                .toList(),
+            children: List.generate(text.length, (index) {
+              return Text(
+                text[index],
+                style: GoogleFonts.playpenSans(
+                  // Change colors based on the boolean
+                  color: correctText[index] ? Colors.green : Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                ),
+              );
+            }),
           ),
         ),
       ),

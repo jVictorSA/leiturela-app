@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class AudioButton extends StatelessWidget {
-  const AudioButton({
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  AudioButton({
     super.key,
   });
+
+  void _playSound() async {
+    await audioPlayer.play(AssetSource('audio/cabelo.wav')); // Update with your sound file path
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: null, // Set your desired action here
+      onPressed: _playSound, // Set your desired action here
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero, // Remove any padding around the button
         backgroundColor: Colors.transparent, // Set the background color to transparent

@@ -4,6 +4,7 @@ import 'custom_widgets/letter_space.dart';
 import 'custom_widgets/word_box.dart';
 import 'custom_widgets/audio_button.dart';
 import 'custom_widgets/return_button.dart';
+import 'dart:math';
 
 void main() {
   runApp(const ActivityExampleApp());
@@ -24,8 +25,74 @@ class _ActivityExampleAppState extends State<ActivityExampleApp> {
     {'key': 'lo', 'widget': const LetterBox(text: 'lo')},
   ];
 
+  Map<String, Offset> letterBoxPositions = {};
+  final double boxWidth = 67; // Width of LetterBox
+  final double boxHeight = 43; // Height of LetterBox
+  final double minDistance = 10; // Minimum distance between boxes (padding)
+
+  // Forbidden zones (buttons)
+  final List<Rect> forbiddenZones = [
+    const Rect.fromLTWH(65, 25, 75, 40),   // Button 1
+    const Rect.fromLTWH(380, 20, 95, 65),  // Button 2
+    const Rect.fromLTWH(660, 60, 145, 135), // Button 3
+  ];
+
   // The list for LetterSpace stays intact; it doesn't get removed
   final List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => generateRandomPositions());
+  }
+
+  void generateRandomPositions() {
+    final random = Random();
+    final maxX = MediaQuery.of(context).size.width - boxWidth - 160; // 160 away from the right
+    final maxY = MediaQuery.of(context).size.height - boxHeight - 75; // 75 away from the top
+
+    setState(() {
+      letterBoxList.forEach((item) {
+        final key = item['key'] as String;
+
+        if (!letterBoxPositions.containsKey(key)) {
+          Offset newPosition;
+
+          do {
+            // Generate a random position
+            newPosition = Offset(
+              random.nextDouble() * maxX,
+              random.nextDouble() * maxY,
+            );
+          } while (isOverlapping(newPosition));
+
+          letterBoxPositions[key] = newPosition;
+        }
+      });
+    });
+  }
+  // Check if the new position overlaps with any existing positions
+  bool isOverlapping(Offset newPosition) {
+    for (var existingPosition in letterBoxPositions.values) {
+      if (_isColliding(existingPosition, newPosition)) {
+        return true; // Collision found
+      }
+    }
+    for (var zone in forbiddenZones) {
+      if (zone.overlaps(Rect.fromLTWH(newPosition.dx, newPosition.dy, boxWidth, boxHeight))) {
+        return true; // Overlaps with a forbidden zone
+      }
+    }
+
+    return false; // No collision
+  }
+  // Check if two boxes collide based on their positions and dimensions
+  bool _isColliding(Offset pos1, Offset pos2) {
+    return (pos1.dx < pos2.dx + boxWidth + minDistance &&
+        pos1.dx + boxWidth + minDistance > pos2.dx &&
+        pos1.dy < pos2.dy + boxHeight + minDistance &&
+        pos1.dy + boxHeight + minDistance > pos2.dy);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,59 +122,62 @@ class _ActivityExampleAppState extends State<ActivityExampleApp> {
       ),
       home: Scaffold(
         backgroundColor: const Color(0xFFAAE0F1),
-        body: Flex(direction: Axis.vertical, children: [
-          Expanded(
-            child: Column(
+        body: Stack(
+          children: [
+            // Main UI and other elements
+            Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const SizedBox(height: 32),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(children: [
-                      SizedBox(width: 25),
-                      ReturnButton(),
-                      // Left button],
-                    ]),
+                    const Row(
+                      children: [
+                        SizedBox(width: 25),
+                        ReturnButton(), // Left button
+                      ],
+                    ),
                     AudioButton(), // Center button
-                    SizedBox(width: 80), // Placeholder to ensure spacing
+                    const SizedBox(width: 80), // Placeholder for spacing
                   ],
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    WordBox(text: ['cabelo']),
-                    SizedBox(width: 25),
+                    WordBox(text: const ['cabelo'], correctText: [letterBoxList.isEmpty]), // The word being spelled
+                    const SizedBox(width: 25),
                   ],
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: letterBoxList
-                        .map((item) => item['widget'] as Widget)
-                        .toList(),
-                    // Display the LetterBox list
-                  ),
                 ),
                 const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Wrap(
-                      spacing: 20.0,
-                      // Fixed spacing between items
-                      alignment: WrapAlignment.center,
-                      // Center items within the Wrap
-                      children:
-                          letterSpaceList, // Display the LetterSpace list (this remains intact)
+                      spacing: 20.0, // Space between items
+                      alignment: WrapAlignment.center, // Center the items
+                      children: letterSpaceList, // LetterSpace list
                     ),
                   ],
                 ),
                 const SizedBox(height: 50),
               ],
             ),
-          ),
-        ]),
+
+            // Stack containing randomly positioned LetterBox widgets
+            if (letterBoxPositions.isNotEmpty)
+              ...letterBoxList.map((item) {
+                final key = item['key'] as String;
+                final position = letterBoxPositions[key];
+
+                return Positioned(
+                  left: position?.dx ?? 0, // Default to (0,0) if position is null
+                  top: position?.dy ?? 0,
+                  child: item['widget'] as Widget,
+                );
+              }).toList(),
+          ],
+        ),
       ),
     );
   }
