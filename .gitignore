@@ -1,4 +1,16 @@
-build/
+# Flutter specific ignores
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+
+# IDE specific ignores
+.idea/
+.vscode/
+
+# Generated files by Flutter
+linux/flutter/
+macos/Flutter/
+windows/flutter/
+
+# Build output
+build/
