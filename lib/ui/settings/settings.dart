@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../custom_widgets/return_button.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget{
   const Settings({super.key});
@@ -9,10 +9,29 @@ class Settings extends StatefulWidget{
 }
 
 class _SettingsState extends State<Settings> {
-  double _efeitosSonoros = 7;
-  double _musica = 7;
-  bool on = true;
-  bool off = false;
+  late SharedPreferences _prefs;
+
+  int? _efeitosSonoros;
+  int? _musica;
+  bool? on = true;
+  bool? off = false;
+
+  @override
+  void initState(){
+    super.initState();
+    initPrefs();
+  }
+
+  void initPrefs() async{
+    _prefs = await SharedPreferences.getInstance();    
+
+    _efeitosSonoros = _prefs.getInt('efeitos') ?? 7;
+    _musica = _prefs.getInt('music') ?? 7;
+    on = _prefs.getBool('on') ?? true;
+    off = _prefs.getBool('off') ?? false;
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context){
@@ -71,13 +90,15 @@ class _SettingsState extends State<Settings> {
                                     tickMarkShape: SliderTickMarkShape.noTickMark
                                   ),
                                   child: Slider(
-                                    value: _efeitosSonoros,
+                                    value: _efeitosSonoros?.toDouble() ?? 7,
                                     max: 10,
                                     divisions: 10,
                                     // label: _musica.round().toString(),
                                     onChanged: (double value) {
                                       setState(() {
-                                        _efeitosSonoros = value;
+                                        _efeitosSonoros = value.toInt();
+                                        _prefs.setInt('efeitos', _efeitosSonoros!);
+                                        setState(() {});
                                       });
                                     },
                                   ),
@@ -96,7 +117,7 @@ class _SettingsState extends State<Settings> {
                                     height: 30,
                                     child: Center(child: 
                                       Text(
-                                        _efeitosSonoros.toInt().toString(),
+                                        _efeitosSonoros?.toInt().toString() ?? "place_holder",
                                         style: const TextStyle(
                                           fontFamily: 'Playpen-Sans',
                                           fontSize: 16,
@@ -148,13 +169,15 @@ class _SettingsState extends State<Settings> {
                                     tickMarkShape: SliderTickMarkShape.noTickMark
                                   ),
                                   child: Slider(
-                                    value: _musica,
+                                    value: _musica?.toDouble() ?? 7,
                                     max: 10,
                                     divisions: 10,
                                     // label: _musica.round().toString(),
                                     onChanged: (double value) {
                                       setState(() {
-                                        _musica = value;
+                                        _musica = value.toInt();
+                                        _prefs.setInt('music', _musica!);
+                                        setState(() {});
                                       });
                                     },
                                   ),
@@ -173,7 +196,7 @@ class _SettingsState extends State<Settings> {
                                     height: 30,
                                     child: Center(
                                       child: Text(
-                                        _musica.toInt().toString(),
+                                        _musica?.toInt().toString() ?? "place_holder",
                                         style: const TextStyle(
                                           fontFamily: 'Playpen-Sans',
                                           fontSize: 16,
@@ -230,7 +253,9 @@ class _SettingsState extends State<Settings> {
                                     onChanged: (value) {
                                         setState(() {
                                             off = value!;
-                                            on = !on;
+                                            on = !on!;
+                                            _prefs.setBool('off', off!);
+                                            _prefs.setBool('on', on!);
                                         });
                                     },
                                   ),
@@ -255,7 +280,9 @@ class _SettingsState extends State<Settings> {
                                     onChanged: (value) {
                                         setState(() {
                                             on = value!;
-                                            off = !off;
+                                            off = !off!;
+                                            _prefs.setBool('on', on!);
+                                            _prefs.setBool('off', off!);
                                         });
                                     },
                                   ),

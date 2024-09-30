@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../custom_widgets/return_button.dart';
 import '../games/activities/activity_example.dart';
-import '../games/activities/hear_sound_select_letter.dart';
+// import '../games/activities/hear_sound_select_letter.dart';
 
 class Minigames extends StatelessWidget {
   const Minigames({super.key});
@@ -38,17 +38,17 @@ class Minigames extends StatelessWidget {
                     child: const Text("Montar Palavra"),
                   ),
                   const SizedBox(width: 15),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const HearSoundSelectLetter()),
-                      );
-                    },
-                    child: const Text("Letra Pelo Som"),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) =>
+                  //               const HearSoundSelectLetter()),
+                  //     );
+                  //   },
+                  //   child: const Text("Letra Pelo Som"),
+                  // ),
                 ],
               ),
             ),
