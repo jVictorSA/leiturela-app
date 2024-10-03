@@ -72,13 +72,13 @@ class Games extends StatelessWidget{
                               crossAxisAlignment: CrossAxisAlignment.center,                            
                               children: [
                                 SvgPicture.asset(
-                                  'assets/imgs/apartment.svg',                
+                                  'assets/imgs/apartment.svg',
                                 ),
                                 SvgPicture.asset(
-                                  'assets/imgs/electric_bolt.svg',                
+                                  'assets/imgs/electric_bolt.svg',
                                 ),
                                 SvgPicture.asset(
-                                  'assets/imgs/domino_mask.svg',                
+                                  'assets/imgs/domino_mask.svg',
                                 )
                               ],
                             )

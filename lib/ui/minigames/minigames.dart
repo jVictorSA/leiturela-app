@@ -1,82 +1,50 @@
 import 'package:flutter/material.dart';
 import '../custom_widgets/return_button.dart';
-import '../custom_widgets/selected_frame.dart';
-import 'package:flutter_svg/svg.dart';
-import '../games/games.dart';
+import '../games/activities/activity_example.dart';
 
 class Minigames extends StatelessWidget {
-  Minigames({super.key});
-
-  List<String> myArray = ['Montar Palavra', 'Divisão Silábica'];//, 'Reconhecimento de Voz', 'Corrigir Palavra'];
-
+  const Minigames({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/imgs/background.png"),
+            fit: BoxFit.contain,
+          ),
+        ),
         child: Stack(
           children: [
-            Positioned.fill(
-              child: SvgPicture.asset(
-                "assets/imgs/background.svg",
-                fit: BoxFit.cover,
-              ),
+            Positioned(
+              top: 0,
+              left: 0,
+              child: ReturnButton(parentContext: context),
             ),
-            Column(
-              children: [
-                Row(children: [ReturnButton(parentContext: context)]),
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SelectedFrame(parentContext: context, 
-                                        nextPage: const Games(),
-                                        title: 'Montar Palavra',
-                                        svgs: const ['assets/imgs/apartment.svg',
-                                                     'assets/imgs/electric_bolt.svg',
-                                                     'assets/imgs/domino_mask.svg'
-                                                    ]
-                                       ),
-                          
-                          SelectedFrame(parentContext: context, 
-                                        nextPage: const Games(),
-                                        title: 'Reconhecimento por voz',
-                                        svgs: const ['assets/imgs/castle.svg',
-                                                     'assets/imgs/crown.svg',
-                                                     'assets/imgs/star.svg'
-                                                    ]
-                                       ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SelectedFrame(parentContext: context, 
-                                        nextPage: const Games(),
-                                        title: 'Divisão Silábica',
-                                        svgs: const ['assets/imgs/planet.svg',
-                                                     'assets/imgs/rocket.svg',
-                                                     'assets/imgs/alien.svg'
-                                                    ]
-                                       ),
-                          
-                          SelectedFrame(parentContext: context, 
-                                        nextPage: const Games(),
-                                        title: 'Corrigir Palavra',
-                                        svgs: const ['assets/imgs/bird.svg',
-                                                     'assets/imgs/trail.svg',
-                                                     'assets/imgs/tree.svg'
-                                                    ]
-                                       ),
-                        ],
-                      ),
-                    ],
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ActivityExampleApp()),
+                      );
+                    },
+                    child: const Text("Montar Palavra"),
                   ),
-                )
-              ],
+                  const SizedBox(width: 15),
+                  ElevatedButton(
+                    onPressed: () {
+                      null;
+                    },
+                    child: const Text("Letra Pelo Som"),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
