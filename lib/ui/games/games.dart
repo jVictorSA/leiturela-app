@@ -90,7 +90,7 @@ class Games extends StatelessWidget{
                       onTap: (){
                         Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const Minigames()),
+                                MaterialPageRoute(builder: (context) => Minigames()),
                               );
                       },
                     child: Container(
