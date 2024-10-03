@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/services.dart';
 
+
 const primaryColor = Color(0xFFAAE0F1);
 const outlineTitle = 1.0;
 
+const bgWidth = 615.0;
+const bgHeight = 396.0;
+
+// Initialize shared preferences
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +25,9 @@ class MyApp extends StatelessWidget{
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context){    
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: primaryColor),
       debugShowCheckedModeBanner: false,
@@ -31,14 +38,15 @@ class MyApp extends StatelessWidget{
           decoration: const BoxDecoration( 
             image: DecorationImage(
               image: AssetImage("assets/imgs/background.png"),
-              fit: BoxFit.contain,
+              fit: BoxFit.fitHeight,
             ),
           ), 
           child: Center(
-              child: Column(
+              child:               
+              Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
@@ -78,7 +86,8 @@ class MyApp extends StatelessWidget{
 
                       Padding(
                         padding: const EdgeInsets.only(
-                          right: 48.0,
+                          // right: (screenWidth/2) - ((bgWidth/2) * 1.05 ),
+                          right: 0.0,
                           top: 40.0
                         ),
                         child: Container(
@@ -114,39 +123,46 @@ class MyApp extends StatelessWidget{
                       ),
                     ]
                   ),
-                          
-                  GradientText(
-                    'Leiturela',
-                    style: const TextStyle(
-                      fontSize: 80.0,
-                      fontFamily: 'Playpen-Sans',
-                      fontWeight: FontWeight.bold,
-                      shadows: [
-                                  Shadow( // bottomLeft
-                                    offset: Offset(-outlineTitle, -outlineTitle),
-                                    color: Colors.black
-                                  ),
-                                  Shadow( // bottomRight
-                                    offset: Offset(outlineTitle, -outlineTitle),
-                                    color: Colors.black
-                                  ),
-                                  Shadow( // topRight
-                                    offset: Offset(outlineTitle, outlineTitle),
-                                    color: Colors.black
-                                  ),
-                                  Shadow( // topLeft
-                                    offset: Offset(-outlineTitle, outlineTitle),
-                                    color: Colors.black
-                                  ),
-                                ]
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      // right: (screenWidth/2) - ((bgWidth/2) * 1.05 ),
+                      right: 0.0,
+                      top: 40.0
                     ),
-                    gradientType: GradientType.linear,
-                    gradientDirection: GradientDirection.ttb,
-                    radius: 4.4,
-                    colors: const [
-                      Color(0xff03BFE7),
-                      Color(0xff01419F),
-                    ],
+
+                    child: GradientText(
+                      'Leiturela',
+                      style: const TextStyle(
+                        fontSize: 80.0,
+                        fontFamily: 'Playpen-Sans',
+                        fontWeight: FontWeight.bold,
+                        shadows: [
+                                    Shadow( // bottomLeft
+                                      offset: Offset(-outlineTitle, -outlineTitle),
+                                      color: Colors.black
+                                    ),
+                                    Shadow( // bottomRight
+                                      offset: Offset(outlineTitle, -outlineTitle),
+                                      color: Colors.black
+                                    ),
+                                    Shadow( // topRight
+                                      offset: Offset(outlineTitle, outlineTitle),
+                                      color: Colors.black
+                                    ),
+                                    Shadow( // topLeft
+                                      offset: Offset(-outlineTitle, outlineTitle),
+                                      color: Colors.black
+                                    ),
+                                  ]
+                      ),
+                      gradientType: GradientType.linear,
+                      gradientDirection: GradientDirection.ttb,
+                      radius: 4.4,
+                      colors: const [
+                        Color(0xff03BFE7),
+                        Color(0xff01419F),
+                      ],
+                    ),
                   ),
                   Container(
                     height: 44.0,
@@ -173,19 +189,25 @@ class MyApp extends StatelessWidget{
                                         shadowColor: MaterialStateProperty.all<Color>(Colors.transparent),
                                         padding: MaterialStateProperty.all(EdgeInsets.zero),                                              
                                        ),
-                      child: const Center(
+                      child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Jogar',
-                              style: TextStyle(            
-                                fontFamily: 'Playpen-Sans',    
-                                fontWeight: FontWeight.w400,
-                                fontSize: 24,
-                                color: Colors.white,                                
+                            Center(
+                              child:
+                              Padding(padding: EdgeInsets.only(bottom: screenHeight*0.01),
+                              
+                              child: Text('Jogar',
+                                style: TextStyle(            
+                                  fontFamily: 'Playpen-Sans',    
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 24,
+                                  color: Colors.white,                                
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                            ),
+                            ),),
                             Padding(padding: EdgeInsets.symmetric(horizontal: 5.0),
                               child: Icon(Icons.play_circle_fill,
                                           color: Colors.white
@@ -198,6 +220,8 @@ class MyApp extends StatelessWidget{
                   )
                 ],            
               ),
+            // ],
+            // )
             ),
           ),
         )
