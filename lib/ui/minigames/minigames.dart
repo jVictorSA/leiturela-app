@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../custom_widgets/return_button.dart';
-import '../games/activities/activity_example.dart';
+import '../games/activities/drag_crossword.dart';
 
 class Minigames extends StatelessWidget {
   const Minigames({super.key});
