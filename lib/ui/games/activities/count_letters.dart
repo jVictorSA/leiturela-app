@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../custom_widgets/return_button.dart';
-import 'dart:math';
+import '../../games/games.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,11 +34,24 @@ class _CountLettersState extends State<CountLetters> {
   static const int textColor = 0xFF03BFE7;
   static const int borderColor = 0xFF012480;
 
-  static const String questionText = "Conte quantos 'n' tem no seguinte texto";
+  bool isAnswerIncorrect = false;
+
+  String get questionText => "Conte quantos '$letter' tem no seguinte texto";
+
+  static const String textToCount =
+      "Nina nadou na piscina enquanto o amigo cantava uma canção calma.";
+
+  static const String letter = 'n';
 
   int letterCount = 13;
 
   bool solvedActivity = false;
+
+  @override
+  void initState() {
+    super.initState();
+    letterCount = countLetter(textToCount, letter);
+  }
 
   void checkAnswer() {
     String userAnswer = controller.text;
@@ -46,19 +59,42 @@ class _CountLettersState extends State<CountLetters> {
     if (userAnswer.isEmpty) {
       print('Please enter an answer');
     } else {
-      // Tenta converter a entrada do usuário para um inteiro
       int? answerAsInt = int.tryParse(userAnswer);
 
       if (answerAsInt == null) {
         print('Please enter a valid number');
       } else if (answerAsInt == letterCount) {
         setState(() {
-          solvedActivity = true; // Atualiza o estado para verdadeiro
+          solvedActivity = true;
+          isAnswerIncorrect = false;
+        });
+        Future.delayed(Duration(seconds: 3), () {
+          // Replace with your navigation logic
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Games()), // Replace with your target page
+          );
         });
       } else {
-        print('Incorrect answer');
+        setState(() {
+          isAnswerIncorrect = true; // Answer is incorrect, flash red
+        });
+        Future.delayed(Duration(milliseconds: 2500), () {
+          setState(() {
+            isAnswerIncorrect = false; // Reset red flash
+          });
+        });
       }
     }
+  }
+
+  int countLetter(String text, String letter) {
+    return text
+        .toLowerCase()
+        .split('')
+        .where((char) => char == letter.toLowerCase())
+        .length;
   }
 
   @override
@@ -83,13 +119,13 @@ class _CountLettersState extends State<CountLetters> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const Stack(
+                    Stack(
                       children: [
                         // This is the stroke text
                         Text(
                           questionText,
                           textAlign: TextAlign.justify,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: textSize,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Playpen-Sans',
@@ -122,7 +158,7 @@ class _CountLettersState extends State<CountLetters> {
                         // This is the main text
                         Text(
                           questionText,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: textSize,
                               fontFamily: 'Playpen-Sans',
                               fontWeight: FontWeight.w500,
@@ -134,7 +170,7 @@ class _CountLettersState extends State<CountLetters> {
                     SizedBox(
                       width: 500, // Defina a largura desejada
                       child: ColorfulText(
-                        'Nina nadou na piscina enquanto o amigo cantava uma canção calma.',
+                        textToCount,
                         fontSize: 24.0,
                         specialLetter: 'n',
                         solved: solvedActivity,
@@ -145,30 +181,82 @@ class _CountLettersState extends State<CountLetters> {
                       children: [
                         TextField(
                           controller: controller,
-                          decoration: const InputDecoration(
-                            constraints: BoxConstraints(
+                          decoration: InputDecoration(
+                            constraints: const BoxConstraints(
                               maxHeight: 150,
                               maxWidth: 150,
                               minHeight: 10,
                               minWidth: 10,
                             ),
                             labelText: 'Número de Letras',
+                            errorText: isAnswerIncorrect ? 'Resposta Incorreta' : null, // Show error text
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: isAnswerIncorrect ? Colors.red : Colors.blue, // Flash red when focused
+                              ),
+                            ),
                           ),
                           keyboardType: TextInputType.number,
-                          // Altera o teclado para numérico
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly,
-                            // Permite apenas dígitos
                           ],
                         ),
+
                         const SizedBox(
                           width: 36,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            checkAnswer(); // Handle answer checking when the button is pressed
-                          },
-                          child: const Text('Submit'),
+                        Container(
+                          height: 56.0,
+                          width: 120.0,
+                          decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  stops: [
+                                    0.5,
+                                    0.9,
+                                  ],
+                                  colors: [
+                                    Color(0xff03BFE7),
+                                    Color(0xff01419F)
+                                  ]),
+                              borderRadius: BorderRadius.circular(30)),
+                          child: OutlinedButton(
+                            onPressed: () {
+                              checkAnswer();
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.transparent),
+                              shadowColor: MaterialStateProperty.all<Color>(
+                                  Colors.transparent),
+                              padding:
+                                  MaterialStateProperty.all(EdgeInsets.zero),
+                            ),
+                            child: const Center(
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Center(
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.only(bottom: 360 * 0.01),
+                                        child: Text(
+                                          'Enviar',
+                                          style: TextStyle(
+                                            fontFamily: 'Playpen-Sans',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 24,
+                                            color: Colors.white,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                          ),
                         ),
                       ],
                     ),
