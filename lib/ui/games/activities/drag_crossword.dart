@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'custom_widgets/letter.dart'; // Import your LetterBox widget
+import '../../custom_widgets/end_activity_popup.dart';
+import 'custom_widgets/letter.dart';
 import 'custom_widgets/letter_space.dart';
 import 'custom_widgets/word_box.dart';
 import 'custom_widgets/audio_button.dart';
 import '../../custom_widgets/return_button.dart';
 import 'dart:math';
 
-class ActivityExampleApp extends StatefulWidget {
-  const ActivityExampleApp({super.key});
+class DragSyllables extends StatefulWidget {
+  const DragSyllables({super.key});
 
   @override
-  _ActivityExampleAppState createState() => _ActivityExampleAppState();
+  _DragSyllablesState createState() => _DragSyllablesState();
 }
 
-class _ActivityExampleAppState extends State<ActivityExampleApp> {
+class _DragSyllablesState extends State<DragSyllables> {
   // List of LetterBox widgets with unique keys
   List<Map<String, dynamic>> letterBoxList = [
     {'key': 'ca', 'widget': const LetterBox(text: 'ca')},
@@ -44,11 +45,13 @@ class _ActivityExampleAppState extends State<ActivityExampleApp> {
 
     // X-axis limits with 10% on both sides
     const minX = 0;
-    final maxX = screenWidth * 0.80 - boxWidth; // Ensure that box width doesn't exceed boundary
+    final maxX = screenWidth * 0.80 -
+        boxWidth; // Ensure that box width doesn't exceed boundary
 
     // Y-axis limits with 5% on top and 5% on bottom
     final minY = screenHeight * 0.20;
-    final maxY = screenHeight * 0.80 - boxHeight; // Ensure that box height doesn't exceed boundary
+    final maxY = screenHeight * 0.80 -
+        boxHeight; // Ensure that box height doesn't exceed boundary
 
     setState(() {
       letterBoxList.forEach((item) {
@@ -102,6 +105,22 @@ class _ActivityExampleAppState extends State<ActivityExampleApp> {
       }
     }
 
+    if (letterBoxList.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const EndActivityPopup(
+                currentScreen: DragSyllables(),
+                story: false,
+              ); // Call your custom popup
+            },
+            barrierDismissible: false,
+          );
+        });
+      });
+    }
     // Create the LetterSpace list (this should not be removed)
     List<LetterSpace> letterSpaceList = letterSpaceKeys.map((key) {
       return LetterSpace(
@@ -170,7 +189,7 @@ class _ActivityExampleAppState extends State<ActivityExampleApp> {
                 top: position?.dy ?? 0,
                 child: item['widget'] as Widget,
               );
-            }).toList(),
+            }),
         ],
       ),
     );

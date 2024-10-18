@@ -1,24 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
 import '../../games/games.dart';
-
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const CountLetters(),
-    );
-  }
-}
 
 class CountLetters extends StatefulWidget {
   const CountLetters({super.key});
@@ -70,17 +55,22 @@ class _CountLettersState extends State<CountLetters> {
         });
         Future.delayed(Duration(seconds: 3), () {
           // Replace with your navigation logic
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Games()), // Replace with your target page
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const EndActivityPopup(
+                currentScreen: CountLetters(),
+                story: false,
+              ); // Call your custom popup
+            },
+            barrierDismissible: false,
           );
         });
       } else {
         setState(() {
           isAnswerIncorrect = true; // Answer is incorrect, flash red
         });
-        Future.delayed(Duration(milliseconds: 2500), () {
+        Future.delayed(Duration(milliseconds: 2000), () {
           setState(() {
             isAnswerIncorrect = false; // Reset red flash
           });
@@ -168,7 +158,7 @@ class _CountLettersState extends State<CountLetters> {
                       ],
                     ),
                     SizedBox(
-                      width: 500, // Defina a largura desejada
+                      width: 500,
                       child: ColorfulText(
                         textToCount,
                         fontSize: 24.0,
