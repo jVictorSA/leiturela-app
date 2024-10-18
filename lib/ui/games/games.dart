@@ -3,32 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:demo_app/ui/stories/stories.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../custom_widgets/return_button.dart';
+import '../custom_widgets/selected_frame.dart';
 
 const primaryColor = Color(0xFFAAE0F1);
 
 const marginVal = 30.0;
 
-class Games extends StatelessWidget{
+class Games extends StatelessWidget {
   const Games({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor = primaryColor,
-      body: Container(
-      decoration: const BoxDecoration( 
-            image: DecorationImage(
-              image: AssetImage("assets/imgs/background.png"),
-              fit: BoxFit.contain,
-            ),
-          ),   
-      child: Column(
-        children: [
-          Row(children: 
-              [ReturnButton(parentContext: context)]
-            ),            
-            Expanded(child:  
-            Column(
+      // backgroundColor = primaryColor,
+      body: Stack(children: [
+        Positioned.fill(
+          child: SvgPicture.asset(
+            "assets/imgs/background.svg", // Update with your SVG path
+            fit: BoxFit.cover, // Same as the fit you used for PNG
+          ),
+        ),
+        Column(children: [
+          Row(children: [ReturnButton(parentContext: context)]),
+          Expanded(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -36,115 +34,35 @@ class Games extends StatelessWidget{
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const Stories()),
-                              );
-                      },
-                      child:Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 3
-                          ),
-                          borderRadius: BorderRadius.circular(35),                    
-                        ),
-                        height: 160,
-                        width: 180,
-                        margin: const EdgeInsets.only(left: marginVal,
-                                                      right: marginVal,
-                                                      bottom: marginVal,
-                                                    ),
-                        child:  Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text("História",
-                              style: TextStyle(
-                                fontSize: 32,
-                                fontFamily: 'Playpen-Sans',
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,                            
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/imgs/apartment.svg',
-                                ),
-                                SvgPicture.asset(
-                                  'assets/imgs/electric_bolt.svg',
-                                ),
-                                SvgPicture.asset(
-                                  'assets/imgs/domino_mask.svg',
-                                )
-                              ],
-                            )
-                          ],
-                        )
-                      ),
+                    SelectedFrame(
+                      parentContext: context,
+                      nextPage: const Stories(),
+                      title: 'Histórias',
+                      svgs: const [
+                      'assets/imgs/apartment.svg',
+                      'assets/imgs/electric_bolt.svg',
+                      'assets/imgs/domino_mask.svg',
+                      ],
+                      textSize: 32,
                     ),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Minigames()),
-                              );
-                      },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 3
-                        ),
-                        borderRadius: BorderRadius.circular(35),                    
-                      ),
-                      height: 160,
-                      width: 180,
-                      margin: const EdgeInsets.only(left: marginVal,
-                                                    right: marginVal,
-                                                    bottom: marginVal,
-                                                  ),
-                      child:  Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text("Minigames",
-                            style: TextStyle(
-                              fontSize: 32,
-                              fontFamily: 'Playpen-Sans',
-                            ),
-                          ),
-                          Row(                            
-                            crossAxisAlignment: CrossAxisAlignment.center,  
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,                          
-                            children: [
-                              SvgPicture.asset(
-                                'assets/imgs/mood.svg',                
-                              ),
-                              SvgPicture.asset(
-                                'assets/imgs/abc.svg',                
-                              ),
-                              SvgPicture.asset(
-                                'assets/imgs/joystick.svg',                
-                              )
-                            ],
-                          )
-                        ],
-                      )
+                    SelectedFrame(
+                      parentContext: context,
+                      nextPage: const Minigames(),
+                      title: 'Minigames',
+                      svgs: const [
+                      'assets/imgs/mood.svg',
+                      'assets/imgs/letter_block.svg',
+                      'assets/imgs/joystick.svg',
+                      ],
+                      textSize: 32,
                     ),
-                    )
                   ],
                 ),
-              
-          ],
-        ),
+              ],
             ),
-        ]
-        ),
-      ),      
+          ),
+        ]),
+      ]),
     );
   }
 }
