@@ -35,21 +35,17 @@ class Minigames extends StatelessWidget {
                             parentContext: context,
                             nextPage: DragSyllables(subStoryId: 0, storyId: 0),
                             title: 'Montar Palavra',
-                            svgs: const [
-                              'assets/imgs/drag_and_drop.svg',
-                              'assets/imgs/build.svg',
-                              'assets/imgs/me.svg'
-                            ],
+                            svgs: 'assets/imgs/drag.svg',
+                            backgroundColor: Colors.lightBlueAccent,
+                            textSize: 20,
                           ),
                           SelectedFrame(
                             parentContext: context,
                             nextPage: CountLetters(subStoryId: 0, storyId: 0),
                             title: 'Contar Letras',
-                            svgs: const [
-                              'assets/imgs/calculator.svg',
-                              'assets/imgs/a_capitalized.svg',
-                              'assets/imgs/three_hand.svg'
-                            ],
+                            svgs: 'assets/imgs/hand_two.svg',
+                            backgroundColor: Colors.redAccent,
+                            textSize: 20,
                           ),
                         ],
                       ),
@@ -60,21 +56,17 @@ class Minigames extends StatelessWidget {
                             parentContext: context,
                             nextPage: const MyApp(),
                             title: 'ATV 3',
-                            svgs: const [
-                              'assets/imgs/abc.svg',
-                              'assets/imgs/abc.svg',
-                              'assets/imgs/abc.svg'
-                            ],
+                            svgs: 'assets/imgs/abc.svg',
+                            backgroundColor: Colors.indigoAccent,
+                            textSize: 20,
                           ),
                           SelectedFrame(
                             parentContext: context,
                             nextPage: const MyApp(),
                             title: 'ATV 4',
-                            svgs: const [
-                              'assets/imgs/abc.svg',
-                              'assets/imgs/abc.svg',
-                              'assets/imgs/abc.svg'
-                            ],
+                            svgs: 'assets/imgs/abc.svg',
+                            backgroundColor: Colors.purpleAccent,
+                            textSize: 20,
                           ),
                         ],
                       ),
@@ -85,21 +77,17 @@ class Minigames extends StatelessWidget {
                             parentContext: context,
                             nextPage: const MyApp(),
                             title: 'ATV 5',
-                            svgs: const [
-                              'assets/imgs/abc.svg',
-                              'assets/imgs/abc.svg',
-                              'assets/imgs/abc.svg'
-                            ],
+                            svgs: 'assets/imgs/abc.svg',
+                            backgroundColor: Colors.lightGreenAccent,
+                            textSize: 20,
                           ),
                           SelectedFrame(
                             parentContext: context,
                             nextPage: const MyApp(),
                             title: 'ATV 6',
-                            svgs: const [
-                              'assets/imgs/abc.svg',
-                              'assets/imgs/abc.svg',
-                              'assets/imgs/abc.svg'
-                            ],
+                            svgs: 'assets/imgs/abc.svg',
+                            backgroundColor: Colors.pinkAccent,
+                            textSize: 20,
                           ),
                         ],
                       ),

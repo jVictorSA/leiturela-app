@@ -6,6 +6,7 @@ import 'dart:convert';// show utf8;
 
 import '../custom_widgets/return_button.dart';
 import '../custom_widgets/selected_frame.dart';
+import '../games/story_games_screen.dart';
 // import '../games/games.dart';
 import '../games/activities/count_letters.dart';
 // import '../games/activities/drag_crossword.dart';
@@ -41,10 +42,10 @@ class Stories extends StatefulWidget {
 }
 
 class StoriesState extends State<Stories>{
-  
+
   @override
   void initState() {
-    super.initState();    
+    super.initState();
     fetchStories().then((response) => {
       setState(() {
         String entireObject;
@@ -55,7 +56,7 @@ class StoriesState extends State<Stories>{
         for (var story in stories){
           titles.add(story["story_prompt"]);
         }
-        widget.storiesLength = stories.length;  
+        widget.storiesLength = stories.length;
         widget.titles = titles;
         // print(widget.storiesLength);
         // print(widget.titles);
@@ -72,6 +73,7 @@ class StoriesState extends State<Stories>{
     if (firstIndex < widget.titles!.length -1){
       // print("par");
       list.add(SelectedFrame(
+                backgroundColor: Colors.blueGrey,
                 parentContext: context,
                 nextPage: ShowStory(
                   parentContext: context,
@@ -82,16 +84,13 @@ class StoriesState extends State<Stories>{
                   nextPage: CountLetters(subStoryId: 1, storyId: firstIndex+1),
                 ),
                 title: widget.titles![firstIndex],
-                svgs: const [
-                  'assets/imgs/apartment.svg',
-                  'assets/imgs/electric_bolt.svg',
-                  'assets/imgs/domino_mask.svg'
-                ],
+                svgs: 'assets/imgs/apartment.svg',
                 textSize: widget.titles![firstIndex].length < maxTextLength ? 28 : 20
               )
       );
       list.add(SelectedFrame(
                 parentContext: context,
+                backgroundColor: Colors.blueGrey,
                 nextPage: ShowStory(
                   parentContext: context,
                   storyId: firstIndex+2,
@@ -101,17 +100,14 @@ class StoriesState extends State<Stories>{
                   nextPage: CountLetters(subStoryId: 1, storyId: firstIndex+2),
                 ),
                 title: widget.titles![firstIndex+1],
-                svgs: const [
-                  'assets/imgs/apartment.svg',
-                  'assets/imgs/electric_bolt.svg',
-                  'assets/imgs/domino_mask.svg'
-                ],
+                svgs: 'assets/imgs/electric_bolt.svg',
                 textSize: widget.titles![firstIndex+1].length < maxTextLength ? 28 : 20,
-              )        
+              )
       );
     }else{
-      
+
       list.add(SelectedFrame(
+                backgroundColor: Colors.blueGrey,
                 parentContext: context,
                 nextPage: ShowStory(
                   parentContext: context,
@@ -122,12 +118,8 @@ class StoriesState extends State<Stories>{
                   nextPage: CountLetters(subStoryId: 1, storyId: firstIndex+1),
                 ),
                 title: widget.titles![firstIndex],
-                svgs: const [
-                  'assets/imgs/apartment.svg',
-                  'assets/imgs/electric_bolt.svg',
-                  'assets/imgs/domino_mask.svg'
-                ],
-                textSize: widget.titles![firstIndex].length < maxTextLength ? 28 : 20
+                svgs: 'assets/imgs/domino_mask.svg',
+                textSize: widget.titles![firstIndex].length < maxTextLength ? 28 : 20,
               ));
     }
     // }
@@ -135,7 +127,7 @@ class StoriesState extends State<Stories>{
   }
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     // print(widget.storiesLength);
     return Scaffold(
       body: SingleChildScrollView(
@@ -151,11 +143,11 @@ class StoriesState extends State<Stories>{
               children: [
                 Row(children: [ReturnButton(parentContext: context)]),
                 Center(
-                  child: 
+                  child:
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      for ( var i = 0; i < widget.titles!.length; i = i + 2) getTextWidgets(i)                      
+                      for ( var i = 0; i < widget.titles!.length; i = i + 2) getTextWidgets(i)
                     ],
                   ),
                 )
