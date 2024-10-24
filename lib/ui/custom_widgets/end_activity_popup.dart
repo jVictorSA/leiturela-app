@@ -1,17 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import 'package:demo_app/ui/stories/stories.dart';
 import '../../main.dart';
 import '../minigames/minigames.dart';
+import '../games/activities/count_letters.dart';
+import '../games/activities/drag_crossword.dart';
+import 'package:demo_app/ui/stories/show_story.dart';
 
 class EndActivityPopup extends StatelessWidget {
   final Widget currentScreen;
   final bool story; // Story or Activity ?
+  final int? storyId;
+  final int? subStoryId;
+  final BuildContext ctx; // Story or Activity ?
 
-  const EndActivityPopup({super.key, required this.currentScreen, required this.story});
+  const EndActivityPopup({super.key,
+                          required this.currentScreen,
+                          required this.story,
+                          required this.storyId,
+                          required this.subStoryId,
+                          required this.ctx
+                        });
+
+  Widget getNextPage(){
+    if (subStoryId != null){
+      return ShowStory(
+                  parentContext: ctx,
+                  storyId: storyId!,
+                  subStoryId: subStoryId! + 1,
+                  storyTitle: "História",
+                  storyContent: "Olá",
+                  nextPage: CountLetters(subStoryId: subStoryId! + 1, storyId: storyId!),
+                );
+    }
+    return const Minigames();
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    // print("EndActivity\n$storyId - $subStoryId!!");
 
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -105,10 +134,13 @@ class EndActivityPopup extends StatelessWidget {
                               borderRadius: BorderRadius.circular(30)),
                           child: OutlinedButton(
                             onPressed: () {
-                              Navigator.push(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Minigames()),
+                                  builder: (context) => getNextPage()
+                                ),
+                                ModalRoute.withName("/")
+                                // (route) => false
                               );
                             },
                             style: ButtonStyle(

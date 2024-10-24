@@ -1,6 +1,8 @@
 import 'package:demo_app/ui/games/games.dart';
+import 'package:demo_app/ui/minigames/minigames.dart';
 import 'package:demo_app/ui/report/report.dart';
 import 'package:demo_app/ui/settings/settings.dart';
+import 'package:demo_app/ui/stories/stories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -31,6 +33,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: primaryColor),
         debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+        // "/home": (context) => ,
+        "/settings": (context) => const Settings(),
+        "/stories": (context) => Stories(),
+        "/minigames": (context) => const Minigames(),
+        "/play": (context) => const Games()
+        },
         home: Builder(
             builder: (context) => Scaffold(
                   // backgroundColor: primaryColor,

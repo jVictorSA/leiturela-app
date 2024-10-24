@@ -36,7 +36,7 @@ class Games extends StatelessWidget {
                   children: [
                     SelectedFrame(
                       parentContext: context,
-                      nextPage: const Stories(),
+                      nextPage: Stories(),
                       title: 'Histórias',
                       svgs: const [
                       'assets/imgs/apartment.svg',

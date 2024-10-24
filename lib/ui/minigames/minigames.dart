@@ -33,7 +33,7 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: const DragSyllables(),
+                            nextPage: DragSyllables(subStoryId: 0, storyId: 0),
                             title: 'Montar Palavra',
                             svgs: const [
                               'assets/imgs/drag_and_drop.svg',
@@ -43,7 +43,7 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: const CountLetters(),
+                            nextPage: CountLetters(subStoryId: 0, storyId: 0),
                             title: 'Contar Letras',
                             svgs: const [
                               'assets/imgs/calculator.svg',
