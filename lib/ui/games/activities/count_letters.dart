@@ -1,9 +1,12 @@
+import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
-import '../../games/games.dart';
+import '../../games/story_games_screen.dart';
+import 'custom_widgets/activity_background.dart';
+import 'custom_widgets/golden_text_special_case.dart';
 
 class CountLetters extends StatefulWidget {
   const CountLetters({super.key});
@@ -21,14 +24,21 @@ class _CountLettersState extends State<CountLetters> {
 
   bool isAnswerIncorrect = false;
 
-  String get questionText => "Conte quantos '$letter' tem no seguinte texto";
+  List<String> get questionText => [
+        "Conte quantos ",
+        letter,
+        " ou ",
+        letterLowerCase,
+        " têm no seguinte texto."
+      ];
 
   static const String textToCount =
       "Nina nadou na piscina enquanto o amigo cantava uma canção calma.";
 
-  static const String letter = 'n';
+  static const String letter = 'N';
+  static String letterLowerCase = 'N'.toLowerCase();
 
-  int letterCount = 13;
+  late int letterCount;
 
   bool solvedActivity = false;
 
@@ -89,109 +99,118 @@ class _CountLettersState extends State<CountLetters> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: SvgPicture.asset(
-              "assets/imgs/background.svg", // Update with your SVG path
-              fit: BoxFit.cover, // Same as the fit you used for PNG
-            ),
+    TextSpan printedText = TextSpan(
+      children: [
+        WidgetSpan(
+          child: GoldenTextSpecial(
+            text: questionText[0],
+            textSize: 20,
+            // Adjust as needed
+            borderColor: 0xFF012480,
+            // Adjust as needed
+            borderWidth: 3,
+            fontWeight: FontWeight.w500,
           ),
-          Column(
+        ),
+        TextSpan(
+          text: questionText[1],
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 30,
+            fontFamily: 'Playpen-Sans', // Fixed font family
+            fontWeight: FontWeight.bold,
+          ), // Style for normal text
+        ),
+        WidgetSpan(
+          child: GoldenTextSpecial(
+            text: questionText[2],
+            textSize: 20,
+            // Adjust as needed
+            borderColor: 0xFF012480,
+            // Adjust as needed
+            borderWidth: 3,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        TextSpan(
+          text: questionText[3],
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 30,
+            fontFamily: 'Playpen-Sans', // Fixed font family
+            fontWeight: FontWeight.bold,
+          ), // Style for normal text
+        ),
+        WidgetSpan(
+          child: GoldenTextSpecial(
+            text: questionText[4],
+            textSize: 20,
+            // Adjust as needed
+            borderColor: 0xFF012480,
+            // Adjust as needed
+            borderWidth: 3,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
+
+    return Scaffold(
+      body: ActivityBackground(
+          child: Column(
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  ReturnButton(parentContext: context),
-                ],
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              ReturnButton(parentContext: context),
+            ],
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                RichText(
+                  text: printedText,
+                ),
+                SizedBox(
+                  width: 500,
+                  child: ColorfulText(
+                    textToCount,
+                    fontSize: 24.0,
+                    specialLetter: 'n',
+                    solved: solvedActivity,
+                  ),
+                ),
+                Column(
                   children: [
-                    Stack(
-                      children: [
-                        // This is the stroke text
-                        Text(
-                          questionText,
-                          textAlign: TextAlign.justify,
-                          style: const TextStyle(
-                            fontSize: textSize,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Playpen-Sans',
-                            color: Color(borderColor),
-                            // Stroke color
-                            shadows: [
-                              Shadow(
-                                color: Color(borderColor), // Stroke color
-                                offset: Offset(1.0, 1.0), // Stroke offset
-                                blurRadius: 0,
-                              ),
-                              Shadow(
-                                color: Color(borderColor), // Stroke color
-                                offset: Offset(-1.0, -1.0), // Stroke offset
-                                blurRadius: 0,
-                              ),
-                              Shadow(
-                                color: Color(borderColor), // Stroke color
-                                offset: Offset(1.0, -1.0), // Stroke offset
-                                blurRadius: 0,
-                              ),
-                              Shadow(
-                                color: Color(borderColor), // Stroke color
-                                offset: Offset(-1.0, 1.0), // Stroke offset
-                                blurRadius: 0,
-                              ),
-                            ],
-                          ),
-                        ),
-                        // This is the main text
-                        Text(
-                          questionText,
-                          style: const TextStyle(
-                              fontSize: textSize,
-                              fontFamily: 'Playpen-Sans',
-                              fontWeight: FontWeight.w500,
-                              color: Color(textColor)),
-                          textAlign: TextAlign.justify,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 500,
-                      child: ColorfulText(
-                        textToCount,
-                        fontSize: 24.0,
-                        specialLetter: 'n',
-                        solved: solvedActivity,
-                      ),
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextField(
-                          controller: controller,
-                          decoration: InputDecoration(
-                            constraints: const BoxConstraints(
-                              maxHeight: 150,
-                              maxWidth: 150,
-                              minHeight: 10,
-                              minWidth: 10,
+                        Container(
+                            height: 56.0,
+                            width: 120.0,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFD1E9F6),
+                              border: Border.all(
+                                  color: isAnswerIncorrect
+                                      ? const Color(0xFFA90C0C)
+                                      : solvedActivity
+                                          ? const Color(0xFF3AAB28)
+                                          : const Color(0xFF03BFE7)),
+                              borderRadius: BorderRadius.circular(30),
                             ),
-                            labelText: 'Número de Letras',
-                            errorText: isAnswerIncorrect ? 'Resposta Incorreta' : null, // Show error text
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: isAnswerIncorrect ? Colors.red : Colors.blue, // Flash red when focused
+                            child: TextField(
+                              controller: controller,
+                              textAlign: TextAlign.center,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 16.0),
                               ),
-                            ),
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                        ),
-
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                            )),
                         const SizedBox(
                           width: 36,
                         ),
@@ -216,12 +235,11 @@ class _CountLettersState extends State<CountLetters> {
                               checkAnswer();
                             },
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
+                              backgroundColor: WidgetStateProperty.all<Color>(
                                   Colors.transparent),
-                              shadowColor: MaterialStateProperty.all<Color>(
+                              shadowColor: WidgetStateProperty.all<Color>(
                                   Colors.transparent),
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.zero),
+                              padding: WidgetStateProperty.all(EdgeInsets.zero),
                             ),
                             child: const Center(
                               child: Row(
@@ -250,14 +268,38 @@ class _CountLettersState extends State<CountLetters> {
                         ),
                       ],
                     ),
-                    SizedBox(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          solvedActivity
+                              ? 'Resposta Correta!'
+                              : isAnswerIncorrect
+                                  ? 'Resposta Incorreta'
+                                  : '',
+                          style: TextStyle(
+                            color: solvedActivity
+                                ? const Color(0xFF3AAB28)
+                                : const Color(0xFFA90C0C),
+                            // You can customize the color or other styles as needed
+                            fontFamily: 'Playpen-Sans',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          width: 156.0,
+                        )
+                      ],
+                    ),
                   ],
-                ),
-              ),
-            ],
+                )
+              ],
+            ),
           ),
         ],
-      ),
+      )),
     );
   }
 }
@@ -281,11 +323,11 @@ class ColorfulText extends StatelessWidget {
           color: letter.toLowerCase() == specialLetter.toLowerCase()
               ? solved
                   ? Color(0xFF3AAB28)
-                  : Colors.black // Special letter color
+                  : Colors.black
               : Colors.black, // Default color
           fontSize: fontSize,
           fontFamily: 'Playpen-Sans', // Fixed font family
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.bold,
         ),
       );
     }).toList();

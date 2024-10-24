@@ -1,4 +1,4 @@
-import 'package:demo_app/ui/games/games.dart';
+import 'package:demo_app/ui/games/story_games_screen.dart';
 import 'package:demo_app/ui/report/report.dart';
 import 'package:demo_app/ui/settings/settings.dart';
 import 'package:flutter/material.dart';

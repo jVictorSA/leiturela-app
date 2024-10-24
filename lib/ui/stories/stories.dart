@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widgets/return_button.dart';
 import '../custom_widgets/selected_frame.dart';
-import '../games/games.dart';
+import '../games/story_games_screen.dart';
 
 class Stories extends StatelessWidget {
   const Stories({super.key});
@@ -33,21 +33,17 @@ class Stories extends StatelessWidget {
                             parentContext: context,
                             nextPage: const Stories(),
                             title: 'Heróis',
-                            svgs: const [
-                              'assets/imgs/apartment.svg',
-                              'assets/imgs/electric_bolt.svg',
-                              'assets/imgs/domino_mask.svg'
-                            ],
+                            svgs: 'assets/imgs/domino_mask.svg',
+                            backgroundColor: Colors.redAccent,
+                            textSize: 24,
                           ),
                           SelectedFrame(
                             parentContext: context,
                             nextPage: const Stories(),
                             title: 'Fadas',
-                            svgs: const [
-                              'assets/imgs/castle.svg',
-                              'assets/imgs/crown.svg',
-                              'assets/imgs/star.svg',
-                            ],
+                            svgs: 'assets/imgs/crown.svg',
+                            backgroundColor: Colors.pinkAccent,
+                            textSize: 24,
                           ),
                         ],
                       ),
@@ -58,21 +54,17 @@ class Stories extends StatelessWidget {
                             parentContext: context,
                             nextPage: const Stories(),
                             title: 'Espaço',
-                            svgs: const [
-                              'assets/imgs/planet.svg',
-                              'assets/imgs/rocket.svg',
-                              'assets/imgs/alien.svg',
-                            ],
+                            svgs: 'assets/imgs/planet.svg',
+                            backgroundColor: Colors.deepPurpleAccent,
+                            textSize: 24,
                           ),
                           SelectedFrame(
                             parentContext: context,
                             nextPage: const Stories(),
                             title: 'Floresta',
-                            svgs: const [
-                              'assets/imgs/bird.svg',
-                              'assets/imgs/trail.svg',
-                              'assets/imgs/tree.svg',
-                            ],
+                            svgs: 'assets/imgs/tree.svg',
+                            backgroundColor: Colors.green,
+                            textSize: 24,
                           ),
                         ],
                       ),
@@ -83,21 +75,17 @@ class Stories extends StatelessWidget {
                             parentContext: context,
                             nextPage: const Stories(),
                             title: 'Aniversário',
-                            svgs: const [
-                              'assets/imgs/balloon.svg',
-                              'assets/imgs/cake.svg',
-                              'assets/imgs/gift.svg',
-                            ],
+                            svgs: 'assets/imgs/gift.svg',
+                            backgroundColor: Colors.blueAccent,
+                            textSize: 24,
                           ),
                           SelectedFrame(
                             parentContext: context,
                             nextPage: const Stories(),
                             title: 'Piratas',
-                            svgs: const [
-                              'assets/imgs/ship.svg',
-                              'assets/imgs/map.svg',
-                              'assets/imgs/treasure.svg',
-                            ],
+                            svgs: 'assets/imgs/ship.svg',
+                            backgroundColor: Colors.blueGrey,
+                            textSize: 24,
                           ),
                         ],
                       ),

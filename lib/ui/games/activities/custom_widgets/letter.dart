@@ -27,31 +27,45 @@ class LetterBox extends StatelessWidget {
   // Builds the letter box UI with options for dragging and placeholder states
   Widget _buildLetterBox(
       {required bool isDragging, bool isPlaceholder = false}) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: ShaderMask(
-        shaderCallback: (bounds) => const LinearGradient(
-          colors: [Color(0xFFF7FB31), Color(0xFFFBB631)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [0.22, 1.0],
-        ).createShader(bounds),
-        child: Container(
-          width: 67,
-          height: 43,
-          color: isPlaceholder ? Colors.transparent : Colors.white,
-          // Make placeholder transparent
-          child: Center(
-            child: isPlaceholder
-                ? null
-                : Text(
-                    text,
-                    style: GoogleFonts.playpenSans(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: isPlaceholder
+                ? Colors.transparent
+                : Color(0xFFFBB631).withOpacity(1), // Shadow color
+            spreadRadius: 0, // How much the shadow spreads
+            blurRadius: 15, // How soft the shadow appears
+            offset: const Offset(0, 0), // Offset for the shadow (x, y)
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15.0),
+        child: ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [Color(0xFFFFF3B8), Color(0xFFF7FB31), Color(0xFFFBB631)],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            stops: [0, 0.25, 1.0],
+          ).createShader(bounds),
+          child: Container(
+            width: 67,
+            height: 43,
+            color: isPlaceholder ? Colors.transparent : Colors.white,
+            // Make placeholder transparent
+            child: Center(
+              child: isPlaceholder
+                  ? null
+                  : Text(
+                      text,
+                      style: GoogleFonts.playpenSans(
+                        color: Colors.black,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
+            ),
           ),
         ),
       ),
@@ -69,27 +83,39 @@ class StaticLetterBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: ShaderMask(
-        shaderCallback: (bounds) => const LinearGradient(
-          colors: [Color(0xFFF7FB31), Color(0xFFFBB631)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [0.22, 1.0],
-        ).createShader(bounds),
-        child: Container(
-          width: 67,
-          height: 43,
-          color: Colors.white,
-          // Make placeholder transparent
-          child: Center(
-            child: Text(
-              text,
-              style: GoogleFonts.playpenSans(
-                color: Colors.black,
-                fontSize: 25,
-                fontWeight: FontWeight.w600,
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFFBB631).withOpacity(1), // Shadow color
+            spreadRadius: 0, // How much the shadow spreads
+            blurRadius: 15, // How soft the shadow appears
+            offset: const Offset(0, 0), // Offset for the shadow (x, y)
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15.0),
+        child: ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [Color(0xFFFFF3B8), Color(0xFFF7FB31), Color(0xFFFBB631)],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            stops: [0, 0.25, 1.0],
+          ).createShader(bounds),
+          child: Container(
+            width: 67,
+            height: 43,
+            color: Colors.white,
+            // Make placeholder transparent
+            child: Center(
+              child: Text(
+                text,
+                style: GoogleFonts.playpenSans(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

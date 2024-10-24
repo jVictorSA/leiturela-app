@@ -5,11 +5,12 @@ class SelectedFrame extends StatelessWidget {
   final BuildContext parentContext;
   final Widget nextPage;
   final marginVal = 30.0;
+
   final double textSize;
-
   final String title;
+  final String svgs;
 
-  final List<String> svgs;
+  final Color backgroundColor;
 
   const SelectedFrame({
     super.key,
@@ -17,10 +18,15 @@ class SelectedFrame extends StatelessWidget {
     required this.nextPage,
     required this.title,
     required this.svgs,
-    double? textSize, // Add an optional parameter
+    double? textSize,
+    required this.backgroundColor,
   }) : textSize = textSize ?? 28.0; // Set default value to 28.0 if null
   @override
   Widget build(BuildContext parentContext) {
+
+    Color yellowColor  = Color(0xFFFFFE75);
+    Color yellowStrong = Color(0xFFFAFF00);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -29,62 +35,76 @@ class SelectedFrame extends StatelessWidget {
         );
       },
       child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 3),
-            borderRadius: BorderRadius.circular(35),
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: yellowStrong, width: 5),
+            bottom: BorderSide(color: yellowStrong, width: 5),
+            left: BorderSide(color: yellowStrong, width: 3),
+            right: BorderSide(color: yellowStrong, width: 3),
           ),
-          height: 160,
-          width: 180,
-          margin: EdgeInsets.only(
-            left: marginVal,
-            right: marginVal,
-            bottom: marginVal,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: textSize,
-                  fontFamily: 'Playpen-Sans',
+          borderRadius: BorderRadius.circular(35),
+          color: backgroundColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(1), // Shadow color
+              spreadRadius: 0, // How much the shadow spreads
+              blurRadius: 10, // Blur effect
+              offset: const Offset(0, 0), // Position of the shadow (x, y)
+            ),
+          ],
+        ),
+        height: 160,
+        width: 160,
+        margin: EdgeInsets.only(
+          left: marginVal,
+          right: marginVal,
+          bottom: marginVal,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                // Stroke (Outlined text)
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: textSize,
+                    fontFamily: 'Playpen-Sans',
+                    fontWeight: FontWeight.bold,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 5
+                      ..color = Colors.black, // Outline color
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    // 'assets/imgs/apartment.svg',
-                    svgs[0],
-                    width: 30,
-                    height: 30,
-                    color: Colors.black,
+                // Main Text
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: yellowColor, // Main text color
+                    fontSize: textSize,
+                    fontFamily: 'Playpen-Sans',
+                    fontWeight: FontWeight.bold,
                   ),
-                  SvgPicture.asset(
-                    // 'assets/imgs/electric_bolt.svg',
-                    svgs[1],
-                    width: 30,
-                    height: 30,
-                    color: Colors.black,
-                  ),
-                  SvgPicture.asset(
-                    // 'assets/imgs/domino_mask.svg',
-                    svgs[2],
-                    width: 30,
-                    height: 30,
-                    color: Colors.black,
-                  )
-                ],
-              )
-            ],
-          )),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            SvgPicture.asset(
+              // 'assets/imgs/apartment.svg',
+              svgs,
+              width: 99,
+              height: 66,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

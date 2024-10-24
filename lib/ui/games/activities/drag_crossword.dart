@@ -1,5 +1,7 @@
+import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
 import 'package:flutter/material.dart';
 import '../../custom_widgets/end_activity_popup.dart';
+import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/letter.dart';
 import 'custom_widgets/letter_space.dart';
 import 'custom_widgets/word_box.dart';
@@ -49,7 +51,7 @@ class _DragSyllablesState extends State<DragSyllables> {
         boxWidth; // Ensure that box width doesn't exceed boundary
 
     // Y-axis limits with 5% on top and 5% on bottom
-    final minY = screenHeight * 0.20;
+    final minY = screenHeight * 0.3;
     final maxY = screenHeight * 0.80 -
         boxHeight; // Ensure that box height doesn't exceed boundary
 
@@ -131,30 +133,43 @@ class _DragSyllablesState extends State<DragSyllables> {
     }).toList();
 
     return Scaffold(
-      body: Stack(
+      body: ActivityBackground(
+          child: Stack(
         children: [
-          // Main UI and other elements
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding:
+                const EdgeInsets.only(top: 10, right: 20, bottom: 20, left: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
                   children: [
-                    Row(
+                    Column(
                       children: [
-                        ReturnButton(
-                          parentContext: context,
-                        ), // Left button
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ReturnButton(
+                              parentContext: context,
+                            ),
+                            const Spacer(flex: 3),
+                            Column(
+                              children: [
+                                const GoldenText(
+                                    text: "Monte a palavra usando as sílabas"),
+                              ],
+                            ),
+                            const Spacer(
+                              flex: 6,
+                            ),
+                          ],
+                        ),
+                        AudioButton(),
                       ],
-                    ),
-                    AudioButton(), // Center button
-                    const SizedBox(
-                      width: 120,
                     )
                   ],
                 ),
+                const Spacer(flex: 2,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -164,6 +179,7 @@ class _DragSyllablesState extends State<DragSyllables> {
                     // The word being spelled
                   ],
                 ),
+                const Spacer(flex: 5,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -185,13 +201,14 @@ class _DragSyllablesState extends State<DragSyllables> {
               final position = letterBoxPositions[key];
 
               return Positioned(
-                left: position?.dx ?? 0, // Default to (0,0) if position is null
+                left: position?.dx ?? 0,
+                // Default to (0,0) if position is null
                 top: position?.dy ?? 0,
                 child: item['widget'] as Widget,
               );
             }),
         ],
-      ),
+      )),
     );
   }
 }

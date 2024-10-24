@@ -1,0 +1,24 @@
+<svg width="89" height="60" viewBox="0 0 89 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Speaker" filter="url(#filter0_d_317_1445)">
+<g id="volume_up">
+<mask id="mask0_317_1445" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="15" y="0" width="59" height="57">
+<rect id="Bounding box" x="16.4402" y="0.5" width="56.1194" height="56" fill="#D9D9D9" stroke="#012480"/>
+</mask>
+<g mask="url(#mask0_317_1445)">
+<path id="volume_up_2" d="M32.6 35.125H23.5801V21.875H32.6H32.8068L32.9532 21.7289L43.9999 10.7053V46.2947L32.9532 35.2711L32.8068 35.125H32.6ZM49.7598 12.1558V8.293C54.2916 9.44005 57.9957 11.8151 60.8886 15.4237C63.9102 19.1928 65.4196 23.5253 65.4196 28.4406C65.4196 33.356 63.9102 37.6885 60.8886 41.4576C57.9957 45.0661 54.2916 47.4412 49.7598 48.5883V44.7255C53.2666 43.6388 56.1143 41.6331 58.2882 38.7143C60.5354 35.6971 61.6597 32.2669 61.6597 28.4406C61.6597 24.6144 60.5354 21.1842 58.2882 18.167C56.1143 15.2482 53.2666 13.2425 49.7598 12.1558ZM53.2063 33.8504C52.3449 35.2613 51.1986 36.3704 49.7598 37.1814V19.7005C51.1973 20.513 52.3434 21.6308 53.2049 23.0584C54.2085 24.7211 54.7097 26.5316 54.7097 28.5C54.7097 30.4269 54.2095 32.2071 53.2063 33.8504Z" fill="#03BFE7" stroke="#0C0C0C"/>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_317_1445" x="-5" y="0" width="99" height="67" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="5"/>
+<feGaussianBlur stdDeviation="2.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_317_1445"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_317_1445" result="shape"/>
+</filter>
+</defs>
+</svg>
