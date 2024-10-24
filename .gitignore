@@ -14,3 +14,5 @@ windows/flutter/
 
 # Build output
 build/
+
+pubspec.lock

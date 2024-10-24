@@ -6,7 +6,9 @@ import '../../custom_widgets/return_button.dart';
 import '../../games/games.dart';
 
 class CountLetters extends StatefulWidget {
-  const CountLetters({super.key});
+  int storyId;
+  int subStoryId;
+  CountLetters({super.key, required this.subStoryId, required this.storyId});
 
   @override
   _CountLettersState createState() => _CountLettersState();
@@ -58,9 +60,12 @@ class _CountLettersState extends State<CountLetters> {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const EndActivityPopup(
-                currentScreen: CountLetters(),
-                story: false,
+              return EndActivityPopup(
+                currentScreen: CountLetters(subStoryId: widget.subStoryId, storyId: widget.storyId),
+                story: widget.subStoryId != 0 ? true : false,
+                storyId: widget.storyId,
+                subStoryId: widget.subStoryId,
+                ctx: context,
               ); // Call your custom popup
             },
             barrierDismissible: false,

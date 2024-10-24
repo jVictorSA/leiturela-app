@@ -7,8 +7,10 @@ import 'custom_widgets/audio_button.dart';
 import '../../custom_widgets/return_button.dart';
 import 'dart:math';
 
-class DragSyllables extends StatefulWidget {
-  const DragSyllables({super.key});
+class DragSyllables extends StatefulWidget {  
+  int storyId;
+  int subStoryId;
+  DragSyllables({super.key, required this.subStoryId, required this.storyId});
 
   @override
   _DragSyllablesState createState() => _DragSyllablesState();
@@ -111,9 +113,12 @@ class _DragSyllablesState extends State<DragSyllables> {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const EndActivityPopup(
-                currentScreen: DragSyllables(),
-                story: false,
+              return EndActivityPopup(
+                currentScreen: DragSyllables(subStoryId: widget.subStoryId, storyId: widget.storyId),
+                story: widget.subStoryId != 0 ? true : false,
+                storyId: widget.storyId,
+                subStoryId: widget.subStoryId ,
+                ctx: context               
               ); // Call your custom popup
             },
             barrierDismissible: false,
