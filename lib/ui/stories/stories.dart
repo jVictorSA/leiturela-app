@@ -68,7 +68,7 @@ class StoriesState extends State<Stories>{
   {
     List<Widget> list = <Widget>[];
     // print(firstIndex);
-    int maxTextLength = 20;
+    int maxTextLength = 10;
     // for ( var i = 0; i < widget.titles!.length; i = i + 2){
     if (firstIndex < widget.titles!.length -1){
       // print("par");
