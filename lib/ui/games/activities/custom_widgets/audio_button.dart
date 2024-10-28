@@ -5,16 +5,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AudioButton extends StatelessWidget {
   final AudioPlayer audioPlayer = AudioPlayer();
+  final String expectedSound;
 
   AudioButton({
-    super.key,
+
+    super.key, required this.expectedSound,
   });
 
   void _playSound() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     await audioPlayer.setVolume(_prefs.getInt('efeitos')!.toDouble() / 10);
     await audioPlayer.play(
-        AssetSource('audio/cabelo.wav')); // Update with your sound file path
+        AssetSource('audio/$expectedSound')); // Update with your sound file path
   }
 
   @override

@@ -169,7 +169,7 @@ class _DragSyllablesState extends State<DragSyllables> {
                             ),
                           ],
                         ),
-                        AudioButton(),
+                        AudioButton(expectedSound: 'cabelo.wav',),
                       ],
                     )
                   ],
