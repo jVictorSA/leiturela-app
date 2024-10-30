@@ -1,3 +1,4 @@
+import 'package:demo_app/ui/games/activities/complete_word.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../main.dart';
@@ -63,9 +64,9 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: const MyApp(),
-                            title: 'ATV 4',
-                            svgs: 'assets/imgs/abc.svg',
+                            nextPage: CompleteWord(subStoryId: 0, storyId: 0),
+                            title: 'Completar Palavra',
+                            svgs: 'assets/imgs/puzzle.svg',
                             backgroundColor: Colors.purpleAccent,
                             textSize: 20,
                           ),
