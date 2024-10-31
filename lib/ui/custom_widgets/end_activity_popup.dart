@@ -27,6 +27,11 @@ class EndActivityPopup extends StatelessWidget {
 
   Widget getNextPage(){
     if (subStoryId != null){
+      if (subStoryId! >= 10){
+        return Stories();  
+      }
+      else{
+
       return ShowStory(
                   parentContext: ctx,
                   storyId: storyId!,
@@ -35,6 +40,7 @@ class EndActivityPopup extends StatelessWidget {
                   storyContent: "Olá",
                   nextPage: CountLetters(subStoryId: subStoryId! + 1, storyId: storyId!),
                 );
+      }
     }
     return const Minigames();
   }
@@ -56,7 +62,7 @@ class EndActivityPopup extends StatelessWidget {
         child: ClipRect(
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Color(0xFF2CA7E4), width: 5),
+              border: Border.all(color: const Color(0xFF2CA7E4), width: 5),
               borderRadius: BorderRadius.circular(30),
             ),
             width: 558,
@@ -73,7 +79,7 @@ class EndActivityPopup extends StatelessWidget {
               Container(
                 height: 500,
                 width: 750,
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -118,12 +124,12 @@ class EndActivityPopup extends StatelessWidget {
                             );
                           },
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all<Color>(
+                            backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
-                            shadowColor: WidgetStateProperty.all<Color>(
+                            shadowColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
                             padding:
-                            WidgetStateProperty.all(EdgeInsets.zero),
+                            MaterialStateProperty.all(EdgeInsets.zero),
                           ),
                           child: Center(
                             child: Row(
@@ -184,12 +190,12 @@ class EndActivityPopup extends StatelessWidget {
                             );
                           },
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all<Color>(
+                            backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
-                            shadowColor: WidgetStateProperty.all<Color>(
+                            shadowColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
                             padding:
-                            WidgetStateProperty.all(EdgeInsets.zero),
+                            MaterialStateProperty.all(EdgeInsets.zero),
                           ),
                           child: const Center(
                             child: Row(
@@ -246,12 +252,12 @@ class EndActivityPopup extends StatelessWidget {
                             );
                           },
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all<Color>(
+                            backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
-                            shadowColor: WidgetStateProperty.all<Color>(
+                            shadowColor: MaterialStateProperty.all<Color>(
                                 Colors.transparent),
                             padding:
-                            WidgetStateProperty.all(EdgeInsets.zero),
+                            MaterialStateProperty.all(EdgeInsets.zero),
                           ),
                           child: const Center(
                             child: Row(

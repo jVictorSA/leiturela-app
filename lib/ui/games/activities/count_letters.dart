@@ -240,11 +240,11 @@ class _CountLettersState extends State<CountLetters> {
                               checkAnswer();
                             },
                             style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all<Color>(
+                              backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.transparent),
-                              shadowColor: WidgetStateProperty.all<Color>(
+                              shadowColor: MaterialStateProperty.all<Color>(
                                   Colors.transparent),
-                              padding: WidgetStateProperty.all(EdgeInsets.zero),
+                              padding: MaterialStateProperty.all(EdgeInsets.zero),
                             ),
                             child: const Center(
                               child: Row(
