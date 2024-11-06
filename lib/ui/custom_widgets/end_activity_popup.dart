@@ -74,7 +74,7 @@ class EndActivityPopup extends StatelessWidget {
                 children: [
                 SvgPicture.asset(
                 'assets/imgs/background.svg',
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fill,
               ),
               Container(
                 height: 500,

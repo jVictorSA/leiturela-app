@@ -9,16 +9,17 @@ import 'custom_widgets/audio_button.dart';
 import '../../custom_widgets/return_button.dart';
 import 'dart:math';
 
-class DragSyllables extends StatefulWidget {  
+class CompleteWord extends StatefulWidget {
   int storyId;
   int subStoryId;
-  DragSyllables({super.key, required this.subStoryId, required this.storyId});
+  CompleteWord({super.key, required this.subStoryId, required this.storyId});
 
   @override
-  _DragSyllablesState createState() => _DragSyllablesState();
+  _CompleteWordState createState() => _CompleteWordState();
 }
 
-class _DragSyllablesState extends State<DragSyllables> {
+class _CompleteWordState extends State<CompleteWord> {
+
   Map<String, Offset> letterBoxPositions = {};
   final double boxWidth = 67; // Width of LetterBox
   final double boxHeight = 43; // Height of LetterBox
@@ -26,18 +27,60 @@ class _DragSyllablesState extends State<DragSyllables> {
 
   // The list for LetterSpace stays intact; it doesn't get removed
   final List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
+  final List<String> randomSyllablesList = ['ma', 'pe', 'lo'];
+
+// Combine otherEntries with the original letterBoxList
+  late List<Map<String, dynamic>> combinedList;
+
   // List of LetterBox widgets with unique keys
   late List<Map<String, dynamic>> letterBoxList;
+  late List<Widget> letterSpaceList;
+
+  // Define the callback function for when a correct letter is found
+  void onCorrectLetterFound(bool correct, String key) {
+    if (correct) {
+      setState(() {
+        // Remove the LetterBox with the matching key
+        letterBoxList.removeWhere((item) => item['key'] == key);
+        combinedList.removeWhere((item) => item['key'] == key);
+      });
+    }
+  }
 
   @override
   void initState() {
-    letterBoxList = letterSpaceKeys.map((key) {
+    super.initState();
+    final randomIndex = Random().nextInt(letterSpaceKeys.length);  // Pick a random index
+    final randomKey = letterSpaceKeys[randomIndex];
+
+    letterBoxList = [
+      {
+        'key': randomKey,
+        'widget': LetterBox(text: randomKey),
+      }
+    ];
+    List<Map<String, dynamic>> randomSyllables = randomSyllablesList.map((random_key) {
       return {
-        'key': key,
-        'widget': LetterBox(text: key),
+        'key': random_key,
+        'widget': LetterBox(text: random_key),
       };
     }).toList();
-    super.initState();
+
+    final filteredSyllables = randomSyllables.where((item) => item['key'] != randomKey).toList();
+    combinedList = [...filteredSyllables , ...letterBoxList];
+
+    // Create the LetterSpace list (this should not be removed)
+    letterSpaceList = letterSpaceKeys.map((key) {
+      if (key == randomKey) {
+        return LetterSpace(
+          expectedLetter: key,
+          correctLetterFound: (correct) => onCorrectLetterFound(correct, key),
+        );
+      } else {
+        return StaticLetterBox(text: key);
+      }
+    }).toList();
+
     WidgetsBinding.instance
         .addPostFrameCallback((_) => generateRandomPositions());
   }
@@ -50,16 +93,14 @@ class _DragSyllablesState extends State<DragSyllables> {
 
     // X-axis limits with 10% on both sides
     const minX = 0;
-    final maxX = screenWidth * 0.80 -
-        boxWidth; // Ensure that box width doesn't exceed boundary
+    final maxX = screenWidth * 0.80 - boxWidth; // Ensure that box width doesn't exceed boundary
 
     // Y-axis limits with 5% on top and 5% on bottom
     final minY = screenHeight * 0.3;
-    final maxY = screenHeight * 0.80 -
-        boxHeight; // Ensure that box height doesn't exceed boundary
+    final maxY = screenHeight * 0.80 - boxHeight; // Ensure that box height doesn't exceed boundary
 
     setState(() {
-      letterBoxList.forEach((item) {
+      for (var item in combinedList) {
         final key = item['key'] as String;
 
         if (!letterBoxPositions.containsKey(key)) {
@@ -75,7 +116,7 @@ class _DragSyllablesState extends State<DragSyllables> {
 
           letterBoxPositions[key] = newPosition;
         }
-      });
+      }
     });
   }
 
@@ -100,15 +141,6 @@ class _DragSyllablesState extends State<DragSyllables> {
 
   @override
   Widget build(BuildContext context) {
-    // Define the callback function for when a correct letter is found
-    void onCorrectLetterFound(bool correct, String key) {
-      if (correct) {
-        setState(() {
-          // Remove the LetterBox with the matching key
-          letterBoxList.removeWhere((item) => item['key'] == key);
-        });
-      }
-    }
 
     if (letterBoxList.isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -117,7 +149,7 @@ class _DragSyllablesState extends State<DragSyllables> {
             context: context,
             builder: (BuildContext context) {
               return EndActivityPopup(
-                currentScreen: DragSyllables(subStoryId: widget.subStoryId, storyId: widget.storyId),
+                currentScreen: CompleteWord(subStoryId: widget.subStoryId, storyId: widget.storyId),
                 story: widget.subStoryId != 0 ? true : false,
                 storyId: widget.storyId,
                 subStoryId: widget.subStoryId ,
@@ -129,15 +161,6 @@ class _DragSyllablesState extends State<DragSyllables> {
         });
       });
     }
-    // Create the LetterSpace list (this should not be removed)
-    List<LetterSpace> letterSpaceList = letterSpaceKeys.map((key) {
-      return LetterSpace(
-        expectedLetter: key,
-        correctLetterFound: (correct) => onCorrectLetterFound(
-            correct, key), // Pass the key with the callback
-      );
-    }).toList();
-
     return Scaffold(
       body: ActivityBackground(
           child: Stack(
@@ -159,9 +182,9 @@ class _DragSyllablesState extends State<DragSyllables> {
                               parentContext: context,
                             ),
                             const Spacer(flex: 3),
-                            Column(
+                            const Column(
                               children: [
-                                const GoldenText(
+                                GoldenText(
                                     text: "Monte a palavra usando as sílabas"),
                               ],
                             ),
@@ -175,17 +198,6 @@ class _DragSyllablesState extends State<DragSyllables> {
                     )
                   ],
                 ),
-                const Spacer(flex: 2,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    WordBox(
-                        text: const ['cabelo'],
-                        correctText: [letterBoxList.isEmpty]),
-                    // The word being spelled
-                  ],
-                ),
-                const Spacer(flex: 5,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -202,7 +214,7 @@ class _DragSyllablesState extends State<DragSyllables> {
 
           // Stack containing randomly positioned LetterBox widgets
           if (letterBoxPositions.isNotEmpty)
-            ...letterBoxList.map((item) {
+            ...combinedList.map((item) {
               final key = item['key'] as String;
               final position = letterBoxPositions[key];
 
