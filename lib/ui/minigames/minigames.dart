@@ -1,4 +1,5 @@
 import 'package:demo_app/ui/games/activities/complete_word.dart';
+import 'package:demo_app/ui/games/activities/image_association.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../main.dart';
@@ -77,8 +78,8 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: const MyApp(),
-                            title: 'ATV 5',
+                            nextPage: ImageAssociation(storyId: 0, subStoryId: 0),
+                            title: 'Associar Imagem',
                             svgs: 'assets/imgs/abc.svg',
                             backgroundColor: Colors.lightGreenAccent,
                             textSize: 20,
