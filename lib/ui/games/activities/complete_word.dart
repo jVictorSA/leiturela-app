@@ -29,6 +29,8 @@ class _CompleteWordState extends State<CompleteWord> {
   final List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
   final List<String> randomSyllablesList = ['ma', 'pe', 'lo'];
 
+  bool dialogShown = false;  // Add a flag to check if the dialog has been shown
+
 // Combine otherEntries with the original letterBoxList
   late List<Map<String, dynamic>> combinedList;
 
@@ -142,7 +144,10 @@ class _CompleteWordState extends State<CompleteWord> {
   @override
   Widget build(BuildContext context) {
 
-    if (letterBoxList.isEmpty) {
+    if (letterBoxList.isEmpty && !dialogShown) {
+      setState(() {
+        dialogShown = true;
+      });
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {
           showDialog(

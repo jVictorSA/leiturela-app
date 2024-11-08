@@ -2,6 +2,7 @@ import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
 import '../../games/story_games_screen.dart';
@@ -11,6 +12,7 @@ import 'custom_widgets/golden_text_special_case.dart';
 class CountLetters extends StatefulWidget {
   int storyId;
   int subStoryId;
+
   CountLetters({super.key, required this.subStoryId, required this.storyId});
 
   @override
@@ -23,6 +25,8 @@ class _CountLettersState extends State<CountLetters> {
   static const textSize = 25.0;
   static const int textColor = 0xFF03BFE7;
   static const int borderColor = 0xFF012480;
+
+  bool dialogShown = false;  // Add a flag to check if the dialog has been shown
 
   bool isAnswerIncorrect = false;
 
@@ -60,10 +64,11 @@ class _CountLettersState extends State<CountLetters> {
 
       if (answerAsInt == null) {
         print('Please enter a valid number');
-      } else if (answerAsInt == letterCount) {
+      } else if (answerAsInt == letterCount && !dialogShown) {
         setState(() {
           solvedActivity = true;
           isAnswerIncorrect = false;
+          dialogShown = true;  // Ensure the dialog is only shown once
         });
         Future.delayed(Duration(seconds: 3), () {
           // Replace with your navigation logic
@@ -71,7 +76,8 @@ class _CountLettersState extends State<CountLetters> {
             context: context,
             builder: (BuildContext context) {
               return EndActivityPopup(
-                currentScreen: CountLetters(subStoryId: widget.subStoryId, storyId: widget.storyId),
+                currentScreen: CountLetters(
+                    subStoryId: widget.subStoryId, storyId: widget.storyId),
                 story: widget.subStoryId != 0 ? true : false,
                 storyId: widget.storyId,
                 subStoryId: widget.subStoryId,
@@ -219,57 +225,11 @@ class _CountLettersState extends State<CountLetters> {
                         const SizedBox(
                           width: 36,
                         ),
-                        Container(
-                          height: 56.0,
-                          width: 120.0,
-                          decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  stops: [
-                                    0.5,
-                                    0.9,
-                                  ],
-                                  colors: [
-                                    Color(0xff03BFE7),
-                                    Color(0xff01419F)
-                                  ]),
-                              borderRadius: BorderRadius.circular(30)),
-                          child: OutlinedButton(
-                            onPressed: () {
-                              checkAnswer();
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.transparent),
-                              shadowColor: MaterialStateProperty.all<Color>(
-                                  Colors.transparent),
-                              padding: MaterialStateProperty.all(EdgeInsets.zero),
-                            ),
-                            child: const Center(
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Center(
-                                      child: Padding(
-                                        padding:
-                                            EdgeInsets.only(bottom: 360 * 0.01),
-                                        child: Text(
-                                          'Enviar',
-                                          style: TextStyle(
-                                            fontFamily: 'Playpen-Sans',
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 24,
-                                            color: Colors.white,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                  ]),
-                            ),
-                          ),
+                        CustomButton(
+                          label: 'Enviar',
+                          onPressed: () {
+                            checkAnswer();
+                          },
                         ),
                       ],
                     ),

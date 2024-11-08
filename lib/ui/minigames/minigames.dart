@@ -8,6 +8,7 @@ import '../custom_widgets/selected_frame.dart';
 import '../games/activities/build_letter.dart';
 import '../games/activities/count_letters.dart';
 import '../games/activities/drag_crossword.dart';
+import '../games/activities/select_word_by_audio.dart';
 
 class Minigames extends StatelessWidget {
   const Minigames({super.key});
@@ -80,17 +81,17 @@ class Minigames extends StatelessWidget {
                             parentContext: context,
                             nextPage: ImageAssociation(storyId: 0, subStoryId: 0),
                             title: 'Associar Imagem',
-                            svgs: 'assets/imgs/abc.svg',
+                            svgs: 'assets/imgs/image_icon.svg',
                             backgroundColor: Colors.lightGreenAccent,
                             textSize: 20,
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: const MyApp(),
-                            title: 'ATV 6',
-                            svgs: 'assets/imgs/abc.svg',
+                            nextPage: SelectWordAudio(storyId: 0, subStoryId: 0),
+                            title: 'Selecionar Palavras Pelo Áudio',
+                            svgs: 'assets/imgs/letter_sound.svg',
                             backgroundColor: Colors.pinkAccent,
-                            textSize: 20,
+                            textSize: 15,
                           ),
                         ],
                       ),

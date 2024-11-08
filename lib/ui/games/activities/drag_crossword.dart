@@ -29,6 +29,8 @@ class _DragSyllablesState extends State<DragSyllables> {
   // List of LetterBox widgets with unique keys
   late List<Map<String, dynamic>> letterBoxList;
 
+  bool dialogShown = false;  // Add a flag to check if the dialog has been shown
+
   @override
   void initState() {
     letterBoxList = letterSpaceKeys.map((key) {
@@ -109,7 +111,31 @@ class _DragSyllablesState extends State<DragSyllables> {
         });
       }
     }
+    if (letterBoxList.isEmpty && !dialogShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          // To avoid multiple calls to showDialog, we set a flag
+          setState(() {
+            dialogShown = true; // Ensure the dialog is only shown once
+          });
 
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return EndActivityPopup(
+                  currentScreen: DragSyllables(
+                      subStoryId: widget.subStoryId, storyId: widget.storyId),
+                  story: widget.subStoryId != 0 ? true : false,
+                  storyId: widget.storyId,
+                  subStoryId: widget.subStoryId,
+                  ctx: context
+              );
+            },
+            barrierDismissible: false,
+          );
+        });
+      });
+    }
     if (letterBoxList.isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {
