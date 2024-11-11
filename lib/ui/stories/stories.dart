@@ -13,8 +13,8 @@ import '../games/activities/count_letters.dart';
 
 
 // for ( var i in text ) Text(i.toString())Future<String> fetchStory(id) async {
-Future<String> fetchStories() async {
-  var response = await http.get(Uri.parse('http://10.0.2.2:8000/stories/'));
+Future<String> fetchStories(http.Client client) async {
+  var response = await client.get(Uri.parse('http://10.0.2.2:8000/stories/'));
   // print(id);
   // print(response.body);
 
@@ -42,11 +42,12 @@ class Stories extends StatefulWidget {
 }
 
 class StoriesState extends State<Stories>{
+  bool isLoaded = false;
 
   @override
   void initState() {
     super.initState();
-    fetchStories().then((response) => {
+    fetchStories(http.Client()).then((response) => {
       setState(() {
         String entireObject;
         entireObject = response;
@@ -58,6 +59,7 @@ class StoriesState extends State<Stories>{
         }
         widget.storiesLength = stories.length;
         widget.titles = titles;
+        isLoaded = true;
         // print(widget.storiesLength);
         // print(widget.titles);
       })
@@ -69,6 +71,7 @@ class StoriesState extends State<Stories>{
     List<Widget> list = <Widget>[];
     // print(firstIndex);
     int maxTextLength = 10;
+    int smallTextSize = 18;
     // for ( var i = 0; i < widget.titles!.length; i = i + 2){
     if (firstIndex < widget.titles!.length -1){
       // print("par");
@@ -85,7 +88,7 @@ class StoriesState extends State<Stories>{
                 ),
                 title: widget.titles![firstIndex],
                 svgs: 'assets/imgs/apartment.svg',
-                textSize: widget.titles![firstIndex].length < maxTextLength ? 28 : 20
+                textSize: widget.titles![firstIndex].length < maxTextLength ? 28 : smallTextSize.toDouble()
               )
       );
       list.add(SelectedFrame(
@@ -101,7 +104,7 @@ class StoriesState extends State<Stories>{
                 ),
                 title: widget.titles![firstIndex+1],
                 svgs: 'assets/imgs/electric_bolt.svg',
-                textSize: widget.titles![firstIndex+1].length < maxTextLength ? 28 : 20,
+                textSize: widget.titles![firstIndex+1].length < maxTextLength ? 28 : smallTextSize.toDouble(),
               )
       );
     }else{
@@ -119,7 +122,7 @@ class StoriesState extends State<Stories>{
                 ),
                 title: widget.titles![firstIndex],
                 svgs: 'assets/imgs/domino_mask.svg',
-                textSize: widget.titles![firstIndex].length < maxTextLength ? 28 : 20,
+                textSize: widget.titles![firstIndex].length < maxTextLength ? 28 : smallTextSize.toDouble(),
               ));
     }
     // }
@@ -127,11 +130,10 @@ class StoriesState extends State<Stories>{
   }
 
   @override
-  Widget build(BuildContext context) {
-    // print(widget.storiesLength);
+  Widget build(BuildContext context) {    
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(
+        child: isLoaded ? Stack(
           children: [
             Positioned.fill(
               child: SvgPicture.asset(
@@ -143,18 +145,21 @@ class StoriesState extends State<Stories>{
               children: [
                 Row(children: [ReturnButton(parentContext: context)]),
                 Center(
-                  child:
-                  Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       for ( var i = 0; i < widget.titles!.length; i = i + 2) getTextWidgets(i)
                     ],
-                  ),
+                  )
                 )
               ],
             ),
           ],
-        ),
+        )
+        : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Center(child: CircularProgressIndicator(),)]
+                ),
       ),
     );
   }

@@ -24,8 +24,8 @@ class SelectedFrame extends StatelessWidget {
   @override
   Widget build(BuildContext parentContext) {
 
-    Color yellowColor  = Color(0xFFFFFE75);
-    Color yellowStrong = Color(0xFFFAFF00);
+    Color yellowColor  = const Color(0xFFFFFE75);
+    Color yellowStrong = const Color(0xFFFAFF00);
 
     return GestureDetector(
       onTap: () {
@@ -61,7 +61,7 @@ class SelectedFrame extends StatelessWidget {
           bottom: marginVal,
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Stack(
@@ -99,8 +99,8 @@ class SelectedFrame extends StatelessWidget {
             SvgPicture.asset(
               // 'assets/imgs/apartment.svg',
               svgs,
-              width: 99,
-              height: 66,
+              width: 44,
+              height: 44,
             ),
           ],
         ),
