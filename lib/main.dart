@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
     audioPlayer.setAudioSource(
       AudioSource.asset('assets/audio/main.mp3'),
     ).then((_) {
+      audioPlayer.setLoopMode(LoopMode.all);
       audioPlayer.play();
     });
 
