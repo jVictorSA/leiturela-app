@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/services.dart';
+import 'package:just_audio/just_audio.dart';
 
 const primaryColor = Color(0xFFAAE0F1);
 const outlineTitle = 1.0;
@@ -28,8 +29,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
 
+    final AudioPlayer audioPlayer = AudioPlayer();
+
+    audioPlayer.setAudioSource(
+      AudioSource.asset('assets/audio/main.mp3'),
+    ).then((_) {
+      audioPlayer.play();
+    });
+
+    final screenHeight = MediaQuery.of(context).size.height;
     return MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: primaryColor),
         debugShowCheckedModeBanner: false,
