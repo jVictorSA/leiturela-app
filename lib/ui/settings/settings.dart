@@ -34,6 +34,68 @@ class _SettingsState extends State<Settings> {
 
     setState(() {});
   }
+  void increaseVibration() {
+    setState(() {
+      if (off == true) {
+        off = false;
+        on = true;
+      } else {
+        on = true;
+      }
+      _prefs.setBool('on', on!);
+      _prefs.setBool('off', off!);
+    });
+  }
+
+  void decreaseVibration() {
+    setState(() {
+      if (on == true) {
+        on = false;
+        off = true;
+      } else {
+        off = true;
+      }
+      _prefs.setBool('on', on!);
+      _prefs.setBool('off', off!);
+    });
+  }
+
+  void increaseVolumeEfeitos() {
+    setState(() {
+      if (_efeitosSonoros! < 10) {
+        _efeitosSonoros = _efeitosSonoros! + 1;
+        _prefs.setInt('efeitos', _efeitosSonoros!);
+      }
+    });
+  }
+
+  void decreaseVolumeEfeitos() {
+    setState(() {
+      if (_efeitosSonoros! > 0) {
+        _efeitosSonoros = _efeitosSonoros! - 1;
+        _prefs.setInt('efeitos', _efeitosSonoros!);
+      }
+    });
+  }
+
+  // Funções para aumentar e diminuir o volume da música
+  void increaseVolumeMusica() {
+    setState(() {
+      if (_musica! < 10) {
+        _musica = _musica! + 1;
+        _prefs.setInt('music', _musica!);
+      }
+    });
+  }
+
+  void decreaseVolumeMusica() {
+    setState(() {
+      if (_musica! > 0) {
+        _musica = _musica! - 1;
+        _prefs.setInt('music', _musica!);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -321,8 +383,9 @@ class _SettingsState extends State<Settings> {
                                   ])),
                             ),
                             const Spacer()
-                          ])
+                          ])   
                     ]),
+                    
               )
             ],
           )
