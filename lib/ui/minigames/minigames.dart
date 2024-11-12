@@ -8,6 +8,7 @@ import '../custom_widgets/selected_frame.dart';
 import '../games/activities/build_letter.dart';
 import '../games/activities/count_letters.dart';
 import '../games/activities/drag_crossword.dart';
+import '../games/activities/press_letter.dart';
 import '../games/activities/select_word_by_audio.dart';
 
 class Minigames extends StatelessWidget {
@@ -92,6 +93,27 @@ class Minigames extends StatelessWidget {
                             svgs: 'assets/imgs/letter_sound.svg',
                             backgroundColor: Colors.pinkAccent,
                             textSize: 15,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SelectedFrame(
+                            parentContext: context,
+                            nextPage: PressLetter(storyId: 0, subStoryId: 0),
+                            title: 'Pressionar Letra',
+                            svgs: 'assets/imgs/press_letter.svg',
+                            backgroundColor: Colors.limeAccent,
+                            textSize: 20,
+                          ),
+                          SelectedFrame(
+                            parentContext: context,
+                            nextPage: PressLetter(storyId: 0, subStoryId: 0),
+                            title: 'Pressionar Letra',
+                            svgs: 'assets/imgs/press.svg',
+                            backgroundColor: Colors.lightGreenAccent,
+                            textSize: 20,
                           ),
                         ],
                       ),

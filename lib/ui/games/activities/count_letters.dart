@@ -34,7 +34,7 @@ class _CountLettersState extends State<CountLetters> {
         "Conte quantos ",
         letter,
         " ou ",
-        letterLowerCase,
+        letter.toLowerCase(),
         " têm no seguinte texto."
       ];
 
@@ -42,7 +42,6 @@ class _CountLettersState extends State<CountLetters> {
       "Nina nadou na piscina enquanto o amigo cantava uma canção calma.";
 
   static const String letter = 'N';
-  static String letterLowerCase = 'N'.toLowerCase();
 
   late int letterCount;
 
