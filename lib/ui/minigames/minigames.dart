@@ -10,6 +10,7 @@ import '../games/activities/count_letters.dart';
 import '../games/activities/drag_crossword.dart';
 import '../games/activities/press_letter.dart';
 import '../games/activities/select_word_by_audio.dart';
+import '../games/activities/mark_the_word.dart';
 
 class Minigames extends StatelessWidget {
   const Minigames({super.key});
@@ -111,6 +112,27 @@ class Minigames extends StatelessWidget {
                             parentContext: context,
                             nextPage: PressLetter(storyId: 0, subStoryId: 0),
                             title: 'Pressionar Letra',
+                            svgs: 'assets/imgs/press.svg',
+                            backgroundColor: Colors.lightGreenAccent,
+                            textSize: 20,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SelectedFrame(
+                            parentContext: context,
+                            nextPage: PressSyllable(storyId: 0, subStoryId: 0, syllable: 'Bo'),
+                            title: 'Marcar Letras',
+                            svgs: 'assets/imgs/',
+                            backgroundColor: const Color.fromARGB(255, 80, 80, 80),
+                            textSize: 20,
+                          ),
+                          SelectedFrame(
+                            parentContext: context,
+                            nextPage: PressLetter(storyId: 0, subStoryId: 0),
+                            title: 'Ativ 10',
                             svgs: 'assets/imgs/press.svg',
                             backgroundColor: Colors.lightGreenAccent,
                             textSize: 20,
