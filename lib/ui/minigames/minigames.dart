@@ -9,6 +9,7 @@ import '../games/activities/build_letter.dart';
 import '../games/activities/count_letters.dart';
 import '../games/activities/drag_crossword.dart';
 import '../games/activities/press_letter.dart';
+import '../games/activities/abc_press_letters.dart';
 import '../games/activities/select_word_by_audio.dart';
 
 class Minigames extends StatelessWidget {
@@ -102,17 +103,17 @@ class Minigames extends StatelessWidget {
                           SelectedFrame(
                             parentContext: context,
                             nextPage: PressLetter(storyId: 0, subStoryId: 0),
-                            title: 'Pressionar Letra',
+                            title: 'Pressionar Letras',
                             svgs: 'assets/imgs/press_letter.svg',
                             backgroundColor: Colors.limeAccent,
                             textSize: 20,
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: PressLetter(storyId: 0, subStoryId: 0),
-                            title: 'Pressionar Letra',
-                            svgs: 'assets/imgs/press.svg',
-                            backgroundColor: Colors.lightGreenAccent,
+                            nextPage: ABCPressLetter(storyId: 0, subStoryId: 0),
+                            title: 'Escolher Letras',
+                            svgs: 'assets/imgs/abcpress.svg',
+                            backgroundColor: Colors.teal,
                             textSize: 20,
                           ),
                         ],

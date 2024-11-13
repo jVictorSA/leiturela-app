@@ -5,6 +5,11 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final double width;
   final double height;
+  final Color colorStart;
+  final Color colorEnd;
+  final Color letterColor;
+  final bool hasStroke;
+  final Color strokeColor;
 
   const CustomButton({
     Key? key,
@@ -12,6 +17,11 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.width = 120.0,  // Default width
     this.height = 56.0,  // Default height
+    this.colorStart = const Color(0xff03BFE7),
+    this.colorEnd = const Color(0xff01419F),
+    this.letterColor = Colors.white,
+    this.hasStroke = false, // Default to no stroke
+    this.strokeColor = const Color(0xff1578b9), // Default stroke color
   }) : super(key: key);
 
   @override
@@ -20,20 +30,22 @@ class CustomButton extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          stops: [0.5, 0.9],
+          stops: const [0.5, 0.9],
           colors: [
-            Color(0xff03BFE7),
-            Color(0xff01419F),
+            colorStart,
+            colorEnd,
           ],
         ),
         borderRadius: BorderRadius.circular(30),
+        border: hasStroke ? Border.all(color: strokeColor, width: 2.0) : null, // Add stroke conditionally
       ),
       child: OutlinedButton(
         onPressed: onPressed,
         style: ButtonStyle(
+          side: hasStroke ? MaterialStateProperty.all(BorderSide.none) : null, // Removes the border
           backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
           shadowColor: MaterialStateProperty.all<Color>(Colors.transparent),
           padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
@@ -41,11 +53,11 @@ class CustomButton extends StatelessWidget {
         child: Center(
           child: Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Playpen-Sans',
               fontWeight: FontWeight.w400,
               fontSize: 24,
-              color: Colors.white,
+              color: letterColor,
             ),
             textAlign: TextAlign.center,
           ),
