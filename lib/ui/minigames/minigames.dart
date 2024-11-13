@@ -7,6 +7,7 @@ import '../custom_widgets/return_button.dart';
 import '../custom_widgets/selected_frame.dart';
 import '../games/activities/build_letter.dart';
 import '../games/activities/count_letters.dart';
+import '../games/activities/count_letters_by_sound.dart';
 import '../games/activities/drag_crossword.dart';
 import '../games/activities/press_letter.dart';
 import '../games/activities/abc_press_letters.dart';
@@ -132,11 +133,11 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: PressLetter(storyId: 0, subStoryId: 0),
-                            title: 'Ativ 10',
+                            nextPage: CountLettersBySound(storyId: 0, subStoryId: 0),
+                            title: 'Contar Letras por Som',
                             svgs: 'assets/imgs/press.svg',
                             backgroundColor: Colors.lightGreenAccent,
-                            textSize: 20,
+                            textSize: 18,
                           ),
                         ],
                       ),

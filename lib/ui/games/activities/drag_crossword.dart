@@ -9,9 +9,10 @@ import 'custom_widgets/audio_button.dart';
 import '../../custom_widgets/return_button.dart';
 import 'dart:math';
 
-class DragSyllables extends StatefulWidget {  
+class DragSyllables extends StatefulWidget {
   int storyId;
   int subStoryId;
+
   DragSyllables({super.key, required this.subStoryId, required this.storyId});
 
   @override
@@ -26,10 +27,11 @@ class _DragSyllablesState extends State<DragSyllables> {
 
   // The list for LetterSpace stays intact; it doesn't get removed
   final List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
+
   // List of LetterBox widgets with unique keys
   late List<Map<String, dynamic>> letterBoxList;
 
-  bool dialogShown = false;  // Add a flag to check if the dialog has been shown
+  bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
   @override
   void initState() {
@@ -111,6 +113,7 @@ class _DragSyllablesState extends State<DragSyllables> {
         });
       }
     }
+
     if (letterBoxList.isEmpty && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -128,8 +131,7 @@ class _DragSyllablesState extends State<DragSyllables> {
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
                   subStoryId: widget.subStoryId,
-                  ctx: context
-              );
+                  ctx: context);
             },
             barrierDismissible: false,
           );
@@ -143,12 +145,12 @@ class _DragSyllablesState extends State<DragSyllables> {
             context: context,
             builder: (BuildContext context) {
               return EndActivityPopup(
-                currentScreen: DragSyllables(subStoryId: widget.subStoryId, storyId: widget.storyId),
-                story: widget.subStoryId != 0 ? true : false,
-                storyId: widget.storyId,
-                subStoryId: widget.subStoryId ,
-                ctx: context               
-              ); // Call your custom popup
+                  currentScreen: DragSyllables(
+                      subStoryId: widget.subStoryId, storyId: widget.storyId),
+                  story: widget.subStoryId != 0 ? true : false,
+                  storyId: widget.storyId,
+                  subStoryId: widget.subStoryId,
+                  ctx: context); // Call your custom popup
             },
             barrierDismissible: false,
           );
@@ -196,12 +198,16 @@ class _DragSyllablesState extends State<DragSyllables> {
                             ),
                           ],
                         ),
-                        AudioButton(expectedSound: 'cabelo.wav',),
+                        AudioButton(
+                          soundFiles: ['cabelo.wav'],
+                        ),
                       ],
                     )
                   ],
                 ),
-                const Spacer(flex: 2,),
+                const Spacer(
+                  flex: 2,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -211,7 +217,9 @@ class _DragSyllablesState extends State<DragSyllables> {
                     // The word being spelled
                   ],
                 ),
-                const Spacer(flex: 5,),
+                const Spacer(
+                  flex: 5,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -108,7 +108,7 @@ class _BuildWordState extends State<BuildWord> {
                 ),
                 const Spacer(),
                 AudioButton(
-                  expectedSound: 'cabelo.wav',
+                  soundFiles: ['cabelo.wav'],
                 ),
                 const Spacer(),
                 Row(
