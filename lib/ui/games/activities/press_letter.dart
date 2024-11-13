@@ -20,94 +20,108 @@ class _PressLetterState extends State<PressLetter> {
 
   bool dialogShown = false;  // Add a flag to check if the dialog has been shown
 
-  static const String letter = 'B';
+  String letter = 'C';
 
-  static List<String> wordList = ["Bolo", "Bobagem", "Lista", "Marte"]; // Não ta atualizando certo resolver dps.
+  List<String> wordList = ["Bora", "Barco", "Costume", "Cuzcuz"]; // Não ta atualizando certo resolver dps.
 
   Color defaultColor = Colors.black;
   Color correctColor = const Color(0xFF21D304);
   Color incorrectColor = const Color(0xFFA90C0C);
 
   // Create the map that associates each word with a list of maps for each letter
-  static var result = wordList.map((word) {
-    return word.split('').map((char) {
-      // Create a map for each letter, where the value is true if it's 'B' or 'b'
-      return {
-        char: char.toUpperCase() == letter || char.toLowerCase() == letter
-      };
+  List<List<Map<String, bool>>> get result {
+    return wordList.map((word) {
+      return word.split('').map((char) {
+        return {
+          char: char.toUpperCase() == letter || char.toLowerCase() == letter
+        };
+      }).toList();
     }).toList();
-  }).toList();
+  }
 
-  static List<String> get questionText => [
-        "Escolha a letra ",
-        letter,
-        " ou ",
-        letter.toLowerCase(),
-      ];
 
-  int numbersFound = result
-      .expand((wordMaps) => wordMaps)  // Flatten the list of lists of maps
-      .where((map) => map.values.first)  // Check if the value is true
-      .length;  // Get the count of trues
+  List<String> get questionText => [
+    "Escolha a letra ",
+    letter,
+    " ou ",
+    letter.toLowerCase(),
+  ];
 
-  TextSpan printedText = TextSpan(
-    children: [
-      WidgetSpan(
-        child: GoldenTextSpecial(
-          text: questionText[0],
-          textSize: 25,
-          // Adjust as needed
-          borderColor: 0xFF012480,
-          // Adjust as needed
-          borderWidth: 3,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      const WidgetSpan(
-        child: SizedBox(width: 8), // Adjust the width for desired spacing
-      ),
-      TextSpan(
-        text: questionText[1],
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 30,
-          fontFamily: 'Playpen-Sans', // Fixed font family
-          fontWeight: FontWeight.bold,
-        ), // Style for normal text
-      ),
-      WidgetSpan(
-        child: GoldenTextSpecial(
-          text: questionText[2],
-          textSize: 25,
-          // Adjust as needed
-          borderColor: 0xFF012480,
-          // Adjust as needed
-          borderWidth: 3,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      TextSpan(
-        text: questionText[3],
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 30,
-          fontFamily: 'Playpen-Sans', // Fixed font family
-          fontWeight: FontWeight.bold,
-        ), // Style for normal text
-      ),
-    ],
-  );
+  int get numbersFound {
+    return result
+        .expand((wordMaps) => wordMaps)
+        .where((map) => map.values.first)
+        .length;
+  }
+
+  int _foundCount = 999;  // Mutable state to track the count
 
   void _decrementNumbersFound() {
     setState(() {
-      numbersFound -= 1;
+      if (_foundCount > 0) {
+        _foundCount -= 1;  // Decrement the count directly
+        print(_foundCount);
+      }
     });
+  }
+  @override
+  void initState() {
+    super.initState();
+    // Set _foundCount to numbersFound once when the widget is initialized
+    _foundCount = numbersFound;
   }
 
   @override
   Widget build(BuildContext context) {
+    TextSpan printedText = TextSpan(
+      children: [
+        WidgetSpan(
+          child: GoldenTextSpecial(
+            text: questionText[0],
+            textSize: 25,
+            // Adjust as needed
+            borderColor: 0xFF012480,
+            // Adjust as needed
+            borderWidth: 3,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const WidgetSpan(
+          child: SizedBox(width: 8), // Adjust the width for desired spacing
+        ),
+        TextSpan(
+          text: questionText[1],
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 30,
+            fontFamily: 'Playpen-Sans', // Fixed font family
+            fontWeight: FontWeight.bold,
+          ), // Style for normal text
+        ),
+        WidgetSpan(
+          child: GoldenTextSpecial(
+            text: questionText[2],
+            textSize: 25,
+            // Adjust as needed
+            borderColor: 0xFF012480,
+            // Adjust as needed
+            borderWidth: 3,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        TextSpan(
+          text: questionText[3],
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 30,
+            fontFamily: 'Playpen-Sans', // Fixed font family
+            fontWeight: FontWeight.bold,
+          ), // Style for normal text
+        ),
+      ],
+    );
 
-    if (numbersFound <= 0 && !dialogShown) {
+    if (_foundCount <= 0 && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {
           // To avoid multiple calls to showDialog, we set a flag
@@ -228,16 +242,10 @@ class _PressLetterState extends State<PressLetter> {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: wordList[3].split('').map((char) {
-                            // Find the map for the first word (wordList[0]) in 'result'
-                            // Use result[0] because we want to get the map for the first word
-                            // The map in result[0] has each character as the key and a boolean as the value
                             bool isAnswer = result[3].firstWhere(
                                     (map) => map.containsKey(char),
                                 orElse: () => {char: false})[char] ??
                                 false;
-                            if (isAnswer){
-                              numbersFound =- 1;
-                            }
                             return PressableLetters(
                               onTap: _decrementNumbersFound,
                               letterText: char,
