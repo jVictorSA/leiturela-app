@@ -7,7 +7,7 @@ import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 
 class PressSyllable extends StatefulWidget {
-  int storyId;
+  String storyId;
   int subStoryId;
   String syllable;
 

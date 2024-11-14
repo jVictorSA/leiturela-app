@@ -8,7 +8,7 @@ import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 
 class ABCPressLetter extends StatefulWidget {
-  int storyId;
+  String storyId;
   int subStoryId;
 
   ABCPressLetter({super.key, required this.storyId, required this.subStoryId});

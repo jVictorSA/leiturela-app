@@ -1,6 +1,7 @@
 import 'package:demo_app/ui/games/activities/complete_word.dart';
 import 'package:demo_app/ui/games/activities/image_association.dart';
 import 'package:demo_app/ui/games/activities/upper_and_lowercase.dart';
+import 'package:demo_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widgets/return_button.dart';
@@ -93,7 +94,7 @@ class Minigames extends StatelessWidget {
                           SelectedFrame(
                             parentContext: context,
 
-                            nextPage: SelectWordAudio(storyId: 0, subStoryId: 0),
+                            nextPage: SelectWordAudio(storyId: '0', subStoryId: 0),
                             title: 'Selecionar Palavras Pelo Áudio',
                             svgs: 'assets/imgs/letter_sound.svg',
                             backgroundColor: Colors.pinkAccent,
@@ -106,7 +107,7 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: PressLetter(storyId: 0, subStoryId: 0),
+                            nextPage: PressLetter(storyId: '0', subStoryId: 0),
                             title: 'Pressionar Letras',
                             svgs: 'assets/imgs/press_letter.svg',
                             backgroundColor: Colors.limeAccent,
@@ -114,7 +115,7 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: ABCPressLetter(storyId: 0, subStoryId: 0),
+                            nextPage: ABCPressLetter(storyId: '0', subStoryId: 0),
                             title: 'Escolher Letras',
                             svgs: 'assets/imgs/abcpress.svg',
                             backgroundColor: Colors.teal,
@@ -127,7 +128,7 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: PressSyllable(storyId: 0, subStoryId: 0, syllable: 'Bo'),
+                            nextPage: PressSyllable(storyId: '0', subStoryId: 0, syllable: 'Bo'),
                             title: 'Marcar Letras',
                             svgs: 'assets/imgs/press_word.svg',
                             backgroundColor: const Color.fromARGB(255, 80, 80, 80),
@@ -135,7 +136,7 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: CountLettersBySound(storyId: 0, subStoryId: 0),
+                            nextPage: CountLettersBySound(storyId: '0', subStoryId: 0),
                             title: 'Contar Letras por Som',
                             svgs: 'assets/imgs/count_sound.svg',
                             backgroundColor: Colors.lightGreenAccent,
@@ -148,7 +149,7 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: SoundLettersAssociation(storyId: 0, subStoryId: 0),
+                            nextPage: SoundLettersAssociation(storyId: '0', subStoryId: 0),
                             title: 'Asssociar Letra pelo Som',
                             svgs: 'assets/imgs/sound_letter_press.svg',
                             backgroundColor: Colors.pink,

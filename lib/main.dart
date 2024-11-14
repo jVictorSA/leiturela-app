@@ -1,5 +1,7 @@
 import 'package:demo_app/ui/custom_widgets/audiomanager.dart';
+import 'package:demo_app/ui/custom_widgets/custom_button.dart';
 import 'package:demo_app/ui/games/story_games_screen.dart';
+import 'package:demo_app/ui/login/login_screen.dart';
 import 'package:demo_app/ui/minigames/minigames.dart';
 import 'package:demo_app/ui/report/report.dart';
 import 'package:demo_app/ui/settings/settings.dart';
@@ -161,6 +163,7 @@ class _MainMenuState extends State<MainMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(
                       // right: (screenWidth/2) - ((bgWidth/2) * 1.05 ),
@@ -203,70 +206,79 @@ class _MainMenuState extends State<MainMenu> {
                   height: 16,
                 ),
                 Container(
-                    height: 80,
-                    width: 240,
-                    decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            stops: [
-                              0.5,
-                              0.9,
-                            ],
-                            colors: [
-                              Color(0xff03BFE7),
-                              Color(0xff01419F)
-                            ]),
-                        borderRadius: BorderRadius.circular(45)),
-                    child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Games()),
-                          );
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.transparent),
-                          shadowColor: MaterialStateProperty.all<Color>(
-                              Colors.transparent),
-                          padding: MaterialStateProperty.all(EdgeInsets.zero),
-                        ),
-                        child: Center(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        bottom: screenHeight * 0.01),
-                                    child: const Text(
-                                      'Jogar',
-                                      style: TextStyle(
-                                        fontFamily: 'Playpen-Sans',
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 32,
-                                        color: Colors.white,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                                const Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 5.0),
-                                  child: Icon(
-                                    Icons.play_circle_fill,
+                  height: 80,
+                  width: 240,
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: [
+                            0.5,
+                            0.9,
+                          ],
+                          colors: [
+                            Color(0xff03BFE7),
+                            Color(0xff01419F)
+                          ]),
+                      borderRadius: BorderRadius.circular(45)),
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Games()),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
+                      shadowColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                    ),
+                    child: Center(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: screenHeight * 0.01),
+                                child: const Text(
+                                  'Jogar',
+                                  style: TextStyle(
+                                    fontFamily: 'Playpen-Sans',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 32,
                                     color: Colors.white,
-                                    size: 45,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
-                              ]),
-                        ))),
-                const SizedBox(
-                  height: 56,
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Icon(
+                                Icons.play_circle_fill,
+                                color: Colors.white,
+                                size: 45,
+                              ),
+                            ),
+                          ]),
+                    ),
+                  ),
+                ),
+                Spacer(),
+                CustomButton(
+                  height: 40,
+                  label: 'Login',
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const Login()));
+                  },
+                ),
+                const Spacer(
+                  flex: 2,
                 ),
               ],
             ),

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_svg/svg.dart';
+import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
 // import '../../games/story_games_screen.dart';
@@ -50,7 +51,8 @@ class CountLetters extends StatefulWidget {
 
 class _CountLettersState extends State<CountLetters> {
   TextEditingController controller = TextEditingController();
- 
+
+  bool dialogShown = false; // Add a flag to check if the dialog has been shown
   bool isAnswerIncorrect = false;
 
   List<String> get questionText => [

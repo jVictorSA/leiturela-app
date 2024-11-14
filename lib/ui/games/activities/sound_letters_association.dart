@@ -9,7 +9,7 @@ import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 
 class SoundLettersAssociation extends StatefulWidget {
-  int storyId;
+  String storyId;
   int subStoryId;
 
   SoundLettersAssociation(

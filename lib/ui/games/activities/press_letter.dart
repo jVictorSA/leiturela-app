@@ -7,7 +7,7 @@ import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 
 class PressLetter extends StatefulWidget {
-  int storyId;
+  String storyId;
   int subStoryId;
 
   PressLetter({super.key, required this.storyId, required this.subStoryId});
