@@ -10,7 +10,7 @@ import '../../custom_widgets/return_button.dart';
 import 'dart:math';
 
 class CompleteWord extends StatefulWidget {
-  int storyId;
+  String storyId;
   int subStoryId;
 
   CompleteWord({super.key, required this.subStoryId, required this.storyId});
@@ -59,14 +59,14 @@ class _CompleteWordState extends State<CompleteWord> {
     letterBoxList = [
       {
         'key': randomKey,
-        'widget': LetterBox(text: randomKey),
+        'widget': LetterBox(text: randomKey, borderRadius: 15.0, width: 67),
       }
     ];
     List<Map<String, dynamic>> randomSyllables =
         randomSyllablesList.map((random_key) {
       return {
         'key': random_key,
-        'widget': LetterBox(text: random_key),
+        'widget': LetterBox(text: random_key, borderRadius: 15.0, width: 67),
       };
     }).toList();
 

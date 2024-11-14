@@ -9,8 +9,8 @@ import 'custom_widgets/audio_button.dart';
 import '../../custom_widgets/return_button.dart';
 import 'dart:math';
 
-class DragSyllables extends StatefulWidget {
-  int storyId;
+class DragSyllables extends StatefulWidget {  
+  String storyId;
   int subStoryId;
 
   DragSyllables({super.key, required this.subStoryId, required this.storyId});
@@ -38,7 +38,7 @@ class _DragSyllablesState extends State<DragSyllables> {
     letterBoxList = letterSpaceKeys.map((key) {
       return {
         'key': key,
-        'widget': LetterBox(text: key),
+        'widget': LetterBox(text: key, borderRadius: 15.0, width: 67),
       };
     }).toList();
     super.initState();
@@ -187,9 +187,9 @@ class _DragSyllablesState extends State<DragSyllables> {
                               parentContext: context,
                             ),
                             const Spacer(flex: 3),
-                            Column(
+                            const Column(
                               children: [
-                                const GoldenText(
+                                GoldenText(
                                     text: "Monte a palavra usando as sílabas"),
                               ],
                             ),

@@ -1,3 +1,4 @@
+import 'package:demo_app/ui/games/activities/custom_widgets/activity_background.dart';
 import 'package:demo_app/ui/stories/show_story.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,11 +11,12 @@ import '../games/story_games_screen.dart';
 // import '../games/games.dart';
 import '../games/activities/count_letters.dart';
 // import '../games/activities/drag_crossword.dart';
+import 'package:demo_app/ui/games/activities/activities_map.dart' as activitiesMap;
 
 
 // for ( var i in text ) Text(i.toString())Future<String> fetchStory(id) async {
 Future<String> fetchStories(http.Client client) async {
-  var response = await client.get(Uri.parse('http://10.0.2.2:8000/stories/'));
+  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/stories'));
   // print(id);
   // print(response.body);
 
@@ -30,11 +32,15 @@ Future<String> fetchStories(http.Client client) async {
 class Stories extends StatefulWidget {
   int? storiesLength;
   List<String>? titles;
+  List<String> ids = [];
+  List<List<String>> activities_ids = [];
+  List<String> nextActivitiesType = [];
 
   Stories({
     super.key,
     this.storiesLength,
     this.titles,
+    // this.nextActivityType = "",
   });
 
   @override
@@ -54,12 +60,22 @@ class StoriesState extends State<Stories>{
         // print(entireObject);
         List stories = json.decode(entireObject);
         List<String> titles = [];
-        for (var story in stories){
+        for (var story in stories){                  
           titles.add(story["story_prompt"]);
+          widget.ids.add(story["_id"]);          
+          
+          List<dynamic> activitiesArroba = story["activities"];
+          // print(activitiesArroba);
+          widget.activities_ids.add(activitiesArroba.cast<String>());
+          // widget.nextActivitiesType.add(story[])
         }
         widget.storiesLength = stories.length;
         widget.titles = titles;
+        print(titles);
         isLoaded = true;
+        // print(widget.ids);
+        // print(widget.activities_ids);
+        
         // print(widget.storiesLength);
         // print(widget.titles);
       })
@@ -80,11 +96,14 @@ class StoriesState extends State<Stories>{
                 parentContext: context,
                 nextPage: ShowStory(
                   parentContext: context,
-                  storyId: firstIndex+1,
-                  subStoryId: 1,
+                  storyId: widget.ids[firstIndex],
+                  subStoryId: 0,
                   storyTitle: "História",
                   storyContent: "Olá",
-                  nextPage: CountLetters(subStoryId: 1, storyId: firstIndex+1),
+                  nextPage: CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex],
+                                         activityId: widget.activities_ids[firstIndex][1],
+                                         nextActivityId: widget.activities_ids[firstIndex][1+1],
+                                        ),
                 ),
                 title: widget.titles![firstIndex],
                 svgs: 'assets/imgs/apartment.svg',
@@ -96,11 +115,14 @@ class StoriesState extends State<Stories>{
                 backgroundColor: Colors.blueGrey,
                 nextPage: ShowStory(
                   parentContext: context,
-                  storyId: firstIndex+2,
-                  subStoryId: 1,
+                  storyId: widget.ids[firstIndex + 1],
+                  subStoryId: 0,
                   storyTitle: "História",
                   storyContent: "Olá",
-                  nextPage: CountLetters(subStoryId: 1, storyId: firstIndex+2),
+                  nextPage: CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex + 1],
+                                         activityId: widget.activities_ids[firstIndex+1][1],
+                                         nextActivityId: widget.activities_ids[firstIndex+1][1+1]
+                                        ),
                 ),
                 title: widget.titles![firstIndex+1],
                 svgs: 'assets/imgs/electric_bolt.svg',
@@ -114,11 +136,14 @@ class StoriesState extends State<Stories>{
                 parentContext: context,
                 nextPage: ShowStory(
                   parentContext: context,
-                  storyId: firstIndex+1,
-                  subStoryId: 1,
+                  storyId: widget.ids[firstIndex],
+                  subStoryId: 0,
                   storyTitle: "História",
                   storyContent: "Olá",
-                  nextPage: CountLetters(subStoryId: 1, storyId: firstIndex+1),
+                  nextPage: CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex],
+                                        activityId: widget.activities_ids[firstIndex][1],
+                                         nextActivityId: widget.activities_ids[firstIndex][1+1]
+                                        ),
                 ),
                 title: widget.titles![firstIndex],
                 svgs: 'assets/imgs/domino_mask.svg',
