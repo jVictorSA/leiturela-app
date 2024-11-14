@@ -1,110 +1,72 @@
-// import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
+import 'package:demo_app/ui/games/activities/custom_widgets/audio_button.dart';
+import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/svg.dart';
+import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
-// import '../../games/story_games_screen.dart';
+import '../../games/story_games_screen.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-Future<String> fetchActivity(http.Client client, activityId) async {
-  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/atividade:6733e0e39ccd12700d69cf8d'));
-  // print(id);
-  // print(response.body);
-
-  if (response.statusCode == 200) {
-  var decoded = utf8.decode(response.bodyBytes);
-  // print(decoded);
-
-    return decoded.toString();
-  }
-  return response.body;
-}
-
-class CountLetters extends StatefulWidget {
-  String storyId;
+class CountLettersBySound extends StatefulWidget {
+  int storyId;
   int subStoryId;
-  int answer;
-  String letter;
-  String text;
-  String activityId;
-  String nextActivityId;
 
-  CountLetters({super.key,
-                required this.subStoryId,
-                required this.storyId,
-                this.activityId = "673346a00a5e2246b93ab556",
-                this.nextActivityId = "673346a00a5e2246b93ab558",
-                this.answer = 9,
-                this.letter = "",
-                this.text = ""
-              });
-
+  CountLettersBySound(
+      {super.key, required this.subStoryId, required this.storyId});
 
   @override
-  _CountLettersState createState() => _CountLettersState();
+  _CountLettersBySoundState createState() => _CountLettersBySoundState();
 }
 
-class _CountLettersState extends State<CountLetters> {
+class _CountLettersBySoundState extends State<CountLettersBySound> {
   TextEditingController controller = TextEditingController();
- 
+
+  static const textSize = 25.0;
+  static const int textColor = 0xFF03BFE7;
+  static const int borderColor = 0xFF012480;
+
+  bool dialogShown = false; // Add a flag to check if the dialog has been shown
+
   bool isAnswerIncorrect = false;
 
   List<String> get questionText => [
         "Conte quantos ",
-        widget.letter,
-        " ou ",
-        widget.letter.toUpperCase(),
-        " têm no seguinte texto."
+        letter,
+        " têm no áudio."
       ];
 
-  // static const String textToCount =
-  //     "Nina nadou na piscina enquanto o amigo cantava uma canção calma.";
+  List<String> originalList = ['cabelo.wav', 'cabelo.wav', 'cabelo.wav'];
+  late List<String> textToCount;
 
-  // static const String letter = 'N';
-  // static String letterLowerCase = 'N'.toLowerCase();
+  static const String letter = 'C';
 
-  // late int letterCount;
+  late int letterCount;
 
   bool solvedActivity = false;
 
   @override
   void initState() {
     super.initState();
-
-    fetchActivity(http.Client(), widget.activityId).then((response) => {
-      setState(() {
-        String entireObject;
-        entireObject = response;        
-        Map activity = json.decode(entireObject);        
-
-        widget.answer = activity["answer"]["num"];
-        widget.letter = activity["body"]["letra"];
-        widget.text = activity["body"]["frase"];
-      })
-    });
-
-    // letterCount = countLetter(textToCount, letter);
+    textToCount = originalList.map((str) => str.replaceAll('.wav', '')).toList();
+    letterCount = countLetterInList(textToCount, letter);
   }
 
   void checkAnswer() {
     String userAnswer = controller.text;
 
     if (userAnswer.isEmpty) {
-      print('Please enter an answer');
     } else {
       int? answerAsInt = int.tryParse(userAnswer);
 
       if (answerAsInt == null) {
-        print('Please enter a valid number');
-      } else if (answerAsInt == widget.answer) {
+      } else if (answerAsInt == letterCount && !dialogShown) {
         setState(() {
           solvedActivity = true;
           isAnswerIncorrect = false;
-          dialogShown = true;  // Ensure the dialog is only shown once
+          dialogShown = true; // Ensure the dialog is only shown once
         });
         Future.delayed(Duration(seconds: 3), () {
           // Replace with your navigation logic
@@ -112,7 +74,7 @@ class _CountLettersState extends State<CountLetters> {
             context: context,
             builder: (BuildContext context) {
               return EndActivityPopup(
-                currentScreen: CountLetters(
+                currentScreen: CountLettersBySound(
                     subStoryId: widget.subStoryId, storyId: widget.storyId),
                 story: widget.subStoryId != 0 ? true : false,
                 storyId: widget.storyId,
@@ -136,13 +98,15 @@ class _CountLettersState extends State<CountLetters> {
     }
   }
 
-  int countLetter(String text, String letter) {
-    return text
-        .toLowerCase()
-        .split('')
-        .where((char) => char == letter.toLowerCase())
-        .length;
+  int countLetterInList(List<String> texts, String letter) {
+    return texts
+        .join('') // Combine all strings in the list into one
+        .toLowerCase() // Convert to lowercase for case-insensitive comparison
+        .split('') // Split the combined string into individual characters
+        .where((char) => char == letter.toLowerCase()) // Filter the matching characters
+        .length; // Count the occurrences
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -179,26 +143,6 @@ class _CountLettersState extends State<CountLetters> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        TextSpan(
-          text: questionText[3],
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            fontFamily: 'Playpen-Sans', // Fixed font family
-            fontWeight: FontWeight.bold,
-          ), // Style for normal text
-        ),
-        WidgetSpan(
-          child: GoldenTextSpecial(
-            text: questionText[4],
-            textSize: 20,
-            // Adjust as needed
-            borderColor: 0xFF012480,
-            // Adjust as needed
-            borderWidth: 3,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
       ],
     );
 
@@ -218,14 +162,8 @@ class _CountLettersState extends State<CountLetters> {
                 RichText(
                   text: printedText,
                 ),
-                SizedBox(
-                  width: 500,
-                  child: ColorfulText(
-                    widget.text,
-                    fontSize: 24.0,
-                    specialLetter: widget.letter,
-                    solved: solvedActivity,
-                  ),
+                AudioButton(
+                  soundFiles: originalList,
                 ),
                 Column(
                   children: [
@@ -323,7 +261,7 @@ class ColorfulText extends StatelessWidget {
         style: TextStyle(
           color: letter.toLowerCase() == specialLetter.toLowerCase()
               ? solved
-                  ? const Color(0xFF3AAB28)
+                  ? Color(0xFF3AAB28)
                   : Colors.black
               : Colors.black, // Default color
           fontSize: fontSize,
