@@ -3,26 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:demo_app/ui/stories/stories.dart';
-import '../../main.dart';
-import '../games/activities/custom_widgets/golden_text.dart';
+import 'package:demo_app/main.dart';
+// import '../games/activities/custom_widgets/golden_text.dart';
 import '../minigames/minigames.dart';
 import '../games/activities/count_letters.dart';
-import '../games/activities/drag_crossword.dart';
+// import '../games/activities/drag_crossword.dart';
 import 'package:demo_app/ui/stories/show_story.dart';
 
 class EndActivityPopup extends StatelessWidget {
   final Widget currentScreen;
   final bool story; // Story or Activity ?
-  final int? storyId;
+  final String? storyId;
   final int? subStoryId;
   final BuildContext ctx; // Story or Activity ?
+  final String nextActivityId;
 
   const EndActivityPopup({super.key,
                           required this.currentScreen,
                           required this.story,
                           required this.storyId,
                           required this.subStoryId,
-                          required this.ctx
+                          required this.ctx,
+                          this.nextActivityId = "673346a00a5e2246b93ab558"
                         });
 
   Widget getNextPage(){

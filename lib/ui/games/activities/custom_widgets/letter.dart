@@ -3,10 +3,20 @@ import 'package:google_fonts/google_fonts.dart';
 
 class LetterBox extends StatelessWidget {
   final String text; // The letter this box represents
+  final double borderRadius; // The border radius of the box
+  final double width; // The width of the box
+  List<Color> colors;
+  Color boxShadowColor;
+  Color fontColor;
 
-  const LetterBox({
+  LetterBox({
     super.key,
     required this.text,
+    required this.borderRadius,
+    required this.width,
+    this.colors = const [Color(0xFFFFF3B8), Color(0xFFF7FB31), Color(0xFFFBB631)],
+    this.boxShadowColor = const Color(0xFFFBB631),
+    this.fontColor = Colors.black
   });
 
   @override
@@ -33,7 +43,7 @@ class LetterBox extends StatelessWidget {
           BoxShadow(
             color: isPlaceholder
                 ? Colors.transparent
-                : Color(0xFFFBB631).withOpacity(1), // Shadow color
+                : boxShadowColor.withOpacity(1), // Shadow color
             spreadRadius: 0, // How much the shadow spreads
             blurRadius: 15, // How soft the shadow appears
             offset: const Offset(0, 0), // Offset for the shadow (x, y)
@@ -41,16 +51,16 @@ class LetterBox extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.circular(borderRadius),
         child: ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [Color(0xFFFFF3B8), Color(0xFFF7FB31), Color(0xFFFBB631)],
+          shaderCallback: (bounds) => LinearGradient(
+            colors: colors,
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            stops: [0, 0.25, 1.0],
+            stops: const [0, 0.25, 1.0],
           ).createShader(bounds),
           child: Container(
-            width: 67,
+            width: width,
             height: 43,
             color: isPlaceholder ? Colors.transparent : Colors.white,
             // Make placeholder transparent
@@ -60,7 +70,7 @@ class LetterBox extends StatelessWidget {
                   : Text(
                       text,
                       style: GoogleFonts.playpenSans(
-                        color: Colors.black,
+                        color: fontColor,
                         fontSize: 25,
                         fontWeight: FontWeight.w600,
                       ),
@@ -75,10 +85,18 @@ class LetterBox extends StatelessWidget {
 
 class StaticLetterBox extends StatelessWidget {
   final String text; // The letter this box represents
+  final double borderRadius; // The border radius of the box
+  final double width; // The width of the box
+  List<Color> colors;
+  Color boxShadowColor;  
 
-  const StaticLetterBox({
+  StaticLetterBox({
     super.key,
     required this.text,
+    this.borderRadius = 15.0,
+    this.width = 67.0,
+    this.colors = const [Color(0xFFFFF3B8), Color(0xFFF7FB31), Color(0xFFFBB631)],
+    this.boxShadowColor = const Color(0xFFFBB631),    
   });
 
   @override
@@ -87,7 +105,7 @@ class StaticLetterBox extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFFFBB631).withOpacity(1), // Shadow color
+            color: boxShadowColor.withOpacity(1), // Shadow color
             spreadRadius: 0, // How much the shadow spreads
             blurRadius: 15, // How soft the shadow appears
             offset: const Offset(0, 0), // Offset for the shadow (x, y)
@@ -95,16 +113,16 @@ class StaticLetterBox extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.circular(borderRadius),
         child: ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [Color(0xFFFFF3B8), Color(0xFFF7FB31), Color(0xFFFBB631)],
+          shaderCallback: (bounds) => LinearGradient(
+            colors: colors,
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            stops: [0, 0.25, 1.0],
+            stops: const [0, 0.25, 1.0],
           ).createShader(bounds),
           child: Container(
-            width: 67,
+            width: width,
             height: 43,
             color: Colors.white,
             // Make placeholder transparent

@@ -8,9 +8,13 @@ import 'dart:convert';// show utf8;
 import '../custom_widgets/return_button.dart';
 
 Future<String> fetchStory(id) async {
-  var response = await http.get(Uri.parse('http://10.0.2.2:8000/stories/$id'));
+  var response = await http.get(Uri.parse('http://10.0.2.2:8000/atividade/story:$id'), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzNkNDI3ODc2ZDRmZGNhNGQ0MGM3ZiIsImV4cCI6MTczMTU1MzUyOX0.Kd0RuMdzxi1nolZrl9SvJOfEHx8GCuN4gKmmUbwasGI',
+    });
   print(id);
-  // print(response.body);
+  print(response.body);
 
   if (response.statusCode == 200) {
   var decoded = utf8.decode(response.bodyBytes);
@@ -29,8 +33,9 @@ class ShowStory extends StatefulWidget {
   double textSize;
   String storyTitle;
   String storyContent;
-  int storyId;
+  String storyId;
   int subStoryId;
+  String nextActivityType;
 
   ShowStory({
     super.key,
@@ -40,6 +45,7 @@ class ShowStory extends StatefulWidget {
     required this.storyContent,
     required this.storyId,
     required this.subStoryId,
+    this.nextActivityType = "",
     double? textSize, // Add an optional parameter
   }) : textSize = textSize ?? 28.0; // Set default value to 28.0 if null
 
@@ -71,14 +77,14 @@ class ShowStoryState extends State<ShowStory> {
     widget.storyTitle = "Xis";
     fetchStory(widget.storyId).then((response) => {
       setState(() {
-        int storyId = widget.storyId;
+        String storyId = widget.storyId;
         String entireObject;
         int subStoryId = widget.subStoryId;
         print("História: $storyId - substória: $subStoryId");
         entireObject = response;
         Map subStories = json.decode(entireObject);
-        String substory = subStories["sub_stories"]['texto_$subStoryId'];
-        
+        String substory = subStories["chunks"][subStoryId];
+        // print(substory);
         storyContent = substory;
         // print(valueMap["sub_stories"]);
       })

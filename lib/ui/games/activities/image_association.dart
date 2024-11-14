@@ -12,7 +12,7 @@ import '../../custom_widgets/return_button.dart';
 import 'dart:math';
 
 class ImageAssociation extends StatefulWidget {
-  int storyId;
+  String storyId;
   int subStoryId;
 
   ImageAssociation(

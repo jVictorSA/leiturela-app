@@ -1,17 +1,47 @@
-import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
+// import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
-import '../../games/story_games_screen.dart';
+// import '../../games/story_games_screen.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+Future<String> fetchActivity(http.Client client, activityId) async {
+  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/atividade:6733e0e39ccd12700d69cf8d'));
+  // print(id);
+  // print(response.body);
+
+  if (response.statusCode == 200) {
+  var decoded = utf8.decode(response.bodyBytes);
+  // print(decoded);
+
+    return decoded.toString();
+  }
+  return response.body;
+}
 
 class CountLetters extends StatefulWidget {
-  int storyId;
+  String storyId;
   int subStoryId;
-  CountLetters({super.key, required this.subStoryId, required this.storyId});
+  int answer;
+  String letter;
+  String text;
+  String activityId;
+  String nextActivityId;
+
+  CountLetters({super.key,
+                required this.subStoryId,
+                required this.storyId,
+                this.activityId = "673346a00a5e2246b93ab556",
+                this.nextActivityId = "673346a00a5e2246b93ab558",
+                this.answer = 9,
+                this.letter = "",
+                this.text = ""
+              });
 
   @override
   _CountLettersState createState() => _CountLettersState();
@@ -20,34 +50,43 @@ class CountLetters extends StatefulWidget {
 class _CountLettersState extends State<CountLetters> {
   TextEditingController controller = TextEditingController();
 
-  static const textSize = 25.0;
-  static const int textColor = 0xFF03BFE7;
-  static const int borderColor = 0xFF012480;
-
   bool isAnswerIncorrect = false;
 
   List<String> get questionText => [
         "Conte quantos ",
-        letter,
+        widget.letter,
         " ou ",
-        letterLowerCase,
+        widget.letter.toUpperCase(),
         " têm no seguinte texto."
       ];
 
-  static const String textToCount =
-      "Nina nadou na piscina enquanto o amigo cantava uma canção calma.";
+  // static const String textToCount =
+  //     "Nina nadou na piscina enquanto o amigo cantava uma canção calma.";
 
-  static const String letter = 'N';
-  static String letterLowerCase = 'N'.toLowerCase();
+  // static const String letter = 'N';
+  // static String letterLowerCase = 'N'.toLowerCase();
 
-  late int letterCount;
+  // late int letterCount;
 
   bool solvedActivity = false;
 
   @override
   void initState() {
     super.initState();
-    letterCount = countLetter(textToCount, letter);
+
+    fetchActivity(http.Client(), widget.activityId).then((response) => {
+      setState(() {
+        String entireObject;
+        entireObject = response;        
+        Map activity = json.decode(entireObject);        
+
+        widget.answer = activity["answer"]["num"];
+        widget.letter = activity["body"]["letra"];
+        widget.text = activity["body"]["frase"];
+      })
+    });
+
+    // letterCount = countLetter(textToCount, letter);
   }
 
   void checkAnswer() {
@@ -60,7 +99,7 @@ class _CountLettersState extends State<CountLetters> {
 
       if (answerAsInt == null) {
         print('Please enter a valid number');
-      } else if (answerAsInt == letterCount) {
+      } else if (answerAsInt == widget.answer) {
         setState(() {
           solvedActivity = true;
           isAnswerIncorrect = false;
@@ -179,9 +218,9 @@ class _CountLettersState extends State<CountLetters> {
                 SizedBox(
                   width: 500,
                   child: ColorfulText(
-                    textToCount,
+                    widget.text,
                     fontSize: 24.0,
-                    specialLetter: 'n',
+                    specialLetter: widget.letter,
                     solved: solvedActivity,
                   ),
                 ),
@@ -327,7 +366,7 @@ class ColorfulText extends StatelessWidget {
         style: TextStyle(
           color: letter.toLowerCase() == specialLetter.toLowerCase()
               ? solved
-                  ? Color(0xFF3AAB28)
+                  ? const Color(0xFF3AAB28)
                   : Colors.black
               : Colors.black, // Default color
           fontSize: fontSize,

@@ -1,8 +1,8 @@
 import 'package:demo_app/ui/games/activities/complete_word.dart';
 import 'package:demo_app/ui/games/activities/image_association.dart';
+import 'package:demo_app/ui/games/activities/upper_and_lowercase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../main.dart';
 import '../custom_widgets/return_button.dart';
 import '../custom_widgets/selected_frame.dart';
 import '../games/activities/build_letter.dart';
@@ -36,7 +36,7 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: DragSyllables(subStoryId: 0, storyId: 0),
+                            nextPage: DragSyllables(storyId: "", subStoryId: 0),
                             title: 'Arrastar Sílaba',
                             svgs: 'assets/imgs/drag.svg',
                             backgroundColor: Colors.lightBlueAccent,
@@ -44,7 +44,7 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: CountLetters(subStoryId: 0, storyId: 0),
+                            nextPage: CountLetters(storyId: "", subStoryId: 0),
                             title: 'Contar Letras',
                             svgs: 'assets/imgs/hand_two.svg',
                             backgroundColor: Colors.redAccent,
@@ -57,7 +57,7 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: BuildWord(subStoryId: 0, storyId: 0,),
+                            nextPage: BuildWord(storyId: "", subStoryId: 0),
                             title: 'Montar Palavra',
                             svgs: 'assets/imgs/press.svg',
                             backgroundColor: Colors.indigoAccent,
@@ -65,7 +65,7 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: CompleteWord(subStoryId: 0, storyId: 0),
+                            nextPage: CompleteWord(storyId: "", subStoryId: 0),
                             title: 'Completar Palavra',
                             svgs: 'assets/imgs/puzzle.svg',
                             backgroundColor: Colors.purpleAccent,
@@ -78,7 +78,7 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: ImageAssociation(storyId: 0, subStoryId: 0),
+                            nextPage: ImageAssociation(storyId: "", subStoryId: 0),
                             title: 'Associar Imagem',
                             svgs: 'assets/imgs/abc.svg',
                             backgroundColor: Colors.lightGreenAccent,
@@ -86,8 +86,8 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: const MyApp(),
-                            title: 'ATV 6',
+                            nextPage: UpperLower(storyId: "", subStoryId: 0,),
+                            title: 'Maiúsculas e Minúsculas',
                             svgs: 'assets/imgs/abc.svg',
                             backgroundColor: Colors.pinkAccent,
                             textSize: 20,
