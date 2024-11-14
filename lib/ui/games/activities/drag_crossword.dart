@@ -52,7 +52,6 @@ class _DragSyllablesState extends State<DragSyllables> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    // X-axis limits with 10% on both sides
     const minX = 0;
     final maxX = screenWidth * 0.80 -
         boxWidth; // Ensure that box width doesn't exceed boundary

@@ -13,6 +13,7 @@ import '../games/activities/press_letter.dart';
 import '../games/activities/abc_press_letters.dart';
 import '../games/activities/select_word_by_audio.dart';
 import '../games/activities/mark_the_word.dart';
+import '../games/activities/sound_letters_association.dart';
 
 class Minigames extends StatelessWidget {
   const Minigames({super.key});
@@ -127,7 +128,7 @@ class Minigames extends StatelessWidget {
                             parentContext: context,
                             nextPage: PressSyllable(storyId: 0, subStoryId: 0, syllable: 'Bo'),
                             title: 'Marcar Letras',
-                            svgs: 'assets/imgs/',
+                            svgs: 'assets/imgs/press_word.svg',
                             backgroundColor: const Color.fromARGB(255, 80, 80, 80),
                             textSize: 20,
                           ),
@@ -135,9 +136,22 @@ class Minigames extends StatelessWidget {
                             parentContext: context,
                             nextPage: CountLettersBySound(storyId: 0, subStoryId: 0),
                             title: 'Contar Letras por Som',
-                            svgs: 'assets/imgs/press.svg',
+                            svgs: 'assets/imgs/count_sound.svg',
                             backgroundColor: Colors.lightGreenAccent,
                             textSize: 18,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SelectedFrame(
+                            parentContext: context,
+                            nextPage: SoundLettersAssociation(storyId: 0, subStoryId: 0),
+                            title: 'Asssociar Letra pelo Som',
+                            svgs: 'assets/imgs/sound_letter_press.svg',
+                            backgroundColor: Colors.pink,
+                            textSize: 20,
                           ),
                         ],
                       ),
