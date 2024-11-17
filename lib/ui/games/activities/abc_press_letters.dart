@@ -1,5 +1,6 @@
 import 'package:demo_app/ui/games/activities/custom_widgets/pressable_letters.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:math';
 import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
@@ -8,7 +9,7 @@ import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 
 class ABCPressLetter extends StatefulWidget {
-  int storyId;
+  String storyId;
   int subStoryId;
 
   ABCPressLetter({super.key, required this.storyId, required this.subStoryId});

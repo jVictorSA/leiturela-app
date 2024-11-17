@@ -1,7 +1,7 @@
 // import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_svg/svg.dart';
+import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
 // import '../../games/story_games_screen.dart';
@@ -72,6 +72,7 @@ class _CountLettersState extends State<CountLetters> {
   TextEditingController controller = TextEditingController();
   String nextActivityId = "";
   bool isAnswerIncorrect = false;
+  bool dialogShown = false;
 
   List<String> get questionText => [
         "Conte quantos ",

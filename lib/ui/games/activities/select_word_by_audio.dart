@@ -14,7 +14,7 @@ import 'custom_widgets/letter_space.dart';
 import 'custom_widgets/word_box.dart';
 
 class SelectWordAudio extends StatefulWidget {
-  int storyId;
+  String storyId;
   int subStoryId;
 
   SelectWordAudio({super.key, required this.subStoryId, required this.storyId});
