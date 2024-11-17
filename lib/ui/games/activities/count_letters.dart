@@ -70,7 +70,9 @@ class CountLetters extends StatefulWidget {
 
 class _CountLettersState extends State<CountLetters> {
   TextEditingController controller = TextEditingController();
+
   String nextActivityId = "";
+  bool dialogShown = false; // Add a flag to check if the dialog has been shown
   bool isAnswerIncorrect = false;
   bool dialogShown = false;
 

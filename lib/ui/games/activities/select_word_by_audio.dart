@@ -75,7 +75,7 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                 Spacer(),
                 const GoldenText(
                   text:
-                      'Escolha a palavra com a mesma primeira letra que o áudio.',
+                  'Escolha a palavra com a mesma primeira letra que o áudio.',
                 ),
                 const Spacer(
                   flex: 2,
