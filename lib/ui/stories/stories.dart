@@ -11,23 +11,8 @@ import '../games/story_games_screen.dart';
 // import '../games/games.dart';
 import '../games/activities/count_letters.dart';
 // import '../games/activities/drag_crossword.dart';
-import 'package:demo_app/ui/games/activities/activities_map.dart' as activitiesMap;
-
-
-// for ( var i in text ) Text(i.toString())Future<String> fetchStory(id) async {
-Future<String> fetchStories(http.Client client) async {
-  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/stories'));
-  // print(id);
-  // print(response.body);
-
-  if (response.statusCode == 200) {
-  var decoded = utf8.decode(response.bodyBytes);
-  // print(decoded);
-
-    return decoded.toString();
-  }
-  return response.body;
-}
+import 'package:demo_app/ui/games/activities/activities_map.dart';
+import "package:demo_app/services/services.dart";
 
 class Stories extends StatefulWidget {
   int? storiesLength;
@@ -71,13 +56,8 @@ class StoriesState extends State<Stories>{
         }
         widget.storiesLength = stories.length;
         widget.titles = titles;
-        print(titles);
-        isLoaded = true;
-        // print(widget.ids);
-        // print(widget.activities_ids);
         
-        // print(widget.storiesLength);
-        // print(widget.titles);
+        isLoaded = true;
       })
     });
   }
@@ -100,10 +80,15 @@ class StoriesState extends State<Stories>{
                   subStoryId: 0,
                   storyTitle: "História",
                   storyContent: "Olá",
-                  nextPage: CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex],
-                                         activityId: widget.activities_ids[firstIndex][1],
-                                         nextActivityId: widget.activities_ids[firstIndex][1+1],
-                                        ),
+                  nextPage: GetActivities(0,
+                                          widget.ids[firstIndex],
+                                          // widget.activities_ids[firstIndex][1],
+                                          widget.activities_ids[firstIndex][0],
+                                         )
+                  // CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex],
+                  //                        activityId: widget.activities_ids[firstIndex][1],
+                  //                        nextActivityId: widget.activities_ids[firstIndex][1+1],
+                  //                       ),
                 ),
                 title: widget.titles![firstIndex],
                 svgs: 'assets/imgs/apartment.svg',
@@ -119,10 +104,15 @@ class StoriesState extends State<Stories>{
                   subStoryId: 0,
                   storyTitle: "História",
                   storyContent: "Olá",
-                  nextPage: CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex + 1],
-                                         activityId: widget.activities_ids[firstIndex+1][1],
-                                         nextActivityId: widget.activities_ids[firstIndex+1][1+1]
-                                        ),
+                  nextPage: GetActivities(0,
+                                          widget.ids[firstIndex + 1],
+                                          // widget.activities_ids[firstIndex][1],
+                                          widget.activities_ids[firstIndex + 1][1+1],
+                                         )
+                  // CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex + 1],
+                  //                        activityId: widget.activities_ids[firstIndex+1][1],
+                  //                        nextActivityId: widget.activities_ids[firstIndex+1][1+1]
+                  //                       ),
                 ),
                 title: widget.titles![firstIndex+1],
                 svgs: 'assets/imgs/electric_bolt.svg',
@@ -140,10 +130,15 @@ class StoriesState extends State<Stories>{
                   subStoryId: 0,
                   storyTitle: "História",
                   storyContent: "Olá",
-                  nextPage: CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex],
-                                        activityId: widget.activities_ids[firstIndex][1],
-                                         nextActivityId: widget.activities_ids[firstIndex][1+1]
-                                        ),
+                  nextPage: GetActivities(0,
+                                          widget.ids[firstIndex],
+                                          // widget.activities_ids[firstIndex][1],
+                                          widget.activities_ids[firstIndex][1+1],
+                                         )
+                  // CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex],
+                  //                       activityId: widget.activities_ids[firstIndex][1],
+                  //                        nextActivityId: widget.activities_ids[firstIndex][1+1]
+                  //                       ),
                 ),
                 title: widget.titles![firstIndex],
                 svgs: 'assets/imgs/domino_mask.svg',
