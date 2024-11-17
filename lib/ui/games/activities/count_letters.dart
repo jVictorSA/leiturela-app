@@ -74,7 +74,6 @@ class _CountLettersState extends State<CountLetters> {
   String nextActivityId = "";
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
   bool isAnswerIncorrect = false;
-  bool dialogShown = false;
 
   List<String> get questionText => [
         "Conte quantos ",
