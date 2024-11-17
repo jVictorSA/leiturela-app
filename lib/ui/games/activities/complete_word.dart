@@ -12,6 +12,7 @@ import 'dart:math';
 class CompleteWord extends StatefulWidget {
   String storyId;
   int subStoryId;
+
   CompleteWord({super.key, required this.subStoryId, required this.storyId});
 
   @override
@@ -19,7 +20,6 @@ class CompleteWord extends StatefulWidget {
 }
 
 class _CompleteWordState extends State<CompleteWord> {
-
   Map<String, Offset> letterBoxPositions = {};
   final double boxWidth = 67; // Width of LetterBox
   final double boxHeight = 43; // Height of LetterBox
@@ -28,6 +28,8 @@ class _CompleteWordState extends State<CompleteWord> {
   // The list for LetterSpace stays intact; it doesn't get removed
   final List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
   final List<String> randomSyllablesList = ['ma', 'pe', 'lo'];
+
+  bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
 // Combine otherEntries with the original letterBoxList
   late List<Map<String, dynamic>> combinedList;
@@ -50,7 +52,8 @@ class _CompleteWordState extends State<CompleteWord> {
   @override
   void initState() {
     super.initState();
-    final randomIndex = Random().nextInt(letterSpaceKeys.length);  // Pick a random index
+    final randomIndex =
+        Random().nextInt(letterSpaceKeys.length); // Pick a random index
     final randomKey = letterSpaceKeys[randomIndex];
 
     letterBoxList = [
@@ -59,15 +62,17 @@ class _CompleteWordState extends State<CompleteWord> {
         'widget': LetterBox(text: randomKey, borderRadius: 15.0, width: 67),
       }
     ];
-    List<Map<String, dynamic>> randomSyllables = randomSyllablesList.map((random_key) {
+    List<Map<String, dynamic>> randomSyllables =
+        randomSyllablesList.map((random_key) {
       return {
         'key': random_key,
         'widget': LetterBox(text: random_key, borderRadius: 15.0, width: 67),
       };
     }).toList();
 
-    final filteredSyllables = randomSyllables.where((item) => item['key'] != randomKey).toList();
-    combinedList = [...filteredSyllables , ...letterBoxList];
+    final filteredSyllables =
+        randomSyllables.where((item) => item['key'] != randomKey).toList();
+    combinedList = [...filteredSyllables, ...letterBoxList];
 
     // Create the LetterSpace list (this should not be removed)
     letterSpaceList = letterSpaceKeys.map((key) {
@@ -93,11 +98,13 @@ class _CompleteWordState extends State<CompleteWord> {
 
     // X-axis limits with 10% on both sides
     const minX = 0;
-    final maxX = screenWidth * 0.80 - boxWidth; // Ensure that box width doesn't exceed boundary
+    final maxX = screenWidth * 0.80 -
+        boxWidth; // Ensure that box width doesn't exceed boundary
 
     // Y-axis limits with 5% on top and 5% on bottom
     final minY = screenHeight * 0.3;
-    final maxY = screenHeight * 0.80 - boxHeight; // Ensure that box height doesn't exceed boundary
+    final maxY = screenHeight * 0.80 -
+        boxHeight; // Ensure that box height doesn't exceed boundary
 
     setState(() {
       for (var item in combinedList) {
@@ -141,20 +148,22 @@ class _CompleteWordState extends State<CompleteWord> {
 
   @override
   Widget build(BuildContext context) {
-
-    if (letterBoxList.isEmpty) {
+    if (letterBoxList.isEmpty && !dialogShown) {
+      setState(() {
+        dialogShown = true;
+      });
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return EndActivityPopup(
-                currentScreen: CompleteWord(subStoryId: widget.subStoryId, storyId: widget.storyId),
-                story: widget.subStoryId != 0 ? true : false,
-                storyId: widget.storyId,
-                subStoryId: widget.subStoryId ,
-                ctx: context               
-              ); // Call your custom popup
+                  currentScreen: CompleteWord(
+                      subStoryId: widget.subStoryId, storyId: widget.storyId),
+                  story: widget.subStoryId != 0 ? true : false,
+                  storyId: widget.storyId,
+                  subStoryId: widget.subStoryId,
+                  ctx: context); // Call your custom popup
             },
             barrierDismissible: false,
           );
@@ -193,7 +202,9 @@ class _CompleteWordState extends State<CompleteWord> {
                             ),
                           ],
                         ),
-                        AudioButton(expectedSound: 'cabelo.wav',),
+                        AudioButton(
+                          soundFiles: ['cabelo.wav'],
+                        ),
                       ],
                     )
                   ],

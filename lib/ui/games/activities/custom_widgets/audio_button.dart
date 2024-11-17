@@ -5,28 +5,31 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AudioButton extends StatelessWidget {
   final AudioPlayer audioPlayer = AudioPlayer();
-  final String expectedSound;
+  final List<String> soundFiles;  // Change to a list of sound files
 
   AudioButton({
-
-    super.key, required this.expectedSound,
+    super.key, required this.soundFiles,
   });
 
-  void _playSound() async {
+  void _playSounds() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    await audioPlayer.setVolume(_prefs.getInt('efeitos')!.toDouble() / 10);
-    await audioPlayer.play(
-        AssetSource('audio/$expectedSound')); // Update with your sound file path
+    double volume = _prefs.getInt('efeitos')!.toDouble() / 10;
+
+    // Loop through the list of sound files
+    for (var sound in soundFiles) {
+      await audioPlayer.setVolume(volume);
+      await audioPlayer.play(AssetSource('audio/$sound')); // Play each sound
+      await audioPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: _playSound, // Set your desired action here
+      onPressed: _playSounds,  // Play all sounds when pressed
       style: TextButton.styleFrom(
-        padding: EdgeInsets.zero, // Remove any padding around the button
-        backgroundColor:
-            Colors.transparent, // Set the background color to transparent
+        padding: EdgeInsets.zero,
+        backgroundColor: Colors.transparent,
       ),
       child: SvgPicture.asset(
         'assets/imgs/speaker.svg',
@@ -36,3 +39,4 @@ class AudioButton extends StatelessWidget {
     );
   }
 }
+

@@ -36,6 +36,7 @@ class _ImageAssociationState extends State<ImageAssociation> {
   String imageFour = 'assets/imgs/castle_atv.svg';
 
   int correctImage = 2;
+  bool dialogShown = false;  // Add a flag to check if the dialog has been shown
 
   Color borderColorOne = Colors.white60;
   Color borderColorTwo = Colors.white60;
@@ -49,28 +50,32 @@ class _ImageAssociationState extends State<ImageAssociation> {
 
   @override
   Widget build(BuildContext context) {
-    if (answerFound){
+
+    if (answerFound && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {
+          // To avoid multiple calls to showDialog, we set a flag
+          setState(() {
+            dialogShown = true; // Ensure the dialog is only shown once
+          });
+
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return EndActivityPopup(
-                  currentScreen: ImageAssociation(subStoryId: widget.subStoryId, storyId: widget.storyId),
+                  currentScreen: ImageAssociation(
+                      subStoryId: widget.subStoryId, storyId: widget.storyId),
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
-                  subStoryId: widget.subStoryId ,
+                  subStoryId: widget.subStoryId,
                   ctx: context
-              ); // Call your custom popup
+              );
             },
             barrierDismissible: false,
           );
         });
       });
     }
-
-
-
 
     TextSpan printedText = TextSpan(
       children: [

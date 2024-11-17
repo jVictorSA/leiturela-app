@@ -32,6 +32,8 @@ class _BuildWordState extends State<BuildWord> {
 
   List<Map<String, dynamic>> shuffledSyllables = [];
 
+  bool dialogShown = false;  // Add a flag to check if the dialog has been shown
+
   @override
   void initState() {
     super.initState();
@@ -64,7 +66,10 @@ class _BuildWordState extends State<BuildWord> {
 
   @override
   Widget build(BuildContext context) {
-    if (checkAllInvisible()){
+    if (checkAllInvisible() && !dialogShown){
+      setState(() {
+        dialogShown = true;
+      });
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {
           showDialog(
@@ -103,7 +108,7 @@ class _BuildWordState extends State<BuildWord> {
                 ),
                 const Spacer(),
                 AudioButton(
-                  expectedSound: 'cabelo.wav',
+                  soundFiles: ['cabelo.wav'],
                 ),
                 const Spacer(),
                 Row(

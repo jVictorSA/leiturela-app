@@ -7,7 +7,12 @@ import '../custom_widgets/return_button.dart';
 import '../custom_widgets/selected_frame.dart';
 import '../games/activities/build_letter.dart';
 import '../games/activities/count_letters.dart';
+import '../games/activities/count_letters_by_sound.dart';
 import '../games/activities/drag_crossword.dart';
+import '../games/activities/press_letter.dart';
+import '../games/activities/abc_press_letters.dart';
+import '../games/activities/select_word_by_audio.dart';
+import '../games/activities/mark_the_word.dart';
 
 class Minigames extends StatelessWidget {
   const Minigames({super.key});
@@ -80,17 +85,60 @@ class Minigames extends StatelessWidget {
                             parentContext: context,
                             nextPage: ImageAssociation(storyId: "", subStoryId: 0),
                             title: 'Associar Imagem',
-                            svgs: 'assets/imgs/abc.svg',
+                            svgs: 'assets/imgs/image_icon.svg',
                             backgroundColor: Colors.lightGreenAccent,
                             textSize: 20,
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: UpperLower(storyId: "", subStoryId: 0,),
-                            title: 'Maiúsculas e Minúsculas',
-                            svgs: 'assets/imgs/abc.svg',
+
+                            nextPage: SelectWordAudio(storyId: 0, subStoryId: 0),
+                            title: 'Selecionar Palavras Pelo Áudio',
+                            svgs: 'assets/imgs/letter_sound.svg',
                             backgroundColor: Colors.pinkAccent,
+                            textSize: 15,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SelectedFrame(
+                            parentContext: context,
+                            nextPage: PressLetter(storyId: 0, subStoryId: 0),
+                            title: 'Pressionar Letras',
+                            svgs: 'assets/imgs/press_letter.svg',
+                            backgroundColor: Colors.limeAccent,
                             textSize: 20,
+                          ),
+                          SelectedFrame(
+                            parentContext: context,
+                            nextPage: ABCPressLetter(storyId: 0, subStoryId: 0),
+                            title: 'Escolher Letras',
+                            svgs: 'assets/imgs/abcpress.svg',
+                            backgroundColor: Colors.teal,
+                            textSize: 20,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SelectedFrame(
+                            parentContext: context,
+                            nextPage: PressSyllable(storyId: 0, subStoryId: 0, syllable: 'Bo'),
+                            title: 'Marcar Letras',
+                            svgs: 'assets/imgs/',
+                            backgroundColor: const Color.fromARGB(255, 80, 80, 80),
+                            textSize: 20,
+                          ),
+                          SelectedFrame(
+                            parentContext: context,
+                            nextPage: CountLettersBySound(storyId: 0, subStoryId: 0),
+                            title: 'Contar Letras por Som',
+                            svgs: 'assets/imgs/press.svg',
+                            backgroundColor: Colors.lightGreenAccent,
+                            textSize: 18,
                           ),
                         ],
                       ),
