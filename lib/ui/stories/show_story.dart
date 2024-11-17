@@ -6,36 +6,19 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';// show utf8;
 
 import '../custom_widgets/return_button.dart';
-
-Future<String> fetchStory(id) async {
-  var response = await http.get(Uri.parse('http://10.0.2.2:8000/atividade/story:$id'), headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzNkNDI3ODc2ZDRmZGNhNGQ0MGM3ZiIsImV4cCI6MTczMTU1MzUyOX0.Kd0RuMdzxi1nolZrl9SvJOfEHx8GCuN4gKmmUbwasGI',
-    });
-  print(id);
-  print(response.body);
-
-  if (response.statusCode == 200) {
-  var decoded = utf8.decode(response.bodyBytes);
-  // print(decoded);
-
-    return decoded.toString();
-  }
-  return response.body;
-}
-
+import 'package:demo_app/ui/games/activities/activities_map.dart';
+import "package:demo_app/services/services.dart";
 
 class ShowStory extends StatefulWidget {
   BuildContext parentContext;
-  Widget nextPage;
+  GetActivities nextPage;
   double marginVal = 30.0;
   double textSize;
   String storyTitle;
   String storyContent;
   String storyId;
   int subStoryId;
-  String nextActivityType;
+  // String nextActivityType;
 
   ShowStory({
     super.key,
@@ -45,7 +28,7 @@ class ShowStory extends StatefulWidget {
     required this.storyContent,
     required this.storyId,
     required this.subStoryId,
-    this.nextActivityType = "",
+    // required this.nextActivityType,
     double? textSize, // Add an optional parameter
   }) : textSize = textSize ?? 28.0; // Set default value to 28.0 if null
 
@@ -53,23 +36,11 @@ class ShowStory extends StatefulWidget {
   ShowStoryState createState() => ShowStoryState();
 }
 
-class ShowStoryState extends State<ShowStory> {
-  // BuildContext? parentContext;
-  // Widget? nextPage;
-  // final marginVal = 30.0;
-  // double? textSize;
-  // String? storyTitle;
-  String storyContent = "";
-  
-
-  // const ShowStory({
-  //   super.key,
-  //   required this.parentContext,
-  //   required this.nextPage,
-  //   required this.storyTitle,
-  //   // required this.svgs,
-  //   double? textSize, // Add an optional parameter
-  // }) : textSize = textSize ?? 28.0; // Set default value to 28.0 if null
+class ShowStoryState extends State<ShowStory> {  
+  // String storyContent = "";
+  String nextActivityType = "";
+  String nextActivityId = "";
+  bool isLoaded = false;
 
   @override
   void initState() {
@@ -78,17 +49,25 @@ class ShowStoryState extends State<ShowStory> {
     fetchStory(widget.storyId).then((response) => {
       setState(() {
         String storyId = widget.storyId;
-        String entireObject;
+        String entireObject;        
         int subStoryId = widget.subStoryId;
         print("História: $storyId - substória: $subStoryId");
         entireObject = response;
         Map subStories = json.decode(entireObject);
         String substory = subStories["chunks"][subStoryId];
-        // print(substory);
-        storyContent = substory;
-        // print(valueMap["sub_stories"]);
+
+        widget.storyContent = substory;
+        nextActivityType = subStories["activities"][subStoryId]["type"];        
       })
     });
+
+    fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+      setState(() {        
+        nextActivityId = response;
+        isLoaded = true;
+      })
+    });
+    print("isLoaded: " + isLoaded.toString());
   }
 
   
@@ -117,7 +96,7 @@ class ShowStoryState extends State<ShowStory> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                            storyContent,
+                            widget.storyContent,
                             style: const TextStyle(
                                 fontSize: 28,
                                 fontFamily: 'Playpen-Sans',
@@ -132,7 +111,9 @@ class ShowStoryState extends State<ShowStory> {
               ),
               
               Padding(padding: const EdgeInsets.only(top: 60.0),
-              child:  Container(
+              child:  isLoaded ?
+                                // Caso dados forem carregados 
+                                Container(
                                   height: 70.0,
                                   width: 100.0,
                                   decoration: BoxDecoration(
@@ -155,7 +136,8 @@ class ShowStoryState extends State<ShowStory> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                            widget.nextPage),
+                                            widget.nextPage.getActivity(nextActivityType,
+                                                                        nextActivityId)),
                                       );
                                     },
                                     style: ButtonStyle(
@@ -170,7 +152,43 @@ class ShowStoryState extends State<ShowStory> {
                                     child: const Icon(Icons.play_circle_fill,
                                                       color: Colors.white,
                                                       size: 50)
-                                  ))
+                                    )
+                                  ) :
+                                
+                                // Caso dados não tiverem sido caregados
+                                Container(
+                                  height: 70.0,
+                                  width: 100.0,
+                                  decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          stops: [
+                                            0.5,
+                                            0.9,
+                                          ],
+                                          colors: [
+                                            Color.fromARGB(255, 158, 161, 161),
+                                            Color.fromARGB(255, 69, 70, 73)
+                                          ]),
+                                      borderRadius:
+                                      BorderRadius.circular(10)),
+                                      child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                      MaterialStateProperty.all<
+                                          Color>(Colors.transparent),
+                                      shadowColor: MaterialStateProperty
+                                          .all<Color>(Colors.transparent),
+                                      padding: MaterialStateProperty.all(
+                                          EdgeInsets.zero),
+                                    ),
+                                    child: const Icon(Icons.play_circle_fill,
+                                                      color: Colors.white,
+                                                      size: 50)
+                                    )
+                                  )
               )
 
             ],

@@ -9,6 +9,7 @@ import '../minigames/minigames.dart';
 import '../games/activities/count_letters.dart';
 // import '../games/activities/drag_crossword.dart';
 import 'package:demo_app/ui/stories/show_story.dart';
+import 'package:demo_app/ui/games/activities/activities_map.dart';
 
 class EndActivityPopup extends StatelessWidget {
   final Widget currentScreen;
@@ -24,12 +25,12 @@ class EndActivityPopup extends StatelessWidget {
                           required this.storyId,
                           required this.subStoryId,
                           required this.ctx,
-                          this.nextActivityId = "673346a00a5e2246b93ab558"
+                          this.nextActivityId = ""
                         });
 
   Widget getNextPage(){
     if (subStoryId != null){
-      if (subStoryId! >= 10){
+      if (subStoryId! >= 9){
         return Stories();  
       }
       else{
@@ -40,7 +41,13 @@ class EndActivityPopup extends StatelessWidget {
                   subStoryId: subStoryId! + 1,
                   storyTitle: "História",
                   storyContent: "Olá",
-                  nextPage: CountLetters(subStoryId: subStoryId! + 1, storyId: storyId!),
+                  nextPage: GetActivities(subStoryId!+1,
+                                          storyId!,
+                                          
+                                          // fetchNextActivity(storyId!, curentSubstory)
+                                          nextActivityId,
+                                          ),
+                  // CountLetters(subStoryId: subStoryId! + 1, storyId: storyId!),
                 );
       }
     }

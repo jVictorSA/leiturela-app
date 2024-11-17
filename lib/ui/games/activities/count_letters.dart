@@ -1,7 +1,6 @@
 // import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_svg/svg.dart';
 import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
@@ -11,16 +10,36 @@ import 'custom_widgets/golden_text_special_case.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzNkNDI3ODc2ZDRmZGNhNGQ0MGM3ZiIsImV4cCI6MTczMTgwNzkyMH0.mogOpSdcFK_zJESUlH1nIBkW2Pqq9S1iCVzbTWjz6U4";
+
 Future<String> fetchActivity(http.Client client, activityId) async {
-  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/atividade:6733e0e39ccd12700d69cf8d'));
-  // print(id);
-  // print(response.body);
+  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/atividade:$activityId'));  
 
   if (response.statusCode == 200) {
-  var decoded = utf8.decode(response.bodyBytes);
-  // print(decoded);
+  var decoded = utf8.decode(response.bodyBytes);  
 
     return decoded.toString();
+  }
+  return response.body;
+}
+
+Future<String> fetchNextActivity(storyId, curentSubstory) async {
+  var response = await http.get(Uri.parse('http://10.0.2.2:8000/atividade/story:$storyId'), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': token,
+    });
+
+  if (response.statusCode == 200) {
+    var decoded = utf8.decode(response.bodyBytes);  
+    
+    String entireObject;        
+      
+    entireObject = decoded.toString();
+    Map subStories = json.decode(entireObject);    
+    String nextActivityId = subStories["activities"][curentSubstory+1]["_id"];    
+
+    return nextActivityId;
   }
   return response.body;
 }
@@ -32,16 +51,16 @@ class CountLetters extends StatefulWidget {
   String letter;
   String text;
   String activityId;
-  String nextActivityId;
+  // String nextActivityId;
 
   CountLetters({super.key,
                 required this.subStoryId,
                 required this.storyId,
-                this.activityId = "673346a00a5e2246b93ab556",
-                this.nextActivityId = "673346a00a5e2246b93ab558",
+                this.activityId = "ERRADO",
+                // this.nextActivityId = "673346a00a5e2246b93ab558",
                 this.answer = 9,
-                this.letter = "",
-                this.text = ""
+                this.letter = "E",
+                this.text = "ERRADO"
               });
 
 
@@ -52,8 +71,10 @@ class CountLetters extends StatefulWidget {
 class _CountLettersState extends State<CountLetters> {
   TextEditingController controller = TextEditingController();
 
+  String nextActivityId = "";
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
   bool isAnswerIncorrect = false;
+  bool dialogShown = false;
 
   List<String> get questionText => [
         "Conte quantos ",
@@ -62,14 +83,6 @@ class _CountLettersState extends State<CountLetters> {
         widget.letter.toUpperCase(),
         " têm no seguinte texto."
       ];
-
-  // static const String textToCount =
-  //     "Nina nadou na piscina enquanto o amigo cantava uma canção calma.";
-
-  // static const String letter = 'N';
-  // static String letterLowerCase = 'N'.toLowerCase();
-
-  // late int letterCount;
 
   bool solvedActivity = false;
 
@@ -81,15 +94,23 @@ class _CountLettersState extends State<CountLetters> {
       setState(() {
         String entireObject;
         entireObject = response;        
-        Map activity = json.decode(entireObject);        
+        Map activity = json.decode(entireObject);
+        print("fetch activity id: " + widget.activityId);
+
+        print("atividade:\n" + activity.toString());
 
         widget.answer = activity["answer"]["num"];
         widget.letter = activity["body"]["letra"];
         widget.text = activity["body"]["frase"];
+        print("VÁRIAS INFORMAÇÕES: " + widget.activityId + "\n" + widget.text + "\n" + widget.subStoryId.toString() + "\n" + widget.storyId);       
       })
     });
 
-    // letterCount = countLetter(textToCount, letter);
+    fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+      setState(() {        
+        nextActivityId = response;
+      })
+    });
   }
 
   void checkAnswer() {
@@ -119,6 +140,7 @@ class _CountLettersState extends State<CountLetters> {
                 story: widget.subStoryId != 0 ? true : false,
                 storyId: widget.storyId,
                 subStoryId: widget.subStoryId,
+                nextActivityId: nextActivityId,
                 ctx: context,
               ); // Call your custom popup
             },
