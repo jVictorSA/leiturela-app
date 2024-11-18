@@ -30,13 +30,36 @@ class _ImageAssociationState extends State<ImageAssociation> {
 
   static const String letter = 'B';
 
-  String imageOne = 'assets/imgs/house_atv.svg';
-  String imageTwo = 'assets/imgs/balloon_atv.svg';
-  String imageThree = 'assets/imgs/cat_atv.svg';
-  String imageFour = 'assets/imgs/castle_atv.svg';
+  List<String> atvImages = [
+    'assets/imgs/atv_imgs/balao.svg',
+    'assets/imgs/atv_imgs/bebe.svg',
+    'assets/imgs/atv_imgs/bolo.svg',
+    'assets/imgs/atv_imgs/brasil.svg',
+    'assets/imgs/atv_imgs/cachorro.svg',
+    'assets/imgs/atv_imgs/carro.svg',
+    'assets/imgs/atv_imgs/casa.svg',
+    'assets/imgs/atv_imgs/castelo.svg',
+    'assets/imgs/atv_imgs/dado.svg',
+    'assets/imgs/atv_imgs/dinheiro.svg',
+    'assets/imgs/atv_imgs/flor.svg',
+    'assets/imgs/atv_imgs/fogo.svg',
+    'assets/imgs/atv_imgs/formiga.svg',
+    'assets/imgs/atv_imgs/galinha.svg',
+    'assets/imgs/atv_imgs/gato.svg',
+    'assets/imgs/atv_imgs/laranja.svg',
+    'assets/imgs/atv_imgs/lua.svg',
+    'assets/imgs/atv_imgs/passaro.svg',
+    'assets/imgs/atv_imgs/peixe.svg',
+    'assets/imgs/atv_imgs/porta.svg',
+    'assets/imgs/atv_imgs/praia.svg',
+    'assets/imgs/atv_imgs/pão.svg',
+    'assets/imgs/atv_imgs/queijo.svg',
+    'assets/imgs/atv_imgs/vaca.svg',
+    'assets/imgs/atv_imgs/arvore.svg'
+  ];
 
   int correctImage = 2;
-  bool dialogShown = false;  // Add a flag to check if the dialog has been shown
+  bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
   Color borderColorOne = Colors.white60;
   Color borderColorTwo = Colors.white60;
@@ -50,7 +73,6 @@ class _ImageAssociationState extends State<ImageAssociation> {
 
   @override
   Widget build(BuildContext context) {
-
     if (answerFound && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -68,8 +90,7 @@ class _ImageAssociationState extends State<ImageAssociation> {
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
                   subStoryId: widget.subStoryId,
-                  ctx: context
-              );
+                  ctx: context);
             },
             barrierDismissible: false,
           );
@@ -151,7 +172,7 @@ class _ImageAssociationState extends State<ImageAssociation> {
                         ),
                       ),
                       child: SvgPicture.asset(
-                        'assets/imgs/house_atv.svg',
+                        atvImages[0],
                         width: 100,
                         height: 100,
                       ),
@@ -180,7 +201,7 @@ class _ImageAssociationState extends State<ImageAssociation> {
                         ),
                       ),
                       child: SvgPicture.asset(
-                        'assets/imgs/balloon_atv.svg',
+                        atvImages[1],
                         width: 100,
                         height: 100,
                       ),
@@ -220,7 +241,7 @@ class _ImageAssociationState extends State<ImageAssociation> {
                         ),
                       ),
                       child: SvgPicture.asset(
-                        'assets/imgs/cat_atv.svg',
+                        atvImages[2],
                         width: 100,
                         height: 100,
                       ),
@@ -249,7 +270,7 @@ class _ImageAssociationState extends State<ImageAssociation> {
                         ),
                       ),
                       child: SvgPicture.asset(
-                        'assets/imgs/castle_atv.svg',
+                        atvImages[3],
                         width: 100,
                         height: 100,
                       ),

@@ -1,4 +1,4 @@
-import 'package:just_audio/just_audio.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class AudioManager {
   static final AudioManager _instance = AudioManager._internal();
@@ -13,13 +13,10 @@ class AudioManager {
   AudioPlayer get audioPlayer => _audioPlayer;
 
   Future<void> playMainMenuMusic() async {
-    if (_audioPlayer.playing) return;
+    if (_audioPlayer.state == PlayerState.playing) return; // Check if already playing
 
-    await _audioPlayer.setAudioSource(
-      AudioSource.asset('assets/audio/main.mp3'),
-    );
-    _audioPlayer.setLoopMode(LoopMode.all);
-    _audioPlayer.play();
+    await _audioPlayer.setReleaseMode(ReleaseMode.loop); // Loop the background music
+    await _audioPlayer.play(AssetSource('audio/main.mp3')); // Ensure path matches your asset setup
   }
 
   void stopMusic() {
