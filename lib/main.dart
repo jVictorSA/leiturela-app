@@ -2,6 +2,7 @@ import 'package:demo_app/ui/custom_widgets/audiomanager.dart';
 import 'package:demo_app/ui/custom_widgets/custom_button.dart';
 import 'package:demo_app/ui/games/story_games_screen.dart';
 import 'package:demo_app/ui/login/login_screen.dart';
+import 'package:demo_app/ui/login/register_screen.dart';
 import 'package:demo_app/ui/minigames/minigames.dart';
 import 'package:demo_app/ui/report/report.dart';
 import 'package:demo_app/ui/settings/settings.dart';
@@ -275,6 +276,15 @@ class _MainMenuState extends State<MainMenu> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => const Login()));
+                  },
+                ),
+                SizedBox(height: 10,),
+                CustomButton(
+                  height: 40,
+                  label: 'Cadastro',
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const Register()));
                   },
                 ),
                 const Spacer(
