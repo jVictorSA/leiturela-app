@@ -88,10 +88,6 @@ class _BuildWordState extends State<BuildWord> {
         });
       });
     }
-
-
-
-
     return Scaffold(
       body: ActivityBackground(
         child: Stack(

@@ -27,7 +27,7 @@ class _CompleteWordState extends State<CompleteWord> {
 
   // The list for LetterSpace stays intact; it doesn't get removed
   final List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
-  final List<String> randomSyllablesList = ['ma', 'pe', 'lo'];
+  final List<String> randomSyllablesList = ['ma', 'pe'];
 
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
