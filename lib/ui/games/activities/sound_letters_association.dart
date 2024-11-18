@@ -28,32 +28,32 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
   late int letterAnswer;
 
   List<String> allLetters = [
-    'A.wav',
-    'B.wav',
-    'C.wav',
-    'D.wav',
-    'E.wav',
-    'F.wav',
-    'G.wav',
-    'H.wav',
-    'I.wav',
-    'J.wav',
-    'K.wav',
-    'L.wav',
-    'M.wav',
-    'N.wav',
-    'O.wav',
-    'P.wav',
-    'Q.wav',
-    'R.wav',
-    'S.wav',
-    'T.wav',
-    'U.wav',
-    'V.wav',
-    'W.wav',
-    'X.wav',
-    'Y.wav',
-    'Z.wav'
+    'a.mp3',
+    'b.mp3',
+    'c.mp3',
+    'd.mp3',
+    'e.mp3',
+    'f.mp3',
+    'g.mp3',
+    'h.mp3',
+    'i.mp3',
+    'j.mp3',
+    'k.mp3',
+    'l.mp3',
+    'm.mp3',
+    'n.mp3',
+    'o.mp3',
+    'p.mp3',
+    'q.mp3',
+    'r.mp3',
+    's.mp3',
+    't.mp3',
+    'y.mp3',
+    'v.mp3',
+    'w.mp3',
+    'x.mp3',
+    'y.mp3',
+    'z.mp3'
   ];
   List<String> activityLetters = [];
   List<String> audioChosenLetters = [];
@@ -95,12 +95,16 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
       return random.nextBool() ? letter.toLowerCase() : letter;
     }).toList();
 
-    chosenLetters = audioChosenLetters.map((str) => str.replaceAll('.wav', '')).toList();
+    chosenLetters = audioChosenLetters.map((str) => str.replaceAll('.mp3', '')).toList();
 
     // Shuffle activityLetters to randomize their order
     activityLetters.shuffle(random);
 
-    activityLetters = activityLetters.map((str) => str.replaceAll('.wav', '')).toList();
+    activityLetters = activityLetters.map((str) => str.replaceAll('.mp3', '')).toList();
+
+    activityLetters = activityLetters.map((letter) {
+      return random.nextBool() ? letter.toUpperCase() : letter;
+    }).toList();
 
     buttonColors = {
       for (var letter in activityLetters) letter: defaultColor,
@@ -178,7 +182,9 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
                 RichText(
                   text: printedText,
                 ),
-                AudioButton(soundFiles: ['letter_sounds/b.wav', 'letter_sounds/b.wav']), // passa audioChosenLetters aqui.
+                AudioButton(
+                  soundFiles: audioChosenLetters.map((file) => 'letter_sounds/$file').toList(),
+                ),
                 const SizedBox(
                   height: 32,
                 ),
