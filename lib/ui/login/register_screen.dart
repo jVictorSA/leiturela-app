@@ -25,7 +25,6 @@ class _RegisterState extends State<Register> {
     final passwordRepeat = controllerPasswordRepeat.text;
 
     if (password != passwordRepeat) {
-      // Exibe um alerta se as senhas não são iguais
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -43,10 +42,8 @@ class _RegisterState extends State<Register> {
     }
 
     try {
-      // URL da sua API
       const url = 'http://10.0.2.2:8000/user/register';
 
-      // Dados a serem enviados
       final response = await http.post(
         Uri.parse(url),
         headers: {'Content-Type': 'application/json'},
@@ -55,10 +52,7 @@ class _RegisterState extends State<Register> {
           'password': password,
         }),
       );
-
-      // Verifica o status da resposta
       if (response.statusCode == 200) {
-        // Sucesso - exibe uma mensagem ou redireciona
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -73,7 +67,6 @@ class _RegisterState extends State<Register> {
           ),
         );
       } else {
-        // Falha - exibe a mensagem de erro
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -89,7 +82,6 @@ class _RegisterState extends State<Register> {
         );
       }
     } catch (e) {
-      // Exibe o erro em caso de falha na requisição
       showDialog(
         context: context,
         builder: (context) => AlertDialog(

@@ -23,8 +23,10 @@ class _LoginState extends State<Login> {
     String password = controllerPassword.text;
 
     try {
+      const url = 'http://10.0.2.2:8000/user/login';
+
       var response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/user/login'),
+        Uri.parse(url),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'email': email,
@@ -33,13 +35,10 @@ class _LoginState extends State<Login> {
       );
 
       if (response.statusCode == 200) {
-        // Login bem-sucedido
         var data = jsonDecode(response.body);
         // Faça algo com os dados recebidos, como salvar o token
         print('Login realizado com sucesso: ${data}');
-        // Navegue para a próxima tela ou mostre uma mensagem de sucesso
       } else {
-        // Erro de login
         print('Erro: ${response.body}');
         _showErrorDialog('Erro no login. Verifique suas credenciais.');
       }
