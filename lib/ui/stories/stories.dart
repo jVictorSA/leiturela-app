@@ -152,8 +152,8 @@ class StoriesState extends State<Stories>{
   @override
   Widget build(BuildContext context) {    
     return Scaffold(
-      body: SingleChildScrollView(
-        child: isLoaded ? Stack(
+      body: isLoaded ? SingleChildScrollView(
+        child: Stack(
           children: [
             Positioned.fill(
               child: SvgPicture.asset(
@@ -176,11 +176,11 @@ class StoriesState extends State<Stories>{
             ),
           ],
         )
-        : const Column(mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Center(child: CircularProgressIndicator(),)]
-                ),
-      ),
+      )
+      : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Center(child: CircularProgressIndicator(),)]
+              ),
     );
   }
 }

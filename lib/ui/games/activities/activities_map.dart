@@ -1,22 +1,18 @@
 import 'package:demo_app/ui//games/activities/count_letters.dart';
+import 'package:demo_app/ui//games/activities/build_letter.dart';
+import 'package:demo_app/ui//games/activities/complete_word.dart';
 import 'package:flutter/material.dart';
 
 
 class GetActivities{
   int subStoryId;
-  String storyId;
-  // String activityId;
+  String storyId;  
   String nextActivityId;
-  // String activityType;
-
 
   GetActivities(this.subStoryId,
                 this.storyId,
-                // this.activityId,
-                this.nextActivityId,
-                // this.activityType
+                this.nextActivityId                
                );
-
   
   Widget getActivity (String activityType, String nextActivityId){
     print(subStoryId);
@@ -27,11 +23,18 @@ class GetActivities{
                           // nextActivityId: nextActivityId,
                         );
     }
-    //else if(activityType == "desembaralha_palavra"){
-    // }
+    else if(activityType == "build_letter"){
+      return BuildWord(subStoryId: subStoryId,
+                       storyId: storyId,
+                       activityId: nextActivityId
+                      );
+    }
       
-    //else if(activityType == "desembaralha_palavra"){
-    // }
+    else if(activityType == "complete_word"){
+      return CompleteWord(subStoryId: subStoryId,
+                          storyId: storyId,
+                          activityId: nextActivityId);
+    }
     
     // Caso base apenas para não dar erro de Null-Safety
     else{

@@ -29,7 +29,7 @@ class EndActivityPopup extends StatelessWidget {
                         });
 
   Widget getNextPage(){
-    if (subStoryId != null){
+    if (nextActivityId != ""){
       if (subStoryId! >= 9){
         return Stories();  
       }
@@ -190,12 +190,13 @@ class EndActivityPopup extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30)),
                         child: OutlinedButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                currentScreen, // Navigate to the current screen again
-                              ),
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => currentScreen
+                                ),
+                                ModalRoute.withName("/")
+                              // (route) => false
                             );
                           },
                           style: ButtonStyle(

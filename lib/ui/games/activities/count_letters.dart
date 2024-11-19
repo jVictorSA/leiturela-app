@@ -9,40 +9,7 @@ import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzNkNDI3ODc2ZDRmZGNhNGQ0MGM3ZiIsImV4cCI6MTczMTgwNzkyMH0.mogOpSdcFK_zJESUlH1nIBkW2Pqq9S1iCVzbTWjz6U4";
-
-Future<String> fetchActivity(http.Client client, activityId) async {
-  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/atividade:$activityId'));  
-
-  if (response.statusCode == 200) {
-  var decoded = utf8.decode(response.bodyBytes);  
-
-    return decoded.toString();
-  }
-  return response.body;
-}
-
-Future<String> fetchNextActivity(storyId, curentSubstory) async {
-  var response = await http.get(Uri.parse('http://10.0.2.2:8000/atividade/story:$storyId'), headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': token,
-    });
-
-  if (response.statusCode == 200) {
-    var decoded = utf8.decode(response.bodyBytes);  
-    
-    String entireObject;        
-      
-    entireObject = decoded.toString();
-    Map subStories = json.decode(entireObject);    
-    String nextActivityId = subStories["activities"][curentSubstory+1]["_id"];    
-
-    return nextActivityId;
-  }
-  return response.body;
-}
+import "package:demo_app/services/services.dart";
 
 class CountLetters extends StatefulWidget {
   String storyId;
@@ -57,7 +24,6 @@ class CountLetters extends StatefulWidget {
                 required this.subStoryId,
                 required this.storyId,
                 this.activityId = "ERRADO",
-                // this.nextActivityId = "673346a00a5e2246b93ab558",
                 this.answer = 9,
                 this.letter = "E",
                 this.text = "ERRADO"
