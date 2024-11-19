@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 
 import '../custom_widgets/custom_button.dart';
 import '../custom_widgets/return_button.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -16,6 +18,93 @@ class _RegisterState extends State<Register> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
   TextEditingController controllerPasswordRepeat = TextEditingController();
+
+  Future<void> registerUser() async {
+    final email = controllerEmail.text;
+    final password = controllerPassword.text;
+    final passwordRepeat = controllerPasswordRepeat.text;
+
+    if (password != passwordRepeat) {
+      // Exibe um alerta se as senhas não são iguais
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Erro"),
+          content: const Text("As senhas não coincidem."),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    try {
+      // URL da sua API
+      const url = 'http://10.0.2.2:8000/user/register';
+
+      // Dados a serem enviados
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+        }),
+      );
+
+      // Verifica o status da resposta
+      if (response.statusCode == 200) {
+        // Sucesso - exibe uma mensagem ou redireciona
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Sucesso"),
+            content: const Text("Registro realizado com sucesso."),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+        );
+      } else {
+        // Falha - exibe a mensagem de erro
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Erro"),
+            content: Text("Erro ao registrar: ${response.body}"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      // Exibe o erro em caso de falha na requisição
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Erro"),
+          content: Text("Ocorreu um erro: $e"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +206,7 @@ class _RegisterState extends State<Register> {
                     child: TextField(
                       controller: controllerPassword,
                       textAlign: TextAlign.center,
+                      obscureText: true,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(vertical: 16.0),
@@ -151,6 +241,7 @@ class _RegisterState extends State<Register> {
                     child: TextField(
                       controller: controllerPasswordRepeat,
                       textAlign: TextAlign.center,
+                      obscureText: true,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(vertical: 16.0),
@@ -164,7 +255,7 @@ class _RegisterState extends State<Register> {
                   const Spacer(flex: 1,),
                   CustomButton(
                     label: 'Enviar',
-                    onPressed: () {},
+                    onPressed: registerUser,
                   ),
                   const Spacer(flex: 1,),
                 ],
