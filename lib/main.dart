@@ -12,6 +12,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const primaryColor = Color(0xFFAAE0F1);
 const outlineTitle = 1.0;
@@ -54,11 +55,13 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   final AudioManager _audioManager = AudioManager();
+  bool isLoggedIn = false;
 
   @override
   void initState() {
     super.initState();
     _audioManager.playMainMenuMusic();
+    _checkLoginStatus();
   }
 
   @override
@@ -67,6 +70,18 @@ class _MainMenuState extends State<MainMenu> {
     // _audioManager.stopMusic();
     super.dispose();
   }
+
+  Future<void> _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('auth_token');
+
+    setState(() {
+      isLoggedIn = token != null && token.isNotEmpty;
+      print('Token encontrado: $token');
+      print('isLoggedIn: $isLoggedIn');
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -223,12 +238,13 @@ class _MainMenuState extends State<MainMenu> {
                           ]),
                       borderRadius: BorderRadius.circular(45)),
                   child: OutlinedButton(
-                    onPressed: () {
+                    onPressed: isLoggedIn ? () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const Games()),
                       );
-                    },
+                    }
+                    :null,
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.transparent),
@@ -259,7 +275,7 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Icon(
+                              child: Icon(                            
                                 Icons.play_circle_fill,
                                 color: Colors.white,
                                 size: 45,
