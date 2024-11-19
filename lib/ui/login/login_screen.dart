@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
                   ReturnButton(parentContext: context),
                 ],
               ),
-              Spacer(
+              const Spacer(
                 flex: 4,
               ),
               Column(
@@ -46,7 +46,7 @@ class _LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // Align children to the left
                 children: [
-                  Spacer(
+                  const Spacer(
                     flex: 1,
                   ),
                   const Text(
@@ -57,7 +57,7 @@ class _LoginState extends State<Login> {
                         fontWeight: FontWeight.w500,
                         color: Colors.black),
                   ),
-                  Spacer(
+                  const Spacer(
                     flex: 1,
                   ),
                   const Text(
