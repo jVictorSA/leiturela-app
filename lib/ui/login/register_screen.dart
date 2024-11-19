@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
 
 import '../custom_widgets/custom_button.dart';
 import '../custom_widgets/return_button.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../../ui/login/login_screen.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -16,6 +19,90 @@ class _RegisterState extends State<Register> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
   TextEditingController controllerPasswordRepeat = TextEditingController();
+
+  Future<void> registerUser() async {
+    final email = controllerEmail.text;
+    final password = controllerPassword.text;
+    final passwordRepeat = controllerPasswordRepeat.text;
+
+    if (password != passwordRepeat) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Erro"),
+          content: const Text("As senhas não coincidem."),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    try {
+      const url = 'http://10.0.2.2:8000/user/register';
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+        }),
+      );
+      if (response.statusCode == 200) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Sucesso"),
+            content: const Text("Registro realizado com sucesso."),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+        );
+
+        Navigator.pushReplacement(
+          context,
+           MaterialPageRoute(builder: (context) => const Login()),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Erro"),
+            content: Text("Erro ao registrar: ${response.body}"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Erro"),
+          content: Text("Ocorreu um erro: $e"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +204,7 @@ class _RegisterState extends State<Register> {
                     child: TextField(
                       controller: controllerPassword,
                       textAlign: TextAlign.center,
+                      obscureText: true,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(vertical: 16.0),
@@ -151,6 +239,7 @@ class _RegisterState extends State<Register> {
                     child: TextField(
                       controller: controllerPasswordRepeat,
                       textAlign: TextAlign.center,
+                      obscureText: true,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(vertical: 16.0),
@@ -163,8 +252,8 @@ class _RegisterState extends State<Register> {
                   ),
                   const Spacer(flex: 1,),
                   CustomButton(
-                    label: 'Enviar',
-                    onPressed: () {},
+                    label: 'Cadastrar',
+                    onPressed: registerUser,
                   ),
                   const Spacer(flex: 1,),
                 ],

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/services.dart';
-
 import '../custom_widgets/custom_button.dart';
 import '../custom_widgets/return_button.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert'; 
+import '../../ui/games/story_games_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -15,6 +17,62 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
+
+  Future<void> _login() async {
+    String email = controllerEmail.text;
+    String password = controllerPassword.text;
+
+    try {
+      const url = 'http://10.0.2.2:8000/user/login';
+
+      var response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+        }),
+      );
+    
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print('Login realizado com sucesso: ${data}');
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+
+        Navigator.pushReplacement(
+          context,
+           MaterialPageRoute(builder: (context) => const Games()),
+        );
+      } else {
+        print('Erro: ${response.body}');
+        _showErrorDialog('Erro no login. Verifique suas credenciais.');
+      }
+    } catch (e) {
+      print('Erro: $e');
+      _showErrorDialog('Erro na conexão com o servidor.');
+    }
+  }
+
+  // Função para mostrar o diálogo de erro
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Erro'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +174,7 @@ class _LoginState extends State<Login> {
                     child: TextField(
                       controller: controllerPassword,
                       textAlign: TextAlign.center,
+                      obscureText: true,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(vertical: 16.0),
@@ -128,8 +187,8 @@ class _LoginState extends State<Login> {
                   ),
                   const Spacer(),
                   CustomButton(
-                    label: 'Enviar',
-                    onPressed: () {},
+                    label: 'Entrar',
+                    onPressed: _login,
                   ),
                   const Spacer(),
                 ],
