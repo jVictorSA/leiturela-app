@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/services.dart';
-
 import '../custom_widgets/custom_button.dart';
 import '../custom_widgets/return_button.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; 
-
+import '../../ui/games/story_games_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -33,11 +33,18 @@ class _LoginState extends State<Login> {
           'password': password,
         }),
       );
-
+    
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        // Faça algo com os dados recebidos, como salvar o token
         print('Login realizado com sucesso: ${data}');
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+
+        Navigator.pushReplacement(
+          context,
+           MaterialPageRoute(builder: (context) => const Games()),
+        );
       } else {
         print('Erro: ${response.body}');
         _showErrorDialog('Erro no login. Verifique suas credenciais.');

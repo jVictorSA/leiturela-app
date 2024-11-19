@@ -6,6 +6,7 @@ import '../custom_widgets/custom_button.dart';
 import '../custom_widgets/return_button.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../../ui/login/login_screen.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -65,6 +66,11 @@ class _RegisterState extends State<Register> {
               ),
             ],
           ),
+        );
+
+        Navigator.pushReplacement(
+          context,
+           MaterialPageRoute(builder: (context) => const Login()),
         );
       } else {
         showDialog(
@@ -246,7 +252,7 @@ class _RegisterState extends State<Register> {
                   ),
                   const Spacer(flex: 1,),
                   CustomButton(
-                    label: 'Enviar',
+                    label: 'Cadastrar',
                     onPressed: registerUser,
                   ),
                   const Spacer(flex: 1,),
