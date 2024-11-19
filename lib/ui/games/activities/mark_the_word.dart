@@ -11,7 +11,8 @@ class PressSyllable extends StatefulWidget {
   int subStoryId;
   String syllable;
 
-  PressSyllable({super.key, required this.storyId, required this.subStoryId, required this.syllable});
+  // PressSyllable({super.key, required this.storyId, required this.subStoryId, required this.syllable= ""});
+  PressSyllable({super.key, required this.storyId, required this.subStoryId, this.syllable = 'Ba'});
 
   @override
   _PressSyllableState createState() => _PressSyllableState();

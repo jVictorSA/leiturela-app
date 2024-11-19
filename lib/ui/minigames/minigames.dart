@@ -127,7 +127,7 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: PressSyllable(storyId: "", subStoryId: 0, syllable: 'Bo'),
+                            nextPage: PressSyllable(storyId: "", subStoryId: 0),
                             title: 'Marcar Letras',
                             svgs: 'assets/imgs/press_word.svg',
                             backgroundColor: const Color.fromARGB(255, 80, 80, 80),
