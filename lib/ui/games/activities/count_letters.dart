@@ -55,30 +55,39 @@ class _CountLettersState extends State<CountLetters> {
   void initState() {
     super.initState();
 
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          nextActivityId = response;        
+          
+        })
+      });
+
+    }else{}
+
+    // fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+    //   setState(() {        
+    //     nextActivityId = response;
+    //   })
+    // });
+
     fetchActivity(http.Client(), widget.activityId).then((response) => {
       setState(() {
         String entireObject;
         entireObject = response;        
         Map activity = json.decode(entireObject);
         print("fetch activity id: " + widget.activityId);
-
         print("atividade:\n" + activity.toString());
 
         widget.answer = activity["answer"]["num"];
         widget.letter = activity["body"]["letra"];
-        widget.text = activity["body"]["frase"];
-        print("VÁRIAS INFORMAÇÕES: " + widget.activityId + "\n" + widget.text + "\n" + widget.subStoryId.toString() + "\n" + widget.storyId);       
+        widget.text = activity["body"]["frase"];        
       })
-    });
-
-    fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
-      setState(() {        
-        nextActivityId = response;
-      })
-    });
+    });    
   }
 
   void checkAnswer() {
+    print("nextActivityId: $nextActivityId");
     String userAnswer = controller.text;
 
     if (userAnswer.isEmpty) {
@@ -94,14 +103,15 @@ class _CountLettersState extends State<CountLetters> {
           isAnswerIncorrect = false;
           dialogShown = true;  // Ensure the dialog is only shown once
         });
-        Future.delayed(Duration(seconds: 3), () {
-          // Replace with your navigation logic
+        Future.delayed(const Duration(milliseconds: 50), () {
+          // Replace with your navigation logic          
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return EndActivityPopup(
-                currentScreen: CountLetters(
-                    subStoryId: widget.subStoryId, storyId: widget.storyId),
+                currentScreen: CountLetters(subStoryId: widget.subStoryId,
+                                             storyId: widget.storyId
+                                           ),
                 story: widget.subStoryId != 0 ? true : false,
                 storyId: widget.storyId,
                 subStoryId: widget.subStoryId,
@@ -116,7 +126,7 @@ class _CountLettersState extends State<CountLetters> {
         setState(() {
           isAnswerIncorrect = true; // Answer is incorrect, flash red
         });
-        Future.delayed(Duration(milliseconds: 2000), () {
+        Future.delayed(const Duration(milliseconds: 50), () {
           setState(() {
             isAnswerIncorrect = false; // Reset red flash
           });

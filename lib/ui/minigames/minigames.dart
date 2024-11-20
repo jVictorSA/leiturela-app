@@ -16,14 +16,70 @@ import '../games/activities/select_word_by_audio.dart';
 import '../games/activities/mark_the_word.dart';
 import '../games/activities/sound_letters_association.dart';
 
-class Minigames extends StatelessWidget {
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import "package:demo_app/services/services.dart";
+import 'dart:math';
+
+class Minigames extends StatefulWidget {
   const Minigames({super.key});
+
+  @override
+  _MinigamesState createState() => _MinigamesState();
+
+}
+
+class _MinigamesState extends State<Minigames> {
+  Map<String, List<String>> minigames = {};
+  bool isLoaded = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchActivities(http.Client()).then((response) => {
+      setState(() {        
+        String entireObject;
+        entireObject = response;        
+        List activities = json.decode(entireObject);
+        
+        print(activities);
+
+        for (var activity in activities){
+          Map<String, String> activityInfo = {};          
+
+          // activityInfo["id"] = 
+          // activityInfo["type"] = 
+          String? type = activity["type"];
+          String? id = activity["_id"];
+          
+          if(id != null && type != null){
+            if(!minigames.containsKey(type)){
+              minigames[type] = [];
+            }
+            minigames[type]?.add(id);            
+          }
+        }
+        print(minigames.keys.toList());
+
+        isLoaded = true;
+      })
+    });
+  }
+
+  String getRandomActivity(String type){
+    String activityID = minigames[type]![Random().nextInt(minigames[type]!.length)];
+    return activityID;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(
+        child: isLoaded ? Stack(
           children: [
             Positioned.fill(
               child: SvgPicture.asset(
@@ -51,7 +107,7 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: CountLetters(storyId: "", subStoryId: 0),
+                            nextPage: CountLetters(storyId: "", subStoryId: 0, activityId: getRandomActivity("count_letters")),
                             title: 'Contar Letras',
                             svgs: 'assets/imgs/hand_two.svg',
                             backgroundColor: Colors.redAccent,
@@ -64,7 +120,7 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: BuildWord(storyId: "", subStoryId: 0),
+                            nextPage: BuildWord(storyId: "", subStoryId: 0, activityId: getRandomActivity("build_letter")),
                             title: 'Montar Palavra',
                             svgs: 'assets/imgs/press.svg',
                             backgroundColor: Colors.indigoAccent,
@@ -72,7 +128,7 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: CompleteWord(storyId: "", subStoryId: 0),
+                            nextPage: CompleteWord(storyId: "", subStoryId: 0, activityId: getRandomActivity("complete_word")),
                             title: 'Completar Palavra',
                             svgs: 'assets/imgs/puzzle.svg',
                             backgroundColor: Colors.purpleAccent,
@@ -114,7 +170,7 @@ class Minigames extends StatelessWidget {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: ABCPressLetter(storyId: "", subStoryId: 0),
+                            nextPage: ABCPressLetter(storyId: "", subStoryId: 0, activityId: getRandomActivity("abc_press_letters")),
                             title: 'Escolher Letras',
                             svgs: 'assets/imgs/abcpress.svg',
                             backgroundColor: Colors.teal,
@@ -127,7 +183,7 @@ class Minigames extends StatelessWidget {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: PressSyllable(storyId: "", subStoryId: 0, syllable: 'Bo'),
+                            nextPage: PressSyllable(storyId: "", subStoryId: 0, syllable: 'Bo', activityId: getRandomActivity("mark_the_word")),
                             title: 'Marcar Letras',
                             svgs: 'assets/imgs/press_word.svg',
                             backgroundColor: const Color.fromARGB(255, 80, 80, 80),
@@ -162,7 +218,11 @@ class Minigames extends StatelessWidget {
               ],
             ),
           ],
-        ),
+        )
+        : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Center(child: CircularProgressIndicator(),)]
+              ),
       ),
     );
   }

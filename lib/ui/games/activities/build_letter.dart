@@ -48,7 +48,18 @@ class _BuildWordState extends State<BuildWord> {
   @override
   void initState() {
     super.initState();
-    // print("ACTIVITY ID BUILDWORD:" + widget.activityId);
+    
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          nextActivityId = response;        
+          
+        })
+      });
+
+    }else{}
+
+
     fetchActivity(http.Client(), widget.activityId).then((response) => {
       setState(() {
         String entireObject;
@@ -79,11 +90,11 @@ class _BuildWordState extends State<BuildWord> {
       })
     });
 
-    fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
-      setState(() {        
-        nextActivityId = response;
-      })
-    });
+    // fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+    //   setState(() {        
+    //     nextActivityId = response;
+    //   })
+    // });
   }
 
   // Remove quaisquer acentos existentes numa string
@@ -140,7 +151,8 @@ class _BuildWordState extends State<BuildWord> {
                   currentScreen: BuildWord(subStoryId: widget.subStoryId, storyId: widget.storyId),
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
-                  subStoryId: widget.subStoryId ,
+                  subStoryId: widget.subStoryId,
+                  nextActivityId: nextActivityId,
                   ctx: context
               ); // Call your custom popup
             },

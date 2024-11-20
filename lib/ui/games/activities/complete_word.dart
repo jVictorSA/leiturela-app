@@ -63,6 +63,17 @@ class _CompleteWordState extends State<CompleteWord> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          nextActivityId = response;        
+          
+        })
+      });
+
+    }else{}
+
     fetchActivity(http.Client(), widget.activityId).then((response) => {
       setState(() {
         String entireObject;
@@ -120,11 +131,11 @@ class _CompleteWordState extends State<CompleteWord> {
       })
     });
 
-    fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
-      setState(() {        
-        nextActivityId = response;
-      })
-    });
+    // fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+    //   setState(() {        
+    //     nextActivityId = response;
+    //   })
+    // });
 
   }
 

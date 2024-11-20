@@ -8,11 +8,22 @@ import '../../custom_widgets/return_button.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import "package:demo_app/services/services.dart";
+
 class ABCPressLetter extends StatefulWidget {
   String storyId;
   int subStoryId;
+  String activityId;
+  String nextActivityId;
 
-  ABCPressLetter({super.key, required this.storyId, required this.subStoryId});
+  ABCPressLetter({super.key,
+                  required this.storyId,
+                  required this.subStoryId,
+                  this.activityId = "",
+                  this.nextActivityId = ""
+                 });
 
   @override
   _ABCPressLetterState createState() => _ABCPressLetterState();
@@ -20,7 +31,8 @@ class ABCPressLetter extends StatefulWidget {
 
 class _ABCPressLetterState extends State<ABCPressLetter> {
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
-
+  bool isLoaded = false;
+  bool nextActivityLoaded = false;
   Random random = Random();
 
   late int letterAnswer;
@@ -55,6 +67,7 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
   ];
   List<String> activityLetters = [];
   List<String> chosenLetters = [];
+  TextSpan printedText = const TextSpan();
 
   // Store the current color of each button
   Map<String, List<Color>> buttonColors = {};
@@ -63,17 +76,111 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
   List<Color> correctColor = [const Color(0xFF03A603), const Color(0xFF45FF2D)];
   List<Color> incorrectColor = [const Color(0xFF991C1C), const Color(0xFFFF2F2F)];
 
-  List<String> get questionText => [
-        "Escolha as letras ",
-        chosenLetters[0],
-        chosenLetters[1],
-        chosenLetters[2],
-      ];
+  List<String>  questionText = [];
+  // List<String> get questionTexts => [
+  //         "Escolha as letras ",
+  //         chosenLetters[0],
+  //         chosenLetters[1],
+  //         chosenLetters[2],
+  //       ];
 
   @override
   void initState() {
     super.initState();
-    _initializeLetters();
+
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          widget.nextActivityId = response;        
+          nextActivityLoaded = true;
+        })
+      });
+
+    }else{}
+
+    fetchActivity(http.Client(), widget.activityId).then((response) => {
+      setState(() {
+        String entireObject;        
+        entireObject = response;
+        Map activity = json.decode(entireObject);
+
+        print("ACTIVIDADY: $activity");
+
+        activityLetters = activity['body']['activity_letters'].cast<String>();
+        // print(activityLettersFetch);
+        // activityLetters = activityLettersFetch;
+        chosenLetters = activity['body']['chosen_letters'].cast<String>();
+        print(activityLetters);
+
+        buttonColors = {
+          for (var letter in activityLetters) letter: defaultColor,
+        };
+
+        letterAnswer = chosenLetters.length;
+
+        questionText.add("Escolha as letras ");
+        questionText.add(chosenLetters[0]);
+        questionText.add(chosenLetters[1]);
+        questionText.add(chosenLetters[2]);
+          
+          
+        printedText = TextSpan(
+          children: [
+            WidgetSpan(
+              child: GoldenTextSpecial(
+                text: questionText[0],
+                textSize: 25,
+                // Adjust as needed
+                borderColor: 0xFF012480,
+                // Adjust as needed
+                borderWidth: 3,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const WidgetSpan(
+              child: SizedBox(width: 8), // Adjust the width for desired spacing
+            ),
+            TextSpan(
+              text: questionText[1],
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontFamily: 'Playpen-Sans', // Fixed font family
+                fontWeight: FontWeight.bold,
+              ), // Style for normal text
+            ),
+            const WidgetSpan(
+              child: SizedBox(width: 8), // Adjust the width for desired spacing
+            ),
+            TextSpan(
+              text: questionText[2],
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontFamily: 'Playpen-Sans', // Fixed font family
+                fontWeight: FontWeight.bold,
+              ), // Style for normal text
+            ),
+            const WidgetSpan(
+              child: SizedBox(width: 8), // Adjust the width for desired spacing
+            ),
+            TextSpan(
+              text: questionText[3],
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontFamily: 'Playpen-Sans', // Fixed font family
+                fontWeight: FontWeight.bold,
+              ), // Style for normal text
+            ),
+          ],
+        );
+
+        isLoaded = true;
+      })
+    });
+
+    // _initializeLetters();
   }
 
   void _initializeLetters() {
@@ -101,6 +208,7 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
     };
 
     letterAnswer = chosenLetters.length;
+    isLoaded = true;
   }
 
   void _handleButtonPress(String letter) {
@@ -118,9 +226,9 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
 
   @override
   Widget build(BuildContext context) {
-    if (letterAnswer <= 0 && !dialogShown) {
+    if (isLoaded && letterAnswer <= 0 && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Future.delayed(const Duration(milliseconds: 500), () {
+        Future.delayed(const Duration(milliseconds: 20), () {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
             dialogShown = true;  // Ensure the dialog is only shown once
@@ -143,65 +251,11 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
       });
     }
 
-
-
-
-
-    TextSpan printedText = TextSpan(
-      children: [
-        WidgetSpan(
-          child: GoldenTextSpecial(
-            text: questionText[0],
-            textSize: 25,
-            // Adjust as needed
-            borderColor: 0xFF012480,
-            // Adjust as needed
-            borderWidth: 3,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const WidgetSpan(
-          child: SizedBox(width: 8), // Adjust the width for desired spacing
-        ),
-        TextSpan(
-          text: questionText[1],
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            fontFamily: 'Playpen-Sans', // Fixed font family
-            fontWeight: FontWeight.bold,
-          ), // Style for normal text
-        ),
-        const WidgetSpan(
-          child: SizedBox(width: 8), // Adjust the width for desired spacing
-        ),
-        TextSpan(
-          text: questionText[2],
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            fontFamily: 'Playpen-Sans', // Fixed font family
-            fontWeight: FontWeight.bold,
-          ), // Style for normal text
-        ),
-        const WidgetSpan(
-          child: SizedBox(width: 8), // Adjust the width for desired spacing
-        ),
-        TextSpan(
-          text: questionText[3],
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            fontFamily: 'Playpen-Sans', // Fixed font family
-            fontWeight: FontWeight.bold,
-          ), // Style for normal text
-        ),
-      ],
-    );
+    
 
     return Scaffold(
       body: ActivityBackground(
-        child: Stack(
+        child: isLoaded ? Stack(
           children: [
             Column(
               children: [
@@ -257,7 +311,11 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
               ],
             ),
           ],
-        ),
+        )
+        : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Center(child: CircularProgressIndicator(),)]
+              ),
       ),
     );
   }

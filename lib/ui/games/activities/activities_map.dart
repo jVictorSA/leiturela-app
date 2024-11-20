@@ -1,8 +1,16 @@
-import 'package:demo_app/ui//games/activities/count_letters.dart';
-import 'package:demo_app/ui//games/activities/build_letter.dart';
-import 'package:demo_app/ui//games/activities/complete_word.dart';
+import 'package:demo_app/ui/games/activities/count_letters.dart';
+import 'package:demo_app/ui/games/activities/build_letter.dart';
+import 'package:demo_app/ui/games/activities/complete_word.dart';
+import 'package:demo_app/ui/games/activities/mark_the_word.dart';
+import 'package:demo_app/ui/games/activities/image_association.dart';
+import 'package:demo_app/ui/games/activities/count_letters_by_sound.dart';
+import 'package:demo_app/ui/games/activities/drag_crossword.dart';
+import 'package:demo_app/ui/games/activities/press_letter.dart';
+import 'package:demo_app/ui/games/activities/abc_press_letters.dart';
+import 'package:demo_app/ui/games/activities/select_word_by_audio.dart';
+import 'package:demo_app/ui/games/activities/sound_letters_association.dart';
 import 'package:flutter/material.dart';
-
+// import 'package:demo_app/ui/games/activities/upper_and_lowercase.dart';
 
 class GetActivities{
   int subStoryId;
@@ -16,7 +24,7 @@ class GetActivities{
   
   Widget getActivity (String activityType, String nextActivityId){
     print(subStoryId);
-    if (activityType == "conta_letra"){
+    if (activityType == "count_letters"){
       return CountLetters(subStoryId: subStoryId,
                           storyId: storyId,
                           activityId: nextActivityId,
@@ -36,13 +44,21 @@ class GetActivities{
                           activityId: nextActivityId);
     }
     
+    else if(activityType == "mark_the_word"){
+      return PressSyllable(subStoryId: subStoryId,
+                           storyId: storyId,
+                           activityId: nextActivityId);
+    }
+
+    else if(activityType == "abc_press_letters"){
+      return ABCPressLetter(subStoryId: subStoryId,
+                            storyId: storyId,
+                            activityId: nextActivityId);
+    }
+
     // Caso base apenas para não dar erro de Null-Safety
     else{
-      return CountLetters(subStoryId: subStoryId,
-                          storyId: storyId,
-                          activityId: nextActivityId,
-                          // nextActivityId: nextActivityId,
-                        );
+      return Container();
     }
   }
 }
