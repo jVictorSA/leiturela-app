@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
 import '../custom_widgets/return_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Report extends StatefulWidget {
   const Report({super.key});
@@ -17,15 +20,72 @@ class Report extends StatefulWidget {
 }
 
 class _ReportState extends State<Report> {
-  int numAtv = 40;
-  double meanNumAtv = 40.0;
-  int timeAtv = 40;
-  double meanTimeAtv = 40.0;
+  int numAtv = 0;
+  double meanNumAtv = 0.0;
+  int timeAtv = 0;
+  double meanTimeAtv = 0.0;
 
   @override
   void initState() {
     super.initState();
   }
+
+  Future<void> _fetchReport() async {
+    const url = "http://127.0.0.1:8000/atividade/relatorio";
+
+    try {
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('auth_token');
+
+      if (token != null) {
+      print('Token não encontrado. O usuário precisa fazer login novamente.');
+      return;
+      }
+
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $token', 
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        setState(() {
+          numAtv = data['num_acertos'] ?? 0;
+          timeAtv = data['total_time'] ?? 0;
+          meanTimeAtv = numAtv > 0 ? timeAtv / numAtv : 0.0; // Calcula a média
+          print('Dados recebidos com sucesso: ${response.body}');
+        });
+      } else {
+        _showError("Erro ao carregar o relatório: ${response.statusCode}");
+      }
+    } catch (e) {
+      _showError("Erro na conexão: $e");
+    }
+  }
+
+  void _showError(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Erro"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {

@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         "/stories": (context) => Stories(),
         "/minigames": (context) => const Minigames(),
         "/play": (context) => const Games(),
+        "/report":(context) => const Report(),
       },
       home: const MainMenu(), // Use the new MainMenu widget
     );
@@ -60,7 +61,7 @@ class _MainMenuState extends State<MainMenu> {
   void initState() {
     super.initState();
     _audioManager.playMainMenuMusic();
-    _checkLoginStatus();
+    _checkLoginStatus(); 
   }
 
   @override
@@ -69,18 +70,14 @@ class _MainMenuState extends State<MainMenu> {
     // _audioManager.stopMusic();
     super.dispose();
   }
-
-  Future<void> _checkLoginStatus() async {
+  void _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.remove('auth_token');
     String? token = prefs.getString('auth_token');
-
     setState(() {
       isLoggedIn = token != null && token.isNotEmpty;
-      print('Token encontrado: $token');
-      print('isLoggedIn: $isLoggedIn');
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -156,13 +153,19 @@ class _MainMenuState extends State<MainMenu> {
                           ]),
                       borderRadius: BorderRadius.circular(30)),
                   child: ElevatedButton(
-                    onPressed: isLoggedIn ?() {
-                      Navigator.push(
+                    onPressed:() {
+                      if(isLoggedIn) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Report()),
+                        );
+                      } else {
+                        Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const Report()),
-                      );
-                    }
-                    :null,
+                        MaterialPageRoute(builder: (context) => const Login()),
+                    );
+                      }
+                    },
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.transparent),
