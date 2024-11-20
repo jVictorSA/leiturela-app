@@ -114,7 +114,7 @@ class _RegisterState extends State<Register> {
         children: [
           Positioned.fill(
             child: SvgPicture.asset(
-              "assets/imgs/background.svg",
+              "assets/imgs/backgrounds/background.svg",
               fit: BoxFit.cover,
             ),
           ),

@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/services.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const primaryColor = Color(0xFFAAE0F1);
@@ -91,7 +90,7 @@ class _MainMenuState extends State<MainMenu> {
         children: [
           Positioned.fill(
             child: SvgPicture.asset(
-              "assets/imgs/background.svg",
+              "assets/imgs/backgrounds/background.svg",
               fit: BoxFit.cover,
             ),
           ),
@@ -180,7 +179,7 @@ class _MainMenuState extends State<MainMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(
                       // right: (screenWidth/2) - ((bgWidth/2) * 1.05 ),

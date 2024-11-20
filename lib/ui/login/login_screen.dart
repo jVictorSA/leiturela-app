@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
         children: [
           Positioned.fill(
             child: SvgPicture.asset(
-              "assets/imgs/background.svg",
+              "assets/imgs/backgrounds/background.svg",
               fit: BoxFit.cover,
             ),
           ),

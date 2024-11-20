@@ -47,7 +47,7 @@ class _ImageAssociationState extends State<ImageAssociation> {
     'assets/imgs/atv_imgs/peixe.svg',
     'assets/imgs/atv_imgs/porta.svg',
     'assets/imgs/atv_imgs/praia.svg',
-    'assets/imgs/atv_imgs/pão.svg',
+    'assets/imgs/atv_imgs/pao.svg',
     'assets/imgs/atv_imgs/queijo.svg',
     'assets/imgs/atv_imgs/vaca.svg',
     'assets/imgs/atv_imgs/arvore.svg'

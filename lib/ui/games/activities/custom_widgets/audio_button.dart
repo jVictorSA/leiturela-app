@@ -21,7 +21,7 @@ class AudioButton extends StatelessWidget {
 
       try {
         await soundPlayer.setVolume(volume);
-        await soundPlayer.play(AssetSource('audio/$sound')); // Play each sound
+        await soundPlayer.play(AssetSource('audio/word_sounds/$sound')); // Play each sound
         await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
       } finally {
         soundPlayer.dispose(); // Dispose of the player after sound finishes
