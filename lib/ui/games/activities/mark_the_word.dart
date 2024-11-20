@@ -6,17 +6,24 @@ import '../../custom_widgets/return_button.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import "package:demo_app/services/services.dart";
+
 class PressSyllable extends StatefulWidget {
   String storyId;
   int subStoryId;
   String syllable;
+  String activityId;
+  String nextActivityId;
 
-  // PressSyllable({super.key, required this.storyId, required this.subStoryId, required this.syllable= ""});
-  PressSyllable(
-      {super.key,
-      required this.storyId,
-      required this.subStoryId,
-      this.syllable = 'Ba'});
+  PressSyllable({super.key,
+                 required this.storyId,
+                 required this.subStoryId,
+                 this.syllable = "",
+                 this.activityId = "",
+                 this.nextActivityId = ""
+                });
 
   @override
   _PressSyllableState createState() => _PressSyllableState();
@@ -24,8 +31,12 @@ class PressSyllable extends StatefulWidget {
 
 class _PressSyllableState extends State<PressSyllable> {
   bool dialogShown = false;
+  bool nextActivityLoaded = false;
+  bool isLoaded = false;
+  // String nextActivityId = "";
+  var result;
 
-  static List<String> wordList = ["Bolo", "Bobagem", "Lista", "Marte"];
+  List<String> wordList = ["Bolo", "Bobagem", "Lista", "Marte"];
 
   Color defaultColor = Colors.black;
   Color correctColor = const Color(0xFF21D304);
@@ -38,39 +49,62 @@ class _PressSyllableState extends State<PressSyllable> {
     return word.toLowerCase().contains(syllable.toLowerCase());
   }
 
-  // Cria a lista de resultados com base na verificação da sílaba/letra
-  var result = wordList.map((word) {
-    return {'word': word, 'isCorrect': false, 'isAnswered': false};
-  }).toList();
+  int numbersFound = 0;
 
   @override
   void initState() {
     super.initState();
-    // Atualiza o estado das palavras com base na sílaba fornecida
-    result = wordList.map((word) {
-      bool isCorrect = checkSyllable(word, widget.syllable);
-      return {'word': word, 'isCorrect': isCorrect, 'isAnswered': false};
-    }).toList();
 
-    numbersFound = result
-        .where((map) => map['isCorrect'] == true && map['isAnswered'] == false)
-        .length;
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          widget.nextActivityId = response;        
+          nextActivityLoaded = true;
+        })
+      });
+
+    }else{
+      nextActivityLoaded = true;
+    }
+    
+    fetchActivity(http.Client(), widget.activityId).then((response) => {
+      setState(() {
+        String entireObject;
+        String silaba;
+        List<String> palavras = [];
+        entireObject = response;
+        Map activity = json.decode(entireObject);
+
+        palavras = activity['body']['palavras'].cast<String>();
+
+        wordList = palavras;
+        silaba = activity['body']['silaba'].toString();
+        widget.syllable = silaba;
+
+        result = wordList.map((word) {
+          return {'word': word, 'isCorrect': false, 'isAnswered': false};
+        }).toList();
+
+        result = wordList.map((word) {
+          bool isCorrect = checkSyllable(word, widget.syllable);
+          return {'word': word, 'isCorrect': isCorrect, 'isAnswered': false};
+        }).toList();
+
+        numbersFound = result.where((map) => map['isCorrect'] == true && map['isAnswered'] == false).length;
+        isLoaded = true;
+      })
+    });
+
   }
 
   @override
   Widget build(BuildContext context) {
-    // Conta quantas palavras corretas existem
-    numbersFound = result
-        .where((map) => map['isCorrect'] == true && map['isAnswered'] == false)
-        .length;
-
-    if (numbersFound <= 0 && !dialogShown) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+    if ((numbersFound <= 0) && (!dialogShown) && (isLoaded)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {        
         Future.delayed(const Duration(milliseconds: 500), () {
           setState(() {
             dialogShown = true;
           });
-
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -82,6 +116,12 @@ class _PressSyllableState extends State<PressSyllable> {
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
                   subStoryId: widget.subStoryId,
+                  nextActivityId: widget.nextActivityId,
+                  // sameScreen: PressSyllable(
+                  //     subStoryId: widget.subStoryId,
+                  //     storyId: "",
+                  //     activityId: widget.activityId,
+                  //     syllable: widget.syllable),
                   ctx: context);
             },
             barrierDismissible: false,
@@ -92,7 +132,7 @@ class _PressSyllableState extends State<PressSyllable> {
 
     return Scaffold(
       body: ActivityBackground(
-        child: Stack(children: [
+        child: isLoaded ? Stack(children: [
           Column(
             children: [
               Row(
@@ -122,7 +162,7 @@ class _PressSyllableState extends State<PressSyllable> {
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: result.map((map) {
+                  children: result.map<Widget>((map) {
                     String word = map['word'] as String;
                     bool isCorrect = map['isCorrect'] as bool;
                     bool isAnswered = map['isAnswered'] as bool;
@@ -155,6 +195,7 @@ class _PressSyllableState extends State<PressSyllable> {
                                           widget.subStoryId != 0 ? true : false,
                                       storyId: widget.storyId,
                                       subStoryId: widget.subStoryId,
+                                      nextActivityId: widget.nextActivityId,
                                       ctx: context);
                                 },
                                 barrierDismissible: false,
@@ -172,7 +213,11 @@ class _PressSyllableState extends State<PressSyllable> {
               ),
             ],
           ),
-        ]),
+        ])
+        : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Center(child: CircularProgressIndicator(),)]
+              ),
       ),
     );
   }

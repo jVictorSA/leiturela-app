@@ -1,5 +1,7 @@
 import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:demo_app/ui/stories/stories.dart';
@@ -18,6 +20,7 @@ class EndActivityPopup extends StatelessWidget {
   final int? subStoryId;
   final BuildContext ctx; // Story or Activity ?
   final String nextActivityId;
+  // final Type sameScreen;
 
   const EndActivityPopup({super.key,
                           required this.currentScreen,
@@ -25,11 +28,13 @@ class EndActivityPopup extends StatelessWidget {
                           required this.storyId,
                           required this.subStoryId,
                           required this.ctx,
-                          this.nextActivityId = ""
+                          this.nextActivityId = "",
+                          // this.sameScreen = Container
                         });
 
   Widget getNextPage(){
-    if (subStoryId != null){
+    print("EndActivityPopup nxtActivityID: $nextActivityId");
+    if (nextActivityId != ""){
       if (subStoryId! >= 9){
         return Stories();  
       }
@@ -55,6 +60,7 @@ class EndActivityPopup extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    
     final screenWidth = MediaQuery
         .of(context)
         .size
@@ -169,70 +175,71 @@ class EndActivityPopup extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      // You can adjust the padding value
-                      child: Container(
-                        height: 56.0,
-                        width: 272.0,
-                        decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                stops: [
-                                  0.5,
-                                  0.9,
-                                ],
-                                colors: [
-                                  Color(0xff03BFE7),
-                                  Color(0xff01419F)
-                                ]),
-                            borderRadius: BorderRadius.circular(30)),
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                currentScreen, // Navigate to the current screen again
-                              ),
-                            );
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.transparent),
-                            shadowColor: MaterialStateProperty.all<Color>(
-                                Colors.transparent),
-                            padding:
-                            MaterialStateProperty.all(EdgeInsets.zero),
-                          ),
-                          child: const Center(
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
-                                children: [
-                                  Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: 360 * 0.01),
-                                      child: Text(
-                                        'Tentar Novamente',
-                                        style: TextStyle(
-                                          fontFamily: 'Playpen-Sans',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   // You can adjust the padding value
+                    //   child: Container(
+                    //     height: 56.0,
+                    //     width: 272.0,
+                    //     decoration: BoxDecoration(
+                    //         gradient: const LinearGradient(
+                    //             begin: Alignment.topCenter,
+                    //             end: Alignment.bottomCenter,
+                    //             stops: [
+                    //               0.5,
+                    //               0.9,
+                    //             ],
+                    //             colors: [
+                    //               Color(0xff03BFE7),
+                    //               Color(0xff01419F)
+                    //             ]),
+                    //         borderRadius: BorderRadius.circular(30)),
+                    //     child: OutlinedButton(
+                    //       onPressed: () {
+                    //         Navigator.pushAndRemoveUntil(
+                    //             context,
+                    //             MaterialPageRoute(
+                    //                 builder: (context) => sameScreen
+                    //             ),
+                    //             ModalRoute.withName("/")
+                    //           // (route) => false
+                    //         );
+                    //       },
+                    //       style: ButtonStyle(
+                    //         backgroundColor: MaterialStateProperty.all<Color>(
+                    //             Colors.transparent),
+                    //         shadowColor: MaterialStateProperty.all<Color>(
+                    //             Colors.transparent),
+                    //         padding:
+                    //         MaterialStateProperty.all(EdgeInsets.zero),
+                    //       ),
+                    //       child: const Center(
+                    //         child: Row(
+                    //             mainAxisAlignment: MainAxisAlignment.center,
+                    //             crossAxisAlignment:
+                    //             CrossAxisAlignment.center,
+                    //             children: [
+                    //               Center(
+                    //                 child: Padding(
+                    //                   padding: EdgeInsets.only(
+                    //                       bottom: 360 * 0.01),
+                    //                   child: Text(
+                    //                     'Tentar Novamente',
+                    //                     style: TextStyle(
+                    //                       fontFamily: 'Playpen-Sans',
+                    //                       fontWeight: FontWeight.w400,
+                    //                       fontSize: 24,
+                    //                       color: Colors.white,
+                    //                     ),
+                    //                     textAlign: TextAlign.center,
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ]),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       // You can adjust the padding value

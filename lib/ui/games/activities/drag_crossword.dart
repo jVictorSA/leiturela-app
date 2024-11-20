@@ -9,6 +9,12 @@ import 'custom_widgets/audio_button.dart';
 import '../../custom_widgets/return_button.dart';
 import 'dart:math';
 
+Map<String, Map<String, List<String>>> activity = {
+  "body": {
+    "silabas": ['lo', 'bo', 'to', 'mia']
+  }
+};
+
 class DragSyllables extends StatefulWidget {  
   String storyId;
   int subStoryId;
@@ -26,7 +32,7 @@ class _DragSyllablesState extends State<DragSyllables> {
   final double minDistance = 10; // Minimum distance between boxes (padding)
 
   // The list for LetterSpace stays intact; it doesn't get removed
-  final List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
+  List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
 
   // List of LetterBox widgets with unique keys
   late List<Map<String, dynamic>> letterBoxList;
@@ -35,6 +41,9 @@ class _DragSyllablesState extends State<DragSyllables> {
 
   @override
   void initState() {
+
+    letterSpaceKeys = activity["body"]!["silabas"]!;
+
     letterBoxList = letterSpaceKeys.map((key) {
       return {
         'key': key,
@@ -105,6 +114,7 @@ class _DragSyllablesState extends State<DragSyllables> {
   Widget build(BuildContext context) {
     // Define the callback function for when a correct letter is found
     void onCorrectLetterFound(bool correct, String key) {
+      print(correct.toString() + "-----" + key);
       if (correct) {
         setState(() {
           // Remove the LetterBox with the matching key
@@ -129,7 +139,7 @@ class _DragSyllablesState extends State<DragSyllables> {
                       subStoryId: widget.subStoryId, storyId: widget.storyId),
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
-                  subStoryId: widget.subStoryId,
+                  subStoryId: widget.subStoryId,                  
                   ctx: context);
             },
             barrierDismissible: false,

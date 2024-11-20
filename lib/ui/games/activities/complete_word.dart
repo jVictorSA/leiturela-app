@@ -7,12 +7,20 @@ import 'custom_widgets/letter_space.dart';
 import 'custom_widgets/audio_button.dart';
 import '../../custom_widgets/return_button.dart';
 import 'dart:math';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import "package:demo_app/services/services.dart";
 
 class CompleteWord extends StatefulWidget {
   String storyId;
   int subStoryId;
+  String activityId;
 
-  CompleteWord({super.key, required this.subStoryId, required this.storyId});
+  CompleteWord({super.key,
+                required this.subStoryId,
+                required this.storyId,
+                this.activityId = "" 
+               });
 
   @override
   _CompleteWordState createState() => _CompleteWordState();
@@ -25,8 +33,10 @@ class _CompleteWordState extends State<CompleteWord> {
   final double minDistance = 10; // Minimum distance between boxes (padding)
 
   // The list for LetterSpace stays intact; it doesn't get removed
-  final List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
-  final List<String> randomSyllablesList = ['ma', 'pe'];
+
+  List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
+  final List<String> randomSyllablesList = ['ma', 'pe', 'lo'];
+
 
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
@@ -36,6 +46,9 @@ class _CompleteWordState extends State<CompleteWord> {
   // List of LetterBox widgets with unique keys
   late List<Map<String, dynamic>> letterBoxList;
   late List<Widget> letterSpaceList;
+
+  String nextActivityId = "";
+  bool isLoaded = false;
 
   // Define the callback function for when a correct letter is found
   void onCorrectLetterFound(bool correct, String key) {
@@ -51,42 +64,80 @@ class _CompleteWordState extends State<CompleteWord> {
   @override
   void initState() {
     super.initState();
-    final randomIndex =
-        Random().nextInt(letterSpaceKeys.length); // Pick a random index
-    final randomKey = letterSpaceKeys[randomIndex];
 
-    letterBoxList = [
-      {
-        'key': randomKey,
-        'widget': LetterBox(text: randomKey, borderRadius: 15.0, width: 67),
-      }
-    ];
-    List<Map<String, dynamic>> randomSyllables =
-        randomSyllablesList.map((random_key) {
-      return {
-        'key': random_key,
-        'widget': LetterBox(text: random_key, borderRadius: 15.0, width: 67),
-      };
-    }).toList();
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          nextActivityId = response;        
+          
+        })
+      });
 
-    final filteredSyllables =
-        randomSyllables.where((item) => item['key'] != randomKey).toList();
-    combinedList = [...filteredSyllables, ...letterBoxList];
+    }else{}
 
-    // Create the LetterSpace list (this should not be removed)
-    letterSpaceList = letterSpaceKeys.map((key) {
-      if (key == randomKey) {
-        return LetterSpace(
-          expectedLetter: key,
-          correctLetterFound: (correct) => onCorrectLetterFound(correct, key),
-        );
-      } else {
-        return StaticLetterBox(text: key);
-      }
-    }).toList();
+    fetchActivity(http.Client(), widget.activityId).then((response) => {
+      setState(() {
+        String entireObject;
+        int index;
+        List<dynamic> palavra;
+        String faltante;
+        entireObject = response;        
+        Map activity = json.decode(entireObject);        
 
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => generateRandomPositions());
+        faltante = activity["answer"]["silaba"];
+        palavra = activity["body"]["palavra"];
+        index = activity["body"]["missing"];
+
+        palavra[index] = faltante;
+
+        letterSpaceKeys = palavra.cast<String>();;
+
+        final randomIndex = index;        
+        final randomKey = letterSpaceKeys[randomIndex];
+
+        letterBoxList = [
+          {
+            'key': randomKey,
+            'widget': LetterBox(text: randomKey, borderRadius: 15.0, width: 67),
+          }
+        ];
+        List<Map<String, dynamic>> randomSyllables =
+            randomSyllablesList.map((random_key) {
+          return {
+            'key': random_key,
+            'widget': LetterBox(text: random_key, borderRadius: 15.0, width: 67),
+          };
+        }).toList();
+
+        final filteredSyllables =
+            randomSyllables.where((item) => item['key'] != randomKey).toList();
+        combinedList = [...filteredSyllables, ...letterBoxList];
+
+        // Create the LetterSpace list (this should not be removed)
+        letterSpaceList = letterSpaceKeys.map((key) {
+          if (key == randomKey) {
+            return LetterSpace(
+              expectedLetter: key,
+              correctLetterFound: (correct) => onCorrectLetterFound(correct, key),
+            );
+          } else {
+            return StaticLetterBox(text: key);
+          }
+        }).toList();
+
+        WidgetsBinding.instance
+            .addPostFrameCallback((_) => generateRandomPositions());
+
+        isLoaded = true;
+      })
+    });
+
+    // fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+    //   setState(() {        
+    //     nextActivityId = response;
+    //   })
+    // });
+
   }
 
   void generateRandomPositions() {
@@ -147,7 +198,7 @@ class _CompleteWordState extends State<CompleteWord> {
 
   @override
   Widget build(BuildContext context) {
-    if (letterBoxList.isEmpty && !dialogShown) {
+    if (isLoaded && letterBoxList.isEmpty && !dialogShown) {
       setState(() {
         dialogShown = true;
       });
@@ -171,7 +222,7 @@ class _CompleteWordState extends State<CompleteWord> {
     }
     return Scaffold(
       body: ActivityBackground(
-          child: Stack(
+          child: isLoaded ? Stack(
         children: [
           Padding(
             padding:
@@ -235,8 +286,13 @@ class _CompleteWordState extends State<CompleteWord> {
                 child: item['widget'] as Widget,
               );
             }),
-        ],
-      )),
+        ]
+        )
+        :  const Column(mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Center(child: CircularProgressIndicator(),)]
+                )
+      ),
     );
   }
 }
