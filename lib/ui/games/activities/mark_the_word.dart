@@ -49,7 +49,7 @@ class _PressSyllableState extends State<PressSyllable> {
     return word.toLowerCase().contains(syllable.toLowerCase());
   }
 
-  int numbersFound = 0;
+  // int numbersFound = 0;
 
   @override
   void initState() {
