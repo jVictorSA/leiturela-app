@@ -99,9 +99,9 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                           label: wordOne,
                           onPressed: () {
                             setState(() {
-                              if (wordOne
+                              if (wordOne[0]
                                   .toLowerCase()
-                                  .contains(letter.toLowerCase())) {
+                                  == (letter.toLowerCase())) {
                                 answerFound = true;
                               }
                             });
@@ -116,9 +116,9 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                           label: wordTwo,
                           onPressed: () {
                             setState(() {
-                              if (wordTwo
+                              if (wordTwo[0]
                                   .toLowerCase()
-                                  .contains(letter.toLowerCase())) {
+                                   == (letter.toLowerCase())) {
                                 answerFound = true;
                               }
                             });
@@ -138,9 +138,9 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                           label: wordThree,
                           onPressed: () {
                             setState(() {
-                              if (wordThree
+                              if (wordThree[0]
                                   .toLowerCase()
-                                  .contains(letter.toLowerCase())) {
+                                  == (letter.toLowerCase())) {
                                 answerFound = true;
                               }
                             });
@@ -155,9 +155,9 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                           label: wordFour,
                           onPressed: () {
                             setState(() {
-                              if (wordFour
+                              if (wordFour[0]
                                   .toLowerCase()
-                                  .contains(letter.toLowerCase())) {
+                                  ==(letter.toLowerCase())) {
                                 answerFound = true;
                               }
                             });
