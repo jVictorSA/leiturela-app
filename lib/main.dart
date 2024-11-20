@@ -2,6 +2,7 @@ import 'package:demo_app/ui/custom_widgets/audiomanager.dart';
 import 'package:demo_app/ui/custom_widgets/custom_button.dart';
 import 'package:demo_app/ui/games/story_games_screen.dart';
 import 'package:demo_app/ui/login/login_screen.dart';
+import 'package:demo_app/ui/login/register_screen.dart';
 import 'package:demo_app/ui/minigames/minigames.dart';
 import 'package:demo_app/ui/report/report.dart';
 import 'package:demo_app/ui/settings/settings.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/services.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const primaryColor = Color(0xFFAAE0F1);
 const outlineTitle = 1.0;
@@ -53,11 +54,13 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   final AudioManager _audioManager = AudioManager();
+  bool isLoggedIn = false;
 
   @override
   void initState() {
     super.initState();
     _audioManager.playMainMenuMusic();
+    _checkLoginStatus();
   }
 
   @override
@@ -67,6 +70,18 @@ class _MainMenuState extends State<MainMenu> {
     super.dispose();
   }
 
+  Future<void> _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('auth_token');
+
+    setState(() {
+      isLoggedIn = token != null && token.isNotEmpty;
+      print('Token encontrado: $token');
+      print('isLoggedIn: $isLoggedIn');
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -75,7 +90,7 @@ class _MainMenuState extends State<MainMenu> {
         children: [
           Positioned.fill(
             child: SvgPicture.asset(
-              "assets/imgs/background.svg",
+              "assets/imgs/backgrounds/background.svg",
               fit: BoxFit.cover,
             ),
           ),
@@ -141,12 +156,13 @@ class _MainMenuState extends State<MainMenu> {
                           ]),
                       borderRadius: BorderRadius.circular(30)),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: isLoggedIn ?() {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const Report()),
                       );
-                    },
+                    }
+                    :null,
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.transparent),
@@ -163,7 +179,7 @@ class _MainMenuState extends State<MainMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(
                       // right: (screenWidth/2) - ((bgWidth/2) * 1.05 ),
@@ -258,7 +274,7 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Icon(
+                              child: Icon(                            
                                 Icons.play_circle_fill,
                                 color: Colors.white,
                                 size: 45,
@@ -275,6 +291,16 @@ class _MainMenuState extends State<MainMenu> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => const Login()));
+                  },
+                ),
+                SizedBox(height: 10,),
+                CustomButton(
+                  height: 40,
+                  width: 150,
+                  label: 'Cadastro',
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const Register()));
                   },
                 ),
                 const Spacer(

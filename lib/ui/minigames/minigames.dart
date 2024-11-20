@@ -1,7 +1,5 @@
 import 'package:demo_app/ui/games/activities/complete_word.dart';
 import 'package:demo_app/ui/games/activities/image_association.dart';
-import 'package:demo_app/ui/games/activities/upper_and_lowercase.dart';
-import 'package:demo_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widgets/return_button.dart';
@@ -83,7 +81,7 @@ class _MinigamesState extends State<Minigames> {
           children: [
             Positioned.fill(
               child: SvgPicture.asset(
-                "assets/imgs/background.svg", // Update with your SVG path
+                "assets/imgs/backgrounds/background.svg", // Update with your SVG path
                 fit: BoxFit.cover, // Same as the fit you used for PNG
               ),
             ),
@@ -101,7 +99,7 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: DragSyllables(storyId: "", subStoryId: 0),
                             title: 'Arrastar Sílaba',
-                            svgs: 'assets/imgs/drag.svg',
+                            svgs: 'assets/imgs/atv_button_svg/drag.svg',
                             backgroundColor: Colors.lightBlueAccent,
                             textSize: 20,
                           ),
@@ -109,7 +107,7 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: CountLetters(storyId: "", subStoryId: 0, activityId: getRandomActivity("count_letters")),
                             title: 'Contar Letras',
-                            svgs: 'assets/imgs/hand_two.svg',
+                            svgs: 'assets/imgs/atv_button_svg/hand_two.svg',
                             backgroundColor: Colors.redAccent,
                             textSize: 20,
                           ),
@@ -122,15 +120,16 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: BuildWord(storyId: "", subStoryId: 0, activityId: getRandomActivity("build_letter")),
                             title: 'Montar Palavra',
-                            svgs: 'assets/imgs/press.svg',
+                            svgs: 'assets/imgs/atv_button_svg/press.svg',
                             backgroundColor: Colors.indigoAccent,
                             textSize: 20,
+                            svgSize: 56,
                           ),
                           SelectedFrame(
                             parentContext: context,
                             nextPage: CompleteWord(storyId: "", subStoryId: 0, activityId: getRandomActivity("complete_word")),
                             title: 'Completar Palavra',
-                            svgs: 'assets/imgs/puzzle.svg',
+                            svgs: 'assets/imgs/atv_button_svg/puzzle.svg',
                             backgroundColor: Colors.purpleAccent,
                             textSize: 20,
                           ),
@@ -143,7 +142,7 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: ImageAssociation(storyId: "", subStoryId: 0),
                             title: 'Associar Imagem',
-                            svgs: 'assets/imgs/image_icon.svg',
+                            svgs: 'assets/imgs/atv_button_svg/image_icon.svg',
                             backgroundColor: Colors.lightGreenAccent,
                             textSize: 20,
                           ),
@@ -151,7 +150,7 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: SelectWordAudio(storyId: "", subStoryId: 0),
                             title: 'Selecionar Palavras Pelo Áudio',
-                            svgs: 'assets/imgs/letter_sound.svg',
+                            svgs: 'assets/imgs/atv_button_svg/letter_sound.svg',
                             backgroundColor: Colors.pinkAccent,
                             textSize: 15,
                           ),
@@ -164,7 +163,7 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: PressLetter(storyId: "", subStoryId: 0),
                             title: 'Pressionar Letras',
-                            svgs: 'assets/imgs/press_letter.svg',
+                            svgs: 'assets/imgs/atv_button_svg/press_letter.svg',
                             backgroundColor: Colors.limeAccent,
                             textSize: 20,
                           ),
@@ -172,9 +171,10 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: ABCPressLetter(storyId: "", subStoryId: 0, activityId: getRandomActivity("abc_press_letters")),
                             title: 'Escolher Letras',
-                            svgs: 'assets/imgs/abcpress.svg',
+                            svgs: 'assets/imgs/atv_button_svg/abc_press.svg',
                             backgroundColor: Colors.teal,
                             textSize: 20,
+                            svgSize: 56,
                           ),
                         ],
                       ),
@@ -185,7 +185,7 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: PressSyllable(storyId: "", subStoryId: 0, syllable: 'Bo', activityId: getRandomActivity("mark_the_word")),
                             title: 'Marcar Letras',
-                            svgs: 'assets/imgs/press_word.svg',
+                            svgs: 'assets/imgs/atv_button_svg/press_word.svg',
                             backgroundColor: const Color.fromARGB(255, 80, 80, 80),
                             textSize: 20,
                           ),
@@ -193,7 +193,7 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: CountLettersBySound(storyId: "", subStoryId: 0),
                             title: 'Contar Letras por Som',
-                            svgs: 'assets/imgs/count_sound.svg',
+                            svgs: 'assets/imgs/atv_button_svg/count_sound.svg',
                             backgroundColor: Colors.lightGreenAccent,
                             textSize: 18,
                           ),
@@ -206,9 +206,10 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: SoundLettersAssociation(storyId: '0', subStoryId: 0),
                             title: 'Asssociar Letra pelo Som',
-                            svgs: 'assets/imgs/sound_letter_press.svg',
+                            svgs: 'assets/imgs/atv_button_svg/sound_letter_press.svg',
                             backgroundColor: Colors.pink,
-                            textSize: 20,
+                            textSize: 16,
+                            svgSize: 55,
                           ),
                         ],
                       ),

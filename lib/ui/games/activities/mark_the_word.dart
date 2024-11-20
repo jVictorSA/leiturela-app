@@ -42,6 +42,8 @@ class _PressSyllableState extends State<PressSyllable> {
   Color correctColor = const Color(0xFF21D304);
   Color incorrectColor = const Color(0xFFA90C0C);
 
+  int numbersFound = 999;
+
   // Função que verifica se a palavra contém ou começa com a sílaba/letra
   bool checkSyllable(String word, String syllable) {
     return word.toLowerCase().contains(syllable.toLowerCase());
@@ -92,6 +94,7 @@ class _PressSyllableState extends State<PressSyllable> {
         isLoaded = true;
       })
     });
+
   }
 
   @override
@@ -142,7 +145,8 @@ class _PressSyllableState extends State<PressSyllable> {
                   children: [
                     WidgetSpan(
                       child: GoldenTextSpecial(
-                        text: "Escolha as palavras que contêm a sílaba '${widget.syllable}'",
+                        text:
+                            "Escolha as palavras que contêm a sílaba '${widget.syllable}'",
                         textSize: 25,
                         borderColor: 0xFF012480,
                         borderWidth: 3,
@@ -177,7 +181,8 @@ class _PressSyllableState extends State<PressSyllable> {
 
                             // Verifica se todas as palavras corretas foram encontradas
                             if (numbersFound <= 0 && !dialogShown) {
-                              dialogShown = true; // Evite que o diálogo seja mostrado várias vezes
+                              dialogShown =
+                                  true; // Evite que o diálogo seja mostrado várias vezes
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -186,7 +191,8 @@ class _PressSyllableState extends State<PressSyllable> {
                                           subStoryId: widget.subStoryId,
                                           storyId: widget.storyId,
                                           syllable: widget.syllable),
-                                      story: widget.subStoryId != 0 ? true : false,
+                                      story:
+                                          widget.subStoryId != 0 ? true : false,
                                       storyId: widget.storyId,
                                       subStoryId: widget.subStoryId,
                                       nextActivityId: widget.nextActivityId,

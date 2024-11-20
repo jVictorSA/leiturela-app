@@ -88,7 +88,7 @@ class EndActivityPopup extends StatelessWidget {
                 alignment: Alignment.center, // Center the children
                 children: [
                 SvgPicture.asset(
-                'assets/imgs/background.svg',
+                'assets/imgs/backgrounds/background.svg',
                 fit: BoxFit.fill,
               ),
               Container(

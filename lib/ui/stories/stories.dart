@@ -140,8 +140,8 @@ class StoriesState extends State<Stories>{
           children: [
             Positioned.fill(
               child: SvgPicture.asset(
-                "assets/imgs/background.svg", // Update with your SVG path
-                fit: BoxFit.cover, // Same as the fit you used for PNG
+                "assets/imgs/backgrounds/background.svg",
+                fit: BoxFit.cover,
               ),
             ),
             Column(
