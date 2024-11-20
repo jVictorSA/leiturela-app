@@ -52,15 +52,19 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
     'Y',
     'Z'
   ];
-  List<String> activityLetters = [];
-  List<String> chosenLetters = [];
+
+  List<String> activityLetters = []; // Lista com 6 letras (3 corretas e 3 erradas)
+  List<String> chosenLetters = []; // Subconjunto com 3 letras corretas
 
   // Store the current color of each button
   Map<String, List<Color>> buttonColors = {};
 
   List<Color> defaultColor = [const Color(0xFFFBB631), const Color(0xFFF7FB31)];
   List<Color> correctColor = [const Color(0xFF03A603), const Color(0xFF45FF2D)];
-  List<Color> incorrectColor = [const Color(0xFF991C1C), const Color(0xFFFF2F2F)];
+  List<Color> incorrectColor = [
+    const Color(0xFF991C1C),
+    const Color(0xFFFF2F2F)
+  ];
 
   List<String> get questionText => [
         "Escolha as letras ",
@@ -103,16 +107,19 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
   }
 
   void _handleButtonPress(String letter) {
-    setState(() {
-      if (chosenLetters.contains(letter.toUpperCase()) || chosenLetters.contains(letter.toLowerCase())) {
-        // Correct letter: green gradient
-        buttonColors[letter] = [correctColor[0], correctColor[1]];
-        letterAnswer -= 1;
-      } else {
-        // Incorrect letter: red gradient
-        buttonColors[letter] = [incorrectColor[0], incorrectColor[1]];
-      }
-    });
+    if (buttonColors[letter]?[0] != correctColor[0]) {
+      setState(() {
+        if (chosenLetters.contains(letter.toUpperCase()) ||
+            chosenLetters.contains(letter.toLowerCase())) {
+          // Correct letter: green gradient
+          buttonColors[letter] = [correctColor[0], correctColor[1]];
+          letterAnswer -= 1;
+        } else {
+          // Incorrect letter: red gradient
+          buttonColors[letter] = [incorrectColor[0], incorrectColor[1]];
+        }
+      });
+    }
   }
 
   @override
@@ -122,29 +129,25 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
         Future.delayed(const Duration(milliseconds: 500), () {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
-            dialogShown = true;  // Ensure the dialog is only shown once
+            dialogShown = true; // Ensure the dialog is only shown once
           });
 
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return EndActivityPopup(
-                  currentScreen: ABCPressLetter(subStoryId: widget.subStoryId, storyId: widget.storyId),
+                  currentScreen: ABCPressLetter(
+                      subStoryId: widget.subStoryId, storyId: widget.storyId),
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
                   subStoryId: widget.subStoryId,
-                  ctx: context
-              );
+                  ctx: context);
             },
             barrierDismissible: false,
           );
         });
       });
     }
-
-
-
-
 
     TextSpan printedText = TextSpan(
       children: [

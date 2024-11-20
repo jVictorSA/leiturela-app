@@ -28,12 +28,12 @@ class _PressableLettersState extends State<PressableLetters> {
 
     return GestureDetector(
       onTap: () {
-        if (widget.isAnswer == true) {
-          widget.onTap(); // Actually invoke the parent's callback function
-        }
       solved
           ? null // Disable onTap if solved is true
           : () {
+        if (widget.isAnswer == true) {
+          widget.onTap(); // Actually invoke the parent's callback function
+        }
         setState(() {
           solved = true;
         });

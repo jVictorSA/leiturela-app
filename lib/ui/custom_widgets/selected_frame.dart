@@ -9,6 +9,7 @@ class SelectedFrame extends StatelessWidget {
   final double textSize;
   final String title;
   final String svgs;
+  final double svgSize;
 
   final Color backgroundColor;
 
@@ -20,7 +21,8 @@ class SelectedFrame extends StatelessWidget {
     required this.svgs,
     double? textSize,
     required this.backgroundColor,
-  }) : textSize = textSize ?? 28.0; // Set default value to 28.0 if null
+    double? svgSize,
+  }) : textSize = textSize ?? 28.0, svgSize = svgSize ?? 44; // Set default value to 28.0 if null
   @override
   Widget build(BuildContext parentContext) {
 
@@ -99,8 +101,8 @@ class SelectedFrame extends StatelessWidget {
             SvgPicture.asset(
               // 'assets/imgs/apartment.svg',
               svgs,
-              width: 44,
-              height: 44,
+              width: svgSize,
+              height: svgSize,
             ),
           ],
         ),
