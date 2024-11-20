@@ -16,11 +16,13 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  TextEditingController controllerName = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
   TextEditingController controllerPasswordRepeat = TextEditingController();
 
   Future<void> registerUser() async {
+    final name = controllerName.text;
     final email = controllerEmail.text;
     final password = controllerPassword.text;
     final passwordRepeat = controllerPasswordRepeat.text;
@@ -49,6 +51,7 @@ class _RegisterState extends State<Register> {
         Uri.parse(url),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
+          'name' : name,
           'email': email,
           'password': password,
         }),
@@ -149,6 +152,38 @@ class _RegisterState extends State<Register> {
                     flex: 1,
                   ),
                   const Text(
+                    "Nome",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: 'Playpen-Sans',
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black),
+                    textAlign: TextAlign.left,
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                      height: 40,
+                      width: 450,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFD1E9F6),
+                        border: Border.all(color: const Color(0xFF03BFE7)),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: TextField(
+                        controller: controllerName,
+                        textAlign: TextAlign.center,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 16.0),
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.singleLineFormatter,
+                        ],
+                      )),
+                  const Text(
                     "E-mail",
                     style: TextStyle(
                         fontSize: 15,
@@ -175,7 +210,7 @@ class _RegisterState extends State<Register> {
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(vertical: 16.0),
                         ),
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.text,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.singleLineFormatter,
                         ],
@@ -251,9 +286,13 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   const Spacer(flex: 1,),
-                  CustomButton(
-                    label: 'Cadastrar',
-                    onPressed: registerUser,
+                  SizedBox(
+                    height: 50,
+                    width: 200,
+                    child:CustomButton(
+                      label: 'Cadastrar',
+                      onPressed: registerUser,
+                    ),
                   ),
                   const Spacer(flex: 1,),
                 ],

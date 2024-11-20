@@ -61,7 +61,7 @@ class _MainMenuState extends State<MainMenu> {
   void initState() {
     super.initState();
     _audioManager.playMainMenuMusic();
-    // _checkLoginStatus();
+    _checkLoginStatus();
   }
 
   @override
@@ -71,16 +71,16 @@ class _MainMenuState extends State<MainMenu> {
     super.dispose();
   }
 
-  // Future<void> _checkLoginStatus() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String? token = prefs.getString('auth_token');
+  Future<void> _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('auth_token');
 
-  //   setState(() {
-  //     isLoggedIn = token != null && token.isNotEmpty;
-  //     print('Token encontrado: $token');
-  //     print('isLoggedIn: $isLoggedIn');
-  //   });
-  // }
+    setState(() {
+      isLoggedIn = token != null && token.isNotEmpty;
+      print('Token encontrado: $token');
+      print('isLoggedIn: $isLoggedIn');
+    });
+  }
 
 
   @override
@@ -157,12 +157,13 @@ class _MainMenuState extends State<MainMenu> {
                           ]),
                       borderRadius: BorderRadius.circular(30)),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: isLoggedIn ?() {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const Report()),
                       );
-                    },
+                    }
+                    :null,
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.transparent),
@@ -296,6 +297,7 @@ class _MainMenuState extends State<MainMenu> {
                 SizedBox(height: 10,),
                 CustomButton(
                   height: 40,
+                  width: 150,
                   label: 'Cadastro',
                   onPressed: () {
                     Navigator.push(context,
