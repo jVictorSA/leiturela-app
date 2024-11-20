@@ -35,7 +35,6 @@ dependencies:
   flutter_svg: ^0.22.0
   audioplayers: ^6.1.0
   shared_preferences: ^2.0.17
-  just_audio: ^0.9.25
   stroke_text: any
   # http: ^0.15.0
 
@@ -74,8 +73,12 @@ flutter:
   assets:
     - assets/imgs/
     - assets/imgs/atv_imgs/
-    - assets/audio/
+    - assets/imgs/atv_button_svg/
+    - assets/imgs/backgrounds/
     - assets/audio/letter_sounds/
+    - assets/audio/word_sounds/
+    - assets/audio/sound_effects/
+    - assets/audio/background_music/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

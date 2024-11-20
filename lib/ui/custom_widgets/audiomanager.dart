@@ -16,9 +16,8 @@ class AudioManager {
     if (_audioPlayer.state == PlayerState.playing) return; // Check if already playing
 
     await _audioPlayer.setReleaseMode(ReleaseMode.loop); // Loop the background music
-    await _audioPlayer.play(AssetSource('audio/main.mp3')); // Ensure path matches your asset setup
+    await _audioPlayer.play(AssetSource('audio/background_music/main.mp3')); // Ensure path matches your asset setup
   }
-
   void stopMusic() {
     _audioPlayer.stop();
   }

@@ -33,7 +33,7 @@ class _ReportState extends State<Report> {
         body: Stack(children: [
       Positioned.fill(
         child: SvgPicture.asset(
-          "assets/imgs/background.svg",
+          "assets/imgs/backgrounds/background.svg",
           fit: BoxFit.cover,
         ),
       ),
