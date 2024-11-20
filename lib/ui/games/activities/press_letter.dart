@@ -20,13 +20,14 @@ class _PressLetterState extends State<PressLetter> {
 
   bool dialogShown = false;  // Add a flag to check if the dialog has been shown
 
-  String letter = 'C';
+  String letter = 'H';
 
-  List<String> wordList = ["Bora", "Barco", "Costume", "Cuzcuz"]; // Não ta atualizando certo resolver dps.
+  List<String> wordList = ["Ventania", "Luz", "Caminho", "Sonho"];
 
   Color defaultColor = Colors.black;
   Color correctColor = const Color(0xFF21D304);
   Color incorrectColor = const Color(0xFFA90C0C);
+
 
   // Create the map that associates each word with a list of maps for each letter
   List<List<Map<String, bool>>> get result {
@@ -38,7 +39,6 @@ class _PressLetterState extends State<PressLetter> {
       }).toList();
     }).toList();
   }
-
 
   List<String> get questionText => [
     "Escolha a letra ",
@@ -220,6 +220,7 @@ class _PressLetterState extends State<PressLetter> {
                       children: [
                         Row(
                           mainAxisSize: MainAxisSize.min,
+                          // list string: ['casa' , 'amor',...]
                           children: wordList[2].split('').map((char) {
                             // Find the map for the first word (wordList[0]) in 'result'
                             // Use result[0] because we want to get the map for the first word

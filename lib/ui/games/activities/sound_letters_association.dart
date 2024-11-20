@@ -95,12 +95,14 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
       return random.nextBool() ? letter.toLowerCase() : letter;
     }).toList();
 
-    chosenLetters = audioChosenLetters.map((str) => str.replaceAll('.mp3', '')).toList();
+    chosenLetters =
+        audioChosenLetters.map((str) => str.replaceAll('.mp3', '')).toList();
 
     // Shuffle activityLetters to randomize their order
     activityLetters.shuffle(random);
 
-    activityLetters = activityLetters.map((str) => str.replaceAll('.mp3', '')).toList();
+    activityLetters =
+        activityLetters.map((str) => str.replaceAll('.mp3', '')).toList();
 
     activityLetters = activityLetters.map((letter) {
       return random.nextBool() ? letter.toUpperCase() : letter;
@@ -114,17 +116,19 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
   }
 
   void _handleButtonPress(String letter) {
-    setState(() {
-      if (chosenLetters.contains(letter.toUpperCase()) ||
-          chosenLetters.contains(letter.toLowerCase())) {
-        // Correct letter: green gradient
-        buttonColors[letter] = [correctColor[0], correctColor[1]];
-        letterAnswer -= 1;
-      } else {
-        // Incorrect letter: red gradient
-        buttonColors[letter] = [incorrectColor[0], incorrectColor[1]];
-      }
-    });
+    if (buttonColors[letter]?[0] != correctColor[0]) {
+      setState(() {
+        if (chosenLetters.contains(letter.toUpperCase()) ||
+            chosenLetters.contains(letter.toLowerCase())) {
+          // Correct letter: green gradient
+          buttonColors[letter] = [correctColor[0], correctColor[1]];
+          letterAnswer -= 1;
+        } else {
+          // Incorrect letter: red gradient
+          buttonColors[letter] = [incorrectColor[0], incorrectColor[1]];
+        }
+      });
+    }
   }
 
   @override
@@ -183,7 +187,9 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
                   text: printedText,
                 ),
                 AudioButton(
-                  soundFiles: audioChosenLetters.map((file) => 'letter_sounds/$file').toList(),
+                  soundFiles: audioChosenLetters
+                      .map((file) => 'letter_sounds/$file')
+                      .toList(),
                 ),
                 const SizedBox(
                   height: 32,

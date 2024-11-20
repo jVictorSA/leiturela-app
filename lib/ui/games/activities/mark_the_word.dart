@@ -12,7 +12,11 @@ class PressSyllable extends StatefulWidget {
   String syllable;
 
   // PressSyllable({super.key, required this.storyId, required this.subStoryId, required this.syllable= ""});
-  PressSyllable({super.key, required this.storyId, required this.subStoryId, this.syllable = 'Ba'});
+  PressSyllable(
+      {super.key,
+      required this.storyId,
+      required this.subStoryId,
+      this.syllable = 'Ba'});
 
   @override
   _PressSyllableState createState() => _PressSyllableState();
@@ -27,6 +31,8 @@ class _PressSyllableState extends State<PressSyllable> {
   Color correctColor = const Color(0xFF21D304);
   Color incorrectColor = const Color(0xFFA90C0C);
 
+  int numbersFound = 999;
+
   // Função que verifica se a palavra contém ou começa com a sílaba/letra
   bool checkSyllable(String word, String syllable) {
     return word.toLowerCase().contains(syllable.toLowerCase());
@@ -34,7 +40,7 @@ class _PressSyllableState extends State<PressSyllable> {
 
   // Cria a lista de resultados com base na verificação da sílaba/letra
   var result = wordList.map((word) {
-    return {'word': word, 'isCorrect': false, 'isAnswered': false}; 
+    return {'word': word, 'isCorrect': false, 'isAnswered': false};
   }).toList();
 
   @override
@@ -43,16 +49,20 @@ class _PressSyllableState extends State<PressSyllable> {
     // Atualiza o estado das palavras com base na sílaba fornecida
     result = wordList.map((word) {
       bool isCorrect = checkSyllable(word, widget.syllable);
-      return {'word': word, 'isCorrect': isCorrect, 'isAnswered': false}; 
+      return {'word': word, 'isCorrect': isCorrect, 'isAnswered': false};
     }).toList();
-  }
 
-  int numbersFound = 0;
+    numbersFound = result
+        .where((map) => map['isCorrect'] == true && map['isAnswered'] == false)
+        .length;
+  }
 
   @override
   Widget build(BuildContext context) {
     // Conta quantas palavras corretas existem
-    numbersFound = result.where((map) => map['isCorrect'] == true && map['isAnswered'] == false).length;
+    numbersFound = result
+        .where((map) => map['isCorrect'] == true && map['isAnswered'] == false)
+        .length;
 
     if (numbersFound <= 0 && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -95,7 +105,8 @@ class _PressSyllableState extends State<PressSyllable> {
                   children: [
                     WidgetSpan(
                       child: GoldenTextSpecial(
-                        text: "Escolha as palavras que contêm a sílaba '${widget.syllable}'",
+                        text:
+                            "Escolha as palavras que contêm a sílaba '${widget.syllable}'",
                         textSize: 25,
                         borderColor: 0xFF012480,
                         borderWidth: 3,
@@ -130,7 +141,8 @@ class _PressSyllableState extends State<PressSyllable> {
 
                             // Verifica se todas as palavras corretas foram encontradas
                             if (numbersFound <= 0 && !dialogShown) {
-                              dialogShown = true; // Evite que o diálogo seja mostrado várias vezes
+                              dialogShown =
+                                  true; // Evite que o diálogo seja mostrado várias vezes
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -139,7 +151,8 @@ class _PressSyllableState extends State<PressSyllable> {
                                           subStoryId: widget.subStoryId,
                                           storyId: widget.storyId,
                                           syllable: widget.syllable),
-                                      story: widget.subStoryId != 0 ? true : false,
+                                      story:
+                                          widget.subStoryId != 0 ? true : false,
                                       storyId: widget.storyId,
                                       subStoryId: widget.subStoryId,
                                       ctx: context);

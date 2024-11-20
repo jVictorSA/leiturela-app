@@ -1,8 +1,5 @@
-import 'dart:ffi';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
 import 'custom_widgets/activity_background.dart';
@@ -10,7 +7,6 @@ import 'custom_widgets/audio_button.dart';
 import 'custom_widgets/golden_text.dart';
 import 'custom_widgets/letter.dart';
 import 'custom_widgets/letter_space.dart';
-import 'custom_widgets/word_box.dart';
 
 class BuildWord extends StatefulWidget {
   String storyId;

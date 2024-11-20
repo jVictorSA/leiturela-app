@@ -1,7 +1,5 @@
 import 'package:demo_app/ui/games/activities/complete_word.dart';
 import 'package:demo_app/ui/games/activities/image_association.dart';
-import 'package:demo_app/ui/games/activities/upper_and_lowercase.dart';
-import 'package:demo_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widgets/return_button.dart';
@@ -69,6 +67,7 @@ class Minigames extends StatelessWidget {
                             svgs: 'assets/imgs/press.svg',
                             backgroundColor: Colors.indigoAccent,
                             textSize: 20,
+                            svgSize: 56,
                           ),
                           SelectedFrame(
                             parentContext: context,
@@ -119,6 +118,7 @@ class Minigames extends StatelessWidget {
                             svgs: 'assets/imgs/abcpress.svg',
                             backgroundColor: Colors.teal,
                             textSize: 20,
+                            svgSize: 56,
                           ),
                         ],
                       ),
@@ -152,7 +152,8 @@ class Minigames extends StatelessWidget {
                             title: 'Asssociar Letra pelo Som',
                             svgs: 'assets/imgs/sound_letter_press.svg',
                             backgroundColor: Colors.pink,
-                            textSize: 20,
+                            textSize: 16,
+                            svgSize: 55,
                           ),
                         ],
                       ),

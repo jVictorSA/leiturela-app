@@ -9,7 +9,6 @@ class GetActivities{
   String nextActivityId;
   // String activityType;
 
-
   GetActivities(this.subStoryId,
                 this.storyId,
                 // this.activityId,

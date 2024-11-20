@@ -12,7 +12,8 @@ class AudioButton extends StatelessWidget {
 
   void _playSounds() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    double volume = _prefs.getInt('efeitos')!.toDouble() / 10;
+    int? volumePref = _prefs.getInt('efeitos');
+    double volume = (volumePref ?? 5).toDouble() / 10; // Default to 5 if null
 
     // Loop through the list of sound files
     for (var sound in soundFiles) {

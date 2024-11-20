@@ -1,12 +1,9 @@
 import 'package:demo_app/ui/games/activities/custom_widgets/audio_button.dart';
-import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
-import '../../games/story_games_screen.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 

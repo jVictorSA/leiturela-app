@@ -4,7 +4,6 @@ import '../../custom_widgets/end_activity_popup.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/letter.dart';
 import 'custom_widgets/letter_space.dart';
-import 'custom_widgets/word_box.dart';
 import 'custom_widgets/audio_button.dart';
 import '../../custom_widgets/return_button.dart';
 import 'dart:math';
