@@ -6,11 +6,22 @@ import '../../custom_widgets/return_button.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import "package:demo_app/services/services.dart";
+
 class PressLetter extends StatefulWidget {
   String storyId;
   int subStoryId;
+  String activityId;
+  String nextActivityId;
 
-  PressLetter({super.key, required this.storyId, required this.subStoryId});
+  PressLetter({super.key,
+               required this.storyId,
+               required this.subStoryId,
+               this.activityId = "",
+               this.nextActivityId = ""
+              });
 
   @override
   _PressLetterState createState() => _PressLetterState();
@@ -19,6 +30,8 @@ class PressLetter extends StatefulWidget {
 class _PressLetterState extends State<PressLetter> {
 
   bool dialogShown = false;  // Add a flag to check if the dialog has been shown
+  bool nextActivityLoaded = false;
+  bool isLoaded = false;
 
   String letter = 'H';
 
@@ -29,32 +42,23 @@ class _PressLetterState extends State<PressLetter> {
   Color incorrectColor = const Color(0xFFA90C0C);
 
 
-  // Create the map that associates each word with a list of maps for each letter
-  List<List<Map<String, bool>>> get result {
-    return wordList.map((word) {
-      return word.split('').map((char) {
-        return {
-          char: char.toUpperCase() == letter || char.toLowerCase() == letter
-        };
-      }).toList();
-    }).toList();
-  }
-
-  List<String> get questionText => [
-    "Escolha a letra ",
-    letter,
-    " ou ",
-    letter.toLowerCase(),
-  ];
-
-  int get numbersFound {
-    return result
-        .expand((wordMaps) => wordMaps)
-        .where((map) => map.values.first)
-        .length;
-  }
-
+  List<List<Map<String, bool>>> result = [];
+  List<String> questionText = [];
+  int numbersFound = 999;
   int _foundCount = 999;  // Mutable state to track the count
+  TextSpan printedText = TextSpan();
+
+  List<List<Map<String, bool>>> getResult(List<String> words){
+    List<List<Map<String, bool>>> result = words.map((word) {
+        return word.split('').map((char) {
+          return {
+            char: char.toUpperCase() == letter || char.toLowerCase() == letter
+          };
+        }).toList();
+      }).toList();    
+
+    return result;
+  }
 
   void _decrementNumbersFound() {
     setState(() {
@@ -67,63 +71,101 @@ class _PressLetterState extends State<PressLetter> {
   @override
   void initState() {
     super.initState();
-    // Set _foundCount to numbersFound once when the widget is initialized
-    _foundCount = numbersFound;
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          widget.nextActivityId = response;        
+          nextActivityLoaded = true;
+        })
+      });
+
+    }else{}
+
+    fetchActivity(http.Client(), widget.activityId).then((response) => {
+      setState(() {
+        String entireObject;        
+        entireObject = response;
+        Map activity = json.decode(entireObject);
+
+        print(activity);
+
+        letter = activity['body']['letra'];
+        wordList = activity['body']['silabas'].cast<String>();
+        
+        result = getResult(wordList);
+
+        questionText.add("Escolha a letra ");
+        questionText.add(letter);
+        questionText.add(" ou ");
+        questionText.add(letter.toUpperCase());
+          
+        numbersFound = result
+                      .expand((wordMaps) => wordMaps)
+                      .where((map) => map.values.first)
+                      .length;        
+
+        printedText = TextSpan(
+          children: [
+            WidgetSpan(
+              child: GoldenTextSpecial(
+                text: questionText[0],
+                textSize: 25,
+                // Adjust as needed
+                borderColor: 0xFF012480,
+                // Adjust as needed
+                borderWidth: 3,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const WidgetSpan(
+              child: SizedBox(width: 8), // Adjust the width for desired spacing
+            ),
+            TextSpan(
+              text: questionText[1],
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontFamily: 'Playpen-Sans', // Fixed font family
+                fontWeight: FontWeight.bold,
+              ), // Style for normal text
+            ),
+            WidgetSpan(
+              child: GoldenTextSpecial(
+                text: questionText[2],
+                textSize: 25,
+                // Adjust as needed
+                borderColor: 0xFF012480,
+                // Adjust as needed
+                borderWidth: 3,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            TextSpan(
+              text: questionText[3],
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontFamily: 'Playpen-Sans', // Fixed font family
+                fontWeight: FontWeight.bold,
+              ), // Style for normal text
+            ),
+          ],
+        );
+
+        print(numbersFound);
+        _foundCount = numbersFound - 1;
+
+        isLoaded = true;
+      })
+    });     
   }
 
   @override
   Widget build(BuildContext context) {
-    TextSpan printedText = TextSpan(
-      children: [
-        WidgetSpan(
-          child: GoldenTextSpecial(
-            text: questionText[0],
-            textSize: 25,
-            // Adjust as needed
-            borderColor: 0xFF012480,
-            // Adjust as needed
-            borderWidth: 3,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const WidgetSpan(
-          child: SizedBox(width: 8), // Adjust the width for desired spacing
-        ),
-        TextSpan(
-          text: questionText[1],
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            fontFamily: 'Playpen-Sans', // Fixed font family
-            fontWeight: FontWeight.bold,
-          ), // Style for normal text
-        ),
-        WidgetSpan(
-          child: GoldenTextSpecial(
-            text: questionText[2],
-            textSize: 25,
-            // Adjust as needed
-            borderColor: 0xFF012480,
-            // Adjust as needed
-            borderWidth: 3,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        TextSpan(
-          text: questionText[3],
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            fontFamily: 'Playpen-Sans', // Fixed font family
-            fontWeight: FontWeight.bold,
-          ), // Style for normal text
-        ),
-      ],
-    );
 
-    if (_foundCount <= 0 && !dialogShown) {
+    if (isLoaded && _foundCount <= 0 && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Future.delayed(const Duration(milliseconds: 500), () {
+        Future.delayed(const Duration(milliseconds: 30), () {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
             dialogShown = true; // Ensure the dialog is only shown once
@@ -149,7 +191,7 @@ class _PressLetterState extends State<PressLetter> {
 
     return Scaffold(
       body: ActivityBackground(
-        child: Stack(children: [
+        child: isLoaded ? Stack(children: [
           Column(
             children: [
               Row(
@@ -267,7 +309,11 @@ class _PressLetterState extends State<PressLetter> {
               ),
             ],
           ),
-        ]),
+        ])
+        : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Center(child: CircularProgressIndicator(),)]
+              ),
       ),
     );
   }
