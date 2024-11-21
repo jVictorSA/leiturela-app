@@ -25,8 +25,9 @@ class _CompleteWordState extends State<CompleteWord> {
   final double minDistance = 10; // Minimum distance between boxes (padding)
 
   // The list for LetterSpace stays intact; it doesn't get removed
-  final List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
-  final List<String> randomSyllablesList = ['ma', 'pe'];
+  final String originalWord = "computador";
+  final List<String> letterSpaceKeys = ['com', 'pu', 'ta', 'dor'];
+  final List<String> randomSyllablesList = ['ma', 'pe', 'ti', 'po'];
 
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
@@ -202,7 +203,7 @@ class _CompleteWordState extends State<CompleteWord> {
                           ],
                         ),
                         AudioButton(
-                          soundFiles: ['cabelo.wav'],
+                          soundFiles: ['$originalWord.mp3'],
                         ),
                       ],
                     )

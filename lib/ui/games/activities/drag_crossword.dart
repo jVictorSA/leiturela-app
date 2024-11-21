@@ -25,8 +25,8 @@ class _DragSyllablesState extends State<DragSyllables> {
   final double boxHeight = 43; // Height of LetterBox
   final double minDistance = 10; // Minimum distance between boxes (padding)
 
-  // The list for LetterSpace stays intact; it doesn't get removed
-  final List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
+  final String originalWord = 'computador';
+  final List<String> letterSpaceKeys = ['com', 'pu', 'ta', 'dor'];
 
   // List of LetterBox widgets with unique keys
   late List<Map<String, dynamic>> letterBoxList;
@@ -198,7 +198,7 @@ class _DragSyllablesState extends State<DragSyllables> {
                           ],
                         ),
                         AudioButton(
-                          soundFiles: ['cabelo.wav'],
+                          soundFiles: ['$originalWord.mp3'],
                         ),
                       ],
                     )
@@ -206,15 +206,6 @@ class _DragSyllablesState extends State<DragSyllables> {
                 ),
                 const Spacer(
                   flex: 2,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    WordBox(
-                        text: const ['cabelo'],
-                        correctText: [letterBoxList.isEmpty]),
-                    // The word being spelled
-                  ],
                 ),
                 const Spacer(
                   flex: 5,

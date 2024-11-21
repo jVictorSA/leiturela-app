@@ -63,13 +63,6 @@ class _MainMenuState extends State<MainMenu> {
     // _checkLoginStatus();
   }
 
-  @override
-  void dispose() {
-    // Optional: Stop music if you want to stop it when navigating away.
-    // _audioManager.stopMusic();
-    super.dispose();
-  }
-
   // Future<void> _checkLoginStatus() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   String? token = prefs.getString('auth_token');

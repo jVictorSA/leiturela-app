@@ -22,7 +22,9 @@ class _BuildWordState extends State<BuildWord> {
   final Set<int> invisibleIndices = {}; // Track syllables to hide
   int lastAddedId = 0; // Track the last added ID
 
-  List<String> stringSyllables = ['In', 'com', 'pre', 'en', 'sí', 'vel'];
+  String originalWord = 'computador';
+
+  List<String> stringSyllables = ['com', 'pu', 'ta', 'dor'];
 
   List<Map<String, dynamic>> syllables = [];
 
@@ -100,7 +102,7 @@ class _BuildWordState extends State<BuildWord> {
                 ),
                 const Spacer(),
                 AudioButton(
-                  soundFiles: ['cabelo.wav'],
+                  soundFiles: ["$originalWord.mp3"],
                 ),
                 const Spacer(),
                 Row(

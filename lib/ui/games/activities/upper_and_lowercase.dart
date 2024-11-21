@@ -17,8 +17,8 @@ class UpperLower extends StatefulWidget {
 class _UpperLowerState extends State<UpperLower> {
 
   double width = 150.0;
-  List<String> maiusculas = ["FURACÃO", "BATATA", "PEQUENO", "ROUPA"];
   List<String> minusculas = ["furacão", "batata", "pequeno", "roupa"];
+  late List<String> maiusculas =  minusculas.map((str) => str.toUpperCase()).toList();
 
   @override
   Widget build(BuildContext context) {
