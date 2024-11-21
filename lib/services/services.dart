@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';// show utf8;
 
-String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzNkNDI3ODc2ZDRmZGNhNGQ0MGM3ZiIsImV4cCI6MTczMTgxNDg1M30.Qz_C9F3FFpLnEv-hXIpoiHJRt2gguSQRbMuuvM5ZyFE";
+String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2QyMTkyYjE5Y2M2ZWIwMjc5YWNhMiIsImV4cCI6MTczMjE0NTk0NX0.n9725w1hjSrN3yqt9KX1H_cgO8hqzEmqB1C8rNTmpwE";
 
 Future<String> fetchStories(http.Client client) async {
   var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/stories'));
@@ -51,6 +51,28 @@ Future<String> fetchNextActivity(storyId, curentSubstory) async {
     print("ID SHOWSTORY: " +nextActivityId);
 
     return nextActivityId;
+  }
+  return response.body;
+}
+
+Future<String> fetchActivity(http.Client client, activityId) async {
+  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/atividade:$activityId'));  
+
+  if (response.statusCode == 200) {
+  var decoded = utf8.decode(response.bodyBytes);  
+
+    return decoded.toString();
+  }
+  return response.body;
+}
+
+Future<String> fetchActivities(http.Client client) async {
+  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/atividades'));  
+
+  if (response.statusCode == 200) {
+  var decoded = utf8.decode(response.bodyBytes);  
+
+    return decoded.toString();
   }
   return response.body;
 }

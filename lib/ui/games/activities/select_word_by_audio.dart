@@ -73,7 +73,7 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                   flex: 2,
                 ),
                 AudioButton(
-                  soundFiles: [audioWord + '.mp3'],
+                  soundFiles: ['$audioWord.mp3'],
                 ),
                 const Spacer(
                   flex: 2,
@@ -91,9 +91,9 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                           label: originalWord[0],
                           onPressed: () {
                             setState(() {
-                              if (originalWord[0]
+                              if (originalWord[0][0]
                                   .toLowerCase()
-                                  .contains(letter.toLowerCase())) {
+                                  == (letter.toLowerCase())) {
                                 answerFound = true;
                               }
                             });
@@ -108,9 +108,9 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                           label: originalWord[1],
                           onPressed: () {
                             setState(() {
-                              if (originalWord[1]
+                              if (originalWord[1][0]
                                   .toLowerCase()
-                                  .contains(letter.toLowerCase())) {
+                                   == (letter.toLowerCase())) {
                                 answerFound = true;
                               }
                             });
@@ -130,9 +130,9 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                           label: originalWord[2],
                           onPressed: () {
                             setState(() {
-                              if (originalWord[2]
+                              if (originalWord[2][0]
                                   .toLowerCase()
-                                  .contains(letter.toLowerCase())) {
+                                  == (letter.toLowerCase())) {
                                 answerFound = true;
                               }
                             });
@@ -147,9 +147,9 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                           label: originalWord[3],
                           onPressed: () {
                             setState(() {
-                              if (originalWord[3]
+                              if (originalWord[3][0]
                                   .toLowerCase()
-                                  .contains(letter.toLowerCase())) {
+                                  ==(letter.toLowerCase())) {
                                 answerFound = true;
                               }
                             });

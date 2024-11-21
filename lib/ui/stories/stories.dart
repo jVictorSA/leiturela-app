@@ -41,18 +41,15 @@ class StoriesState extends State<Stories>{
     fetchStories(http.Client()).then((response) => {
       setState(() {
         String entireObject;
-        entireObject = response;
-        // print(entireObject);
+        entireObject = response;        
         List stories = json.decode(entireObject);
         List<String> titles = [];
-        for (var story in stories){                  
+        for (var story in stories){
           titles.add(story["story_prompt"]);
           widget.ids.add(story["_id"]);          
           
-          List<dynamic> activitiesArroba = story["activities"];
-          // print(activitiesArroba);
-          widget.activities_ids.add(activitiesArroba.cast<String>());
-          // widget.nextActivitiesType.add(story[])
+          List<dynamic> activitiesArroba = story["activities"];          
+          widget.activities_ids.add(activitiesArroba.cast<String>());          
         }
         widget.storiesLength = stories.length;
         widget.titles = titles;
@@ -64,13 +61,11 @@ class StoriesState extends State<Stories>{
 
   Widget getTextWidgets(int firstIndex)
   {
-    List<Widget> list = <Widget>[];
-    // print(firstIndex);
+    List<Widget> list = <Widget>[];    
     int maxTextLength = 10;
     int smallTextSize = 18;
-    // for ( var i = 0; i < widget.titles!.length; i = i + 2){
-    if (firstIndex < widget.titles!.length -1){
-      // print("par");
+    
+    if (firstIndex < widget.titles!.length -1){      
       list.add(SelectedFrame(
                 backgroundColor: Colors.blueGrey,
                 parentContext: context,
@@ -85,10 +80,6 @@ class StoriesState extends State<Stories>{
                                           // widget.activities_ids[firstIndex][1],
                                           widget.activities_ids[firstIndex][0],
                                          )
-                  // CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex],
-                  //                        activityId: widget.activities_ids[firstIndex][1],
-                  //                        nextActivityId: widget.activities_ids[firstIndex][1+1],
-                  //                       ),
                 ),
                 title: widget.titles![firstIndex],
                 svgs: 'assets/imgs/apartment.svg',
@@ -109,10 +100,6 @@ class StoriesState extends State<Stories>{
                                           // widget.activities_ids[firstIndex][1],
                                           widget.activities_ids[firstIndex + 1][1+1],
                                          )
-                  // CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex + 1],
-                  //                        activityId: widget.activities_ids[firstIndex+1][1],
-                  //                        nextActivityId: widget.activities_ids[firstIndex+1][1+1]
-                  //                       ),
                 ),
                 title: widget.titles![firstIndex+1],
                 svgs: 'assets/imgs/electric_bolt.svg',
@@ -135,10 +122,6 @@ class StoriesState extends State<Stories>{
                                           // widget.activities_ids[firstIndex][1],
                                           widget.activities_ids[firstIndex][1+1],
                                          )
-                  // CountLetters(subStoryId: 0, storyId: widget.ids[firstIndex],
-                  //                       activityId: widget.activities_ids[firstIndex][1],
-                  //                        nextActivityId: widget.activities_ids[firstIndex][1+1]
-                  //                       ),
                 ),
                 title: widget.titles![firstIndex],
                 svgs: 'assets/imgs/domino_mask.svg',
@@ -152,8 +135,8 @@ class StoriesState extends State<Stories>{
   @override
   Widget build(BuildContext context) {    
     return Scaffold(
-      body: SingleChildScrollView(
-        child: isLoaded ? Stack(
+      body: isLoaded ? SingleChildScrollView(
+        child: Stack(
           children: [
             Positioned.fill(
               child: SvgPicture.asset(
@@ -176,11 +159,11 @@ class StoriesState extends State<Stories>{
             ),
           ],
         )
-        : const Column(mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Center(child: CircularProgressIndicator(),)]
-                ),
-      ),
+      )
+      : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Center(child: CircularProgressIndicator(),)]
+              ),
     );
   }
 }
