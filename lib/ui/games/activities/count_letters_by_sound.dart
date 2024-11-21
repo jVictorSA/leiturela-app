@@ -25,6 +25,12 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
   static const int textColor = 0xFF03BFE7;
   static const int borderColor = 0xFF012480;
 
+  List<String> wordList = ['computador', 'bolo', 'casa'];
+
+  static const String letter = 'C';
+
+  late int letterCount;
+
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
   bool isAnswerIncorrect = false;
@@ -35,20 +41,14 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
         " têm no áudio."
       ];
 
-  List<String> originalList = ['cabelo.wav', 'cabelo.wav', 'cabelo.wav'];
-  late List<String> textToCount;
-
-  static const String letter = 'C';
-
-  late int letterCount;
+  late List<String> audioList = ['${wordList[0]}.mp3', '${wordList[1]}.mp3', '${wordList[2]}.mp3'];
 
   bool solvedActivity = false;
 
   @override
   void initState() {
     super.initState();
-    textToCount = originalList.map((str) => str.replaceAll('.wav', '')).toList();
-    letterCount = countLetterInList(textToCount, letter);
+    letterCount = countLetterInList(wordList, letter);
   }
 
   void checkAnswer() {
@@ -160,7 +160,7 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
                   text: printedText,
                 ),
                 AudioButton(
-                  soundFiles: originalList,
+                  soundFiles: audioList,
                 ),
                 Column(
                   children: [

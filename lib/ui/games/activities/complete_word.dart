@@ -19,7 +19,7 @@ class CompleteWord extends StatefulWidget {
   CompleteWord({super.key,
                 required this.subStoryId,
                 required this.storyId,
-                this.activityId = "" 
+                this.activityId = ""
                });
 
   @override
@@ -33,10 +33,9 @@ class _CompleteWordState extends State<CompleteWord> {
   final double minDistance = 10; // Minimum distance between boxes (padding)
 
   // The list for LetterSpace stays intact; it doesn't get removed
-
-  List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
-  final List<String> randomSyllablesList = ['ma', 'pe', 'lo'];
-
+  final String originalWord = "computador";
+  late final List<String> letterSpaceKeys = ['com', 'pu', 'ta', 'dor'];
+  final List<String> randomSyllablesList = ['ma', 'pe', 'ti', 'po'];
 
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
@@ -67,9 +66,9 @@ class _CompleteWordState extends State<CompleteWord> {
 
     if (widget.storyId != ""){
       fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
-        setState(() {        
-          nextActivityId = response;        
-          
+        setState(() {
+          nextActivityId = response;
+
         })
       });
 
@@ -81,8 +80,8 @@ class _CompleteWordState extends State<CompleteWord> {
         int index;
         List<dynamic> palavra;
         String faltante;
-        entireObject = response;        
-        Map activity = json.decode(entireObject);        
+        entireObject = response;
+        Map activity = json.decode(entireObject);
 
         faltante = activity["answer"]["silaba"];
         palavra = activity["body"]["palavra"];
@@ -90,9 +89,9 @@ class _CompleteWordState extends State<CompleteWord> {
 
         palavra[index] = faltante;
 
-        letterSpaceKeys = palavra.cast<String>();;
+        List<String> letterSpaceKeys = palavra.cast<String>();
 
-        final randomIndex = index;        
+        final randomIndex = index;
         final randomKey = letterSpaceKeys[randomIndex];
 
         letterBoxList = [
@@ -133,7 +132,7 @@ class _CompleteWordState extends State<CompleteWord> {
     });
 
     // fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
-    //   setState(() {        
+    //   setState(() {
     //     nextActivityId = response;
     //   })
     // });
@@ -253,7 +252,7 @@ class _CompleteWordState extends State<CompleteWord> {
                           ],
                         ),
                         AudioButton(
-                          soundFiles: ['cabelo.wav'],
+                          soundFiles: ['$originalWord.mp3'],
                         ),
                       ],
                     )

@@ -1,17 +1,10 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-
 import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/audio_button.dart';
 import 'custom_widgets/golden_text.dart';
-import 'custom_widgets/letter.dart';
-import 'custom_widgets/letter_space.dart';
-import 'custom_widgets/word_box.dart';
 
 class SelectWordAudio extends StatefulWidget {
   String storyId;
@@ -27,12 +20,11 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
   bool answerFound = false;
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
-  final String wordOne = 'Montanha';
-  final String wordTwo = 'Papagaio';
-  final String wordThree = 'Bota';
-  final String wordFour = 'Cobra';
+  List<String> originalWord = ['Computador', 'Casa', 'Bolo', 'Macieira'];
 
-  final String letter = 'c';
+  String audioWord = 'carro';
+
+  late String letter = audioWord[0];
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +73,7 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                   flex: 2,
                 ),
                 AudioButton(
-                  soundFiles: ['cabelo.wav'],
+                  soundFiles: ['$audioWord.mp3'],
                 ),
                 const Spacer(
                   flex: 2,
@@ -96,10 +88,10 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         CustomButton(
-                          label: wordOne,
+                          label: originalWord[0],
                           onPressed: () {
                             setState(() {
-                              if (wordOne[0]
+                              if (originalWord[0][0]
                                   .toLowerCase()
                                   == (letter.toLowerCase())) {
                                 answerFound = true;
@@ -113,10 +105,10 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                           height: 30,
                         ),
                         CustomButton(
-                          label: wordTwo,
+                          label: originalWord[1],
                           onPressed: () {
                             setState(() {
-                              if (wordTwo[0]
+                              if (originalWord[1][0]
                                   .toLowerCase()
                                    == (letter.toLowerCase())) {
                                 answerFound = true;
@@ -135,10 +127,10 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         CustomButton(
-                          label: wordThree,
+                          label: originalWord[2],
                           onPressed: () {
                             setState(() {
-                              if (wordThree[0]
+                              if (originalWord[2][0]
                                   .toLowerCase()
                                   == (letter.toLowerCase())) {
                                 answerFound = true;
@@ -152,10 +144,10 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                           height: 30,
                         ),
                         CustomButton(
-                          label: wordFour,
+                          label: originalWord[3],
                           onPressed: () {
                             setState(() {
-                              if (wordFour[0]
+                              if (originalWord[3][0]
                                   .toLowerCase()
                                   ==(letter.toLowerCase())) {
                                 answerFound = true;

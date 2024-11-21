@@ -9,17 +9,28 @@ import 'custom_widgets/audio_button.dart';
 import '../../custom_widgets/return_button.dart';
 import 'dart:math';
 
-Map<String, Map<String, List<String>>> activity = {
-  "body": {
-    "silabas": ['lo', 'bo', 'to', 'mia']
-  }
-};
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import "package:demo_app/services/services.dart";
 
-class DragSyllables extends StatefulWidget {  
+// Map<String, Map<String, List<String>>> activity = {
+//   "body": {
+//     "silabas": ['lo', 'bo', 'to', 'mia']
+//   }
+// };
+
+class DragSyllables extends StatefulWidget {
   String storyId;
   int subStoryId;
+  String activityId;
+  String nextActivityId;
 
-  DragSyllables({super.key, required this.subStoryId, required this.storyId});
+  DragSyllables({super.key,
+                 required this.subStoryId,
+                 required this.storyId,
+                 this.activityId = "",
+                 this.nextActivityId = ""
+                });
 
   @override
   _DragSyllablesState createState() => _DragSyllablesState();
@@ -31,28 +42,56 @@ class _DragSyllablesState extends State<DragSyllables> {
   final double boxHeight = 43; // Height of LetterBox
   final double minDistance = 10; // Minimum distance between boxes (padding)
 
-  // The list for LetterSpace stays intact; it doesn't get removed
-  List<String> letterSpaceKeys = ['ca', 'be', 'lo'];
+  String originalWord = 'computador';
+  List<String> letterSpaceKeys = ['com', 'pu', 'ta', 'dor'];
 
   // List of LetterBox widgets with unique keys
   late List<Map<String, dynamic>> letterBoxList;
 
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
+  bool isLoaded = false;
 
   @override
   void initState() {
-
-    letterSpaceKeys = activity["body"]!["silabas"]!;
-
-    letterBoxList = letterSpaceKeys.map((key) {
-      return {
-        'key': key,
-        'widget': LetterBox(text: key, borderRadius: 15.0, width: 67),
-      };
-    }).toList();
     super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => generateRandomPositions());
+
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          widget.nextActivityId = response;        
+          
+        })
+      });
+
+    }else{}
+
+    fetchActivity(http.Client(), widget.activityId).then((response) => {
+      setState(() {
+        String entireObject;
+        List<dynamic> ordenado;
+        List<dynamic> desordenado;
+        entireObject = response;        
+        Map activity = json.decode(entireObject);
+
+        letterSpaceKeys = activity["body"]["silabas"].cast<String>();
+
+        letterBoxList = letterSpaceKeys.map((key) {
+          return {
+            'key': key,
+            'widget': LetterBox(text: key, borderRadius: 15.0, width: 67),
+          };
+        }).toList();
+        WidgetsBinding.instance
+            .addPostFrameCallback((_) => generateRandomPositions());
+
+        isLoaded = true;
+
+      })
+    
+    
+    });
+
+    
   }
 
   void generateRandomPositions() {
@@ -123,7 +162,7 @@ class _DragSyllablesState extends State<DragSyllables> {
       }
     }
 
-    if (letterBoxList.isEmpty && !dialogShown) {
+    if (isLoaded && letterBoxList.isEmpty && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {
           // To avoid multiple calls to showDialog, we set a flag
@@ -139,7 +178,7 @@ class _DragSyllablesState extends State<DragSyllables> {
                       subStoryId: widget.subStoryId, storyId: widget.storyId),
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
-                  subStoryId: widget.subStoryId,                  
+                  subStoryId: widget.subStoryId,
                   ctx: context);
             },
             barrierDismissible: false,
@@ -147,7 +186,7 @@ class _DragSyllablesState extends State<DragSyllables> {
         });
       });
     }
-    if (letterBoxList.isEmpty) {
+    if (isLoaded && letterBoxList.isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {
           showDialog(
@@ -177,7 +216,7 @@ class _DragSyllablesState extends State<DragSyllables> {
 
     return Scaffold(
       body: ActivityBackground(
-          child: Stack(
+          child: isLoaded ? Stack(
         children: [
           Padding(
             padding:
@@ -208,7 +247,7 @@ class _DragSyllablesState extends State<DragSyllables> {
                           ],
                         ),
                         AudioButton(
-                          soundFiles: ['cabelo.wav'],
+                          soundFiles: ['$originalWord.mp3'],
                         ),
                       ],
                     )
@@ -216,15 +255,6 @@ class _DragSyllablesState extends State<DragSyllables> {
                 ),
                 const Spacer(
                   flex: 2,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    WordBox(
-                        text: const ['cabelo'],
-                        correctText: [letterBoxList.isEmpty]),
-                    // The word being spelled
-                  ],
                 ),
                 const Spacer(
                   flex: 5,
@@ -257,7 +287,12 @@ class _DragSyllablesState extends State<DragSyllables> {
               );
             }),
         ],
-      )),
+      )
+      : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Center(child: CircularProgressIndicator(),)]
+              ),
+      )
     );
   }
 }

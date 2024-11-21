@@ -61,7 +61,7 @@ class _MainMenuState extends State<MainMenu> {
   void initState() {
     super.initState();
     _audioManager.playMainMenuMusic();
-    _checkLoginStatus(); 
+    _checkLoginStatus();
   }
 
   @override
@@ -80,6 +80,7 @@ class _MainMenuState extends State<MainMenu> {
        isLoggedIn = token != null && token.isNotEmpty && userId != null; 
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

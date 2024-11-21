@@ -3,13 +3,20 @@ import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/letter.dart';
 import '../../custom_widgets/return_button.dart';
 
+// import "dart:pair";
+
 class UpperLower extends StatefulWidget {
   String storyId;
-  int subStoryId;  
+  int subStoryId;
+  String activityId;
+  String nextActivityId;
 
-  UpperLower(
-      {super.key, required this.storyId, required this.subStoryId});
-
+  UpperLower({super.key,
+              required this.storyId,
+              required this.subStoryId,
+              this.activityId = "",
+              this.nextActivityId = ""
+             });
   @override
   _UpperLowerState createState() => _UpperLowerState();
 }
@@ -17,8 +24,28 @@ class UpperLower extends StatefulWidget {
 class _UpperLowerState extends State<UpperLower> {
 
   double width = 150.0;
-  List<String> maiusculas = ["FURACÃO", "BATATA", "PEQUENO", "ROUPA"];
   List<String> minusculas = ["furacão", "batata", "pequeno", "roupa"];
+  late List<String> maiusculas =  minusculas.map((str) => str.toUpperCase()).toList();
+
+  List<Map<int, int>> matches = []; 
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   print(maiusculas);
+  //   print(minusculas);
+  //   for(int i = 0; i < maiusculas.length; i++){
+  //     print(maiusculas[i].toLowerCase());
+  //     for(int j = 0; j < minusculas.length; j++){
+  //       if (maiusculas[i].toLowerCase() == minusculas[j].toLowerCase()){
+  //         matches[i] = {i: j};
+  //       }
+  //     }
+  //   }
+
+  //   print(matches);
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +111,8 @@ class _UpperLowerState extends State<UpperLower> {
                     ),
                     const Spacer(),
                     ElevatedButton(
-                      onPressed: () {                        
+                      onPressed: () {        
+                        print("APERTOU MINUSCULAS1");
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(0),

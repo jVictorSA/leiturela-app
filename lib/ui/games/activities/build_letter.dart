@@ -35,6 +35,8 @@ class _BuildWordState extends State<BuildWord> {
   final Set<int> invisibleIndices = {}; // Track syllables to hide
   int lastAddedId = 0; // Track the last added ID
 
+  String originalWord = "";
+
   List<String> stringSyllables = [];
 
   List<Map<String, dynamic>> syllables = [];
@@ -46,12 +48,12 @@ class _BuildWordState extends State<BuildWord> {
   @override
   void initState() {
     super.initState();
-    
+
     if (widget.storyId != ""){
       fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
-        setState(() {        
-          nextActivityId = response;        
-          
+        setState(() {
+          nextActivityId = response;
+
         })
       });
 
@@ -63,7 +65,7 @@ class _BuildWordState extends State<BuildWord> {
         String entireObject;
         List<dynamic> ordenado;
         List<dynamic> desordenado;
-        entireObject = response;        
+        entireObject = response;
         Map activity = json.decode(entireObject);
         // print("fetch activity id: " + widget.activityId);
 
@@ -72,7 +74,10 @@ class _BuildWordState extends State<BuildWord> {
         ordenado = activity["answer"]["ordenado"];
         desordenado = activity["body"]["desordenado"];
         stringSyllables = ordenado.cast<String>();
-        
+
+        // Para pegar o áudio eu preciso da palavra completa
+        originalWord = stringSyllables.join("");
+
         //ESSES DOIS FOR SÓ EXISTEM PORQUE AS SÍLABAS NÃO ESTÃO PADRONIZADAS NO BANCO!!!!!!!!!!!!!!!!!!
         for(int i = 0; i < stringSyllables.length; i++){
           stringSyllables[i] = removerAcentos(stringSyllables[i]);
@@ -80,16 +85,16 @@ class _BuildWordState extends State<BuildWord> {
         for(int i = 0; i < desordenado.length; i++){
           desordenado[i] = removerAcentos(desordenado[i]);
         }
-                
+
         createSyllables();  // Create syllables from the list of strings
         shuffleSyllables(desordenado); // Shuffle the syllables
-                
+
         isLoaded = true;
       })
     });
 
     // fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
-    //   setState(() {        
+    //   setState(() {
     //     nextActivityId = response;
     //   })
     // });
@@ -99,9 +104,9 @@ class _BuildWordState extends State<BuildWord> {
   String removerAcentos(String str) {
 
     var comAcento = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
-    var semAcento = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz'; 
+    var semAcento = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
 
-    for (int i = 0; i < comAcento.length; i++) {      
+    for (int i = 0; i < comAcento.length; i++) {
       str = str.replaceAll(comAcento[i], semAcento[i]);
     }
 
@@ -116,19 +121,19 @@ class _BuildWordState extends State<BuildWord> {
   }
 
   // Shuffle the syllables' text into a new list
-  void shuffleSyllables(unorderedSylllables) {    
-    unorderedSylllables.forEach((value) {      
-      syllables.forEach((value1) {        
-        if(value == value1['text']){          
+  void shuffleSyllables(unorderedSylllables) {
+    unorderedSylllables.forEach((value) {
+      syllables.forEach((value1) {
+        if(value == value1['text']){
           shuffledSyllables.add(value1);
-        }        
-        });      
-    });    
+        }
+        });
+    });
   }
 
   // Function to check if all syllables are invisible
   bool checkAllInvisible() {
-    if (invisibleIndices.length == syllables.length) {      
+    if (invisibleIndices.length == syllables.length) {
       return true;
     }
     return false;
@@ -175,7 +180,7 @@ class _BuildWordState extends State<BuildWord> {
                 ),
                 const Spacer(),
                 AudioButton(
-                  soundFiles: ['cabelo.wav'],
+                  soundFiles: ["$originalWord.mp3"],
                 ),
                 const Spacer(),
                 Row(
