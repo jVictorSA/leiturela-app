@@ -9,8 +9,8 @@ import 'package:demo_app/ui/games/activities/press_letter.dart';
 import 'package:demo_app/ui/games/activities/abc_press_letters.dart';
 import 'package:demo_app/ui/games/activities/select_word_by_audio.dart';
 import 'package:demo_app/ui/games/activities/sound_letters_association.dart';
+import 'package:demo_app/ui/games/activities/upper_and_lowercase.dart';
 import 'package:flutter/material.dart';
-// import 'package:demo_app/ui/games/activities/upper_and_lowercase.dart';
 
 class GetActivities{
   int subStoryId;
@@ -55,6 +55,24 @@ class GetActivities{
                             storyId: storyId,
                             activityId: nextActivityId);
     }
+    else if(activityType == "press_letter"){
+      return PressLetter(subStoryId: subStoryId,
+                            storyId: storyId,
+                            activityId: nextActivityId);
+    }
+    else if(activityType == "drag_crossword"){
+      return DragSyllables(subStoryId: subStoryId,
+                            storyId: storyId,
+                            activityId: nextActivityId);
+    }
+    else if(activityType == "upper_and_lowercase"){
+      return UpperLower(subStoryId: subStoryId,
+                            storyId: storyId,
+                            activityId: nextActivityId);
+    }
+    // else if(activityType == "abc_press_letters"){
+      
+    // }
 
     // Caso base apenas para não dar erro de Null-Safety
     else{

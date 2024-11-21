@@ -13,6 +13,7 @@ import '../games/activities/abc_press_letters.dart';
 import '../games/activities/select_word_by_audio.dart';
 import '../games/activities/mark_the_word.dart';
 import '../games/activities/sound_letters_association.dart';
+import '../games/activities/upper_and_lowercase.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -97,7 +98,7 @@ class _MinigamesState extends State<Minigames> {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: DragSyllables(storyId: "", subStoryId: 0),
+                            nextPage: DragSyllables(storyId: "", subStoryId: 0, activityId: getRandomActivity("drag_crossword")),
                             title: 'Arrastar Sílaba',
                             svgs: 'assets/imgs/atv_button_svg/drag.svg',
                             backgroundColor: Colors.lightBlueAccent,
@@ -161,7 +162,7 @@ class _MinigamesState extends State<Minigames> {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: PressLetter(storyId: "", subStoryId: 0),
+                            nextPage: PressLetter(storyId: "", subStoryId: 0, activityId: getRandomActivity("press_letter")),
                             title: 'Pressionar Letras',
                             svgs: 'assets/imgs/atv_button_svg/press_letter.svg',
                             backgroundColor: Colors.limeAccent,
@@ -206,6 +207,15 @@ class _MinigamesState extends State<Minigames> {
                             parentContext: context,
                             nextPage: SoundLettersAssociation(storyId: '0', subStoryId: 0),
                             title: 'Asssociar Letra pelo Som',
+                            svgs: 'assets/imgs/atv_button_svg/sound_letter_press.svg',
+                            backgroundColor: Colors.pink,
+                            textSize: 16,
+                            svgSize: 55,
+                          ),
+                          SelectedFrame(
+                            parentContext: context,                          
+                            nextPage: UpperLower(storyId: '', subStoryId: 0, activityId: getRandomActivity("upper_and_lowercase") ),
+                            title: 'Palavras maiúsculas e minúsculas',
                             svgs: 'assets/imgs/atv_button_svg/sound_letter_press.svg',
                             backgroundColor: Colors.pink,
                             textSize: 16,
