@@ -41,7 +41,7 @@ class _ReportState extends State<Report> {
       final response = await http.get(
         Uri.parse(url),
         headers: {
-          'Authorization': 'Bearer $token', 
+          'Authorization': token ?? '',
           'Content-Type': 'application/json',
           // 'User-Id': userId,
         },
