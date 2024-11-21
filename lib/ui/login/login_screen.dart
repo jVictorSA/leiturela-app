@@ -37,9 +37,16 @@ class _LoginState extends State<Login> {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         String token = data['access_token'];
+        String userId = data['user_id'];
+
         SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('auth_token', token);
+          await prefs.setString('user_id', userId);
+
         print('Login realizado com sucesso: ${data}');
+        print('toke, ${token}');
+        print('id user, ${userId}');
+        
         Navigator.pushReplacement(
           context,
            MaterialPageRoute(builder: (context) => const Games()),

@@ -74,8 +74,10 @@ class _MainMenuState extends State<MainMenu> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // await prefs.remove('auth_token');
     String? token = prefs.getString('auth_token');
+    String? userId = prefs.getString('user_id');
     setState(() {
-      isLoggedIn = token != null && token.isNotEmpty;
+      // isLoggedIn = token != null && token.isNotEmpty;
+       isLoggedIn = token != null && token.isNotEmpty && userId != null; 
     });
   }
 
@@ -160,10 +162,27 @@ class _MainMenuState extends State<MainMenu> {
                           MaterialPageRoute(builder: (context) => const Report()),
                         );
                       } else {
+                    //     Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (context) => const Login()),
+                    // );
+                     // Se não estiver logado, vai para a tela de login
                         Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Login()),
-                    );
+                          context,
+                          MaterialPageRoute(builder: (context) => const Login()),
+                        ).then((_) async {
+                          // Após o login ser feito, verifica novamente o status de login
+                          _checkLoginStatus();
+                          if (isLoggedIn) {
+                            // Se o login for bem-sucedido, redireciona para o relatório
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const Report()),
+                            );
+                          }else{
+                            print("Login falhou");
+                          }
+                        });
                       }
                     },
                     style: ButtonStyle(

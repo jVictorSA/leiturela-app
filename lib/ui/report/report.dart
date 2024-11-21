@@ -28,37 +28,32 @@ class _ReportState extends State<Report> {
   @override
   void initState() {
     super.initState();
+    _fetchReport();
   }
 
   Future<void> _fetchReport() async {
-    const url = "http://127.0.0.1:8000/atividade/relatorio";
+    const url = "http://10.0.2.2:8000/atividade/relatorio";
 
     try {
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('auth_token');
-
-      if (token != null) {
-      print('Token não encontrado. O usuário precisa fazer login novamente.');
-      return;
-      }
-
       final response = await http.get(
         Uri.parse(url),
         headers: {
           'Authorization': 'Bearer $token', 
           'Content-Type': 'application/json',
+          // 'User-Id': userId,
         },
       );
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-
         setState(() {
-          numAtv = data['num_acertos'] ?? 0;
-          timeAtv = data['total_time'] ?? 0;
-          meanTimeAtv = numAtv > 0 ? timeAtv / numAtv : 0.0; // Calcula a média
-          print('Dados recebidos com sucesso: ${response.body}');
+          numAtv = data['entregas'] ?? 0;
+          timeAtv = data['total_time']?.toInt() ?? 0;
+          meanNumAtv = data['entregas'] > 0 ? data['total_time'] / data['entregas'] : 0.0;
+          meanTimeAtv = numAtv > 0 ? timeAtv / numAtv : 0.0;
         });
       } else {
         _showError("Erro ao carregar o relatório: ${response.statusCode}");
@@ -169,7 +164,8 @@ class _ReportState extends State<Report> {
               Column(
                 children: [
                   Text(
-                    numAtv.toString(),
+                    // numAtv.toString(),
+                    '$numAtv',
                     style: TextStyle(
                         fontFamily: 'Playpen-Sans',
                         fontWeight: FontWeight.w500,
@@ -178,7 +174,8 @@ class _ReportState extends State<Report> {
                   ),
                   SizedBox(height: Report.sizedBoxSize),
                   Text(
-                    meanNumAtv.toString(),
+                    // meanNumAtv.toString(),
+                    '$meanNumAtv',
                     style: TextStyle(
                         fontFamily: 'Playpen-Sans',
                         fontWeight: FontWeight.w500,
@@ -187,7 +184,8 @@ class _ReportState extends State<Report> {
                   ),
                   SizedBox(height: Report.sizedBoxSize),
                   Text(
-                    timeAtv.toString(),
+                    // timeAtv.toString(),
+                    '$timeAtv',
                     style: TextStyle(
                         fontFamily: 'Playpen-Sans',
                         fontWeight: FontWeight.w500,
@@ -196,7 +194,8 @@ class _ReportState extends State<Report> {
                   ),
                   SizedBox(height: Report.sizedBoxSize),
                   Text(
-                    meanTimeAtv.toString(),
+                    // meanTimeAtv.toString(),
+                    '${meanTimeAtv.toStringAsFixed(2)}',
                     style: TextStyle(
                         fontFamily: 'Playpen-Sans',
                         fontWeight: FontWeight.w500,
