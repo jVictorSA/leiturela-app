@@ -59,6 +59,8 @@ class _ImageAssociationState extends State<ImageAssociation> {
 
   late List<String> cleanImagesString;
 
+  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+
   List<bool> clicked = [false,false,false,false];
 
   Color borderColorOne = Colors.white60;
@@ -97,6 +99,7 @@ class _ImageAssociationState extends State<ImageAssociation> {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
             dialogShown = true; // Ensure the dialog is only shown once
+            var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
           });
 
           showDialog(

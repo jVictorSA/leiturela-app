@@ -33,6 +33,8 @@ class _PressLetterState extends State<PressLetter> {
   bool nextActivityLoaded = false;
   bool isLoaded = false;
 
+  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+
   String letter = 'H';
 
   List<String> wordList = ["Ventania", "Luz", "Caminho", "Sonho"];
@@ -76,6 +78,7 @@ class _PressLetterState extends State<PressLetter> {
         setState(() {        
           widget.nextActivityId = response;        
           nextActivityLoaded = true;
+          var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
         })
       });
 

@@ -32,6 +32,8 @@ class _CompleteWordState extends State<CompleteWord> {
   final double boxHeight = 43; // Height of LetterBox
   final double minDistance = 10; // Minimum distance between boxes (padding)
 
+  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+
   // The list for LetterSpace stays intact; it doesn't get removed
   final String originalWord = "computador";
   late final List<String> letterSpaceKeys = ['com', 'pu', 'ta', 'dor'];
@@ -200,6 +202,7 @@ class _CompleteWordState extends State<CompleteWord> {
     if (isLoaded && letterBoxList.isEmpty && !dialogShown) {
       setState(() {
         dialogShown = true;
+        var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
       });
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {

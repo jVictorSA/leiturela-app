@@ -42,6 +42,8 @@ class _DragSyllablesState extends State<DragSyllables> {
   final double boxHeight = 43; // Height of LetterBox
   final double minDistance = 10; // Minimum distance between boxes (padding)
 
+  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+
   String originalWord = 'computador';
   List<String> letterSpaceKeys = ['com', 'pu', 'ta', 'dor'];
 
@@ -168,6 +170,7 @@ class _DragSyllablesState extends State<DragSyllables> {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
             dialogShown = true; // Ensure the dialog is only shown once
+            var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
           });
 
           showDialog(

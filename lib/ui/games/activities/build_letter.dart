@@ -32,6 +32,8 @@ class _BuildWordState extends State<BuildWord> {
   String nextActivityId = "";
   bool isLoaded = false;
 
+  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+
   final Set<int> invisibleIndices = {}; // Track syllables to hide
   int lastAddedId = 0; // Track the last added ID
 
@@ -144,6 +146,7 @@ class _BuildWordState extends State<BuildWord> {
     if (checkAllInvisible() && !dialogShown && isLoaded){
       setState(() {
         dialogShown = true;
+        var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
       });
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 500), () {

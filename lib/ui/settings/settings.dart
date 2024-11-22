@@ -1,3 +1,4 @@
+import 'package:demo_app/ui/custom_widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widgets/audiomanager.dart';
@@ -57,6 +58,7 @@ class _SettingsState extends State<Settings> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -313,7 +315,13 @@ class _SettingsState extends State<Settings> {
                                   ])),
                             ),
                             const Spacer()
-                          ])
+                          ]),
+                      Spacer(),
+                      CustomButton(label: "Sair da conta", onPressed: (){
+                        // To do: Lógica para sair da conta.
+                      },
+                      width: 180,),
+                      Spacer(),
                     ]),
               )
             ],

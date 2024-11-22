@@ -20,6 +20,8 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
   bool answerFound = false;
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
+  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+
   List<String> originalWord = ['Computador', 'Casa', 'Bolo', 'Macieira'];
 
   String audioWord = 'carro';
@@ -34,6 +36,7 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
             dialogShown = true; // Ensure the dialog is only shown once
+            var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
           });
 
           showDialog(

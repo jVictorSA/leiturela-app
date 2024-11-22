@@ -36,6 +36,8 @@ class _PressSyllableState extends State<PressSyllable> {
   // String nextActivityId = "";
   var result;
 
+  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+
   List<String> wordList = ["Bolo", "Bobagem", "Lista", "Marte"];
 
   Color defaultColor = Colors.black;
@@ -104,6 +106,7 @@ class _PressSyllableState extends State<PressSyllable> {
         Future.delayed(const Duration(milliseconds: 500), () {
           setState(() {
             dialogShown = true;
+            var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
           });
           showDialog(
             context: context,

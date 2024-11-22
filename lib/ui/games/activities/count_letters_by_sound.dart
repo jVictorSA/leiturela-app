@@ -31,6 +31,8 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
 
   late int letterCount;
 
+  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
 
   bool isAnswerIncorrect = false;
@@ -64,6 +66,7 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
           solvedActivity = true;
           isAnswerIncorrect = false;
           dialogShown = true; // Ensure the dialog is only shown once
+          var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
         });
         Future.delayed(Duration(seconds: 3), () {
           // Replace with your navigation logic

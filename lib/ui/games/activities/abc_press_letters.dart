@@ -34,6 +34,8 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
   bool nextActivityLoaded = false;
   Random random = Random();
 
+  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+
   late int letterAnswer;
 
   List<String> allLetters = [
@@ -91,6 +93,8 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
   @override
   void initState() {
     super.initState();
+
+    timeStartActivity = DateTime.now();
 
     if (widget.storyId != ""){
       fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
@@ -235,6 +239,7 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
             dialogShown = true; // Ensure the dialog is only shown once
+            var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
           });
 
           showDialog(

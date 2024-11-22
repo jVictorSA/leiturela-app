@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         "/stories": (context) => Stories(),
         "/minigames": (context) => const Minigames(),
         "/play": (context) => const Games(),
-        "/report":(context) => const Report(),
+        "/report": (context) => const Report(),
       },
       home: const MainMenu(), // Use the new MainMenu widget
     );
@@ -58,6 +58,8 @@ class _MainMenuState extends State<MainMenu> {
   final AudioManager _audioManager = AudioManager();
   bool isLoggedIn = false;
 
+  String userName = "Default Name"; // Muda para "" depois de adicionar a integração com o back, para não aparecer caso não tenha login.
+
   @override
   void initState() {
     super.initState();
@@ -71,6 +73,7 @@ class _MainMenuState extends State<MainMenu> {
     // _audioManager.stopMusic();
     super.dispose();
   }
+
   void _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // await prefs.clear();
@@ -78,10 +81,9 @@ class _MainMenuState extends State<MainMenu> {
     String? userId = prefs.getString('user_id');
     setState(() {
       // isLoggedIn = token != null && token.isNotEmpty;
-       isLoggedIn = token != null && token.isNotEmpty && userId != null; 
+      isLoggedIn = token != null && token.isNotEmpty && userId != null;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +98,41 @@ class _MainMenuState extends State<MainMenu> {
             ),
           ),
           Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 60, top: 40.0),
+              child: GradientText(
+                '$userName',
+                style: const TextStyle(
+                    fontSize: 28,
+                    fontFamily: 'Playpen-Sans',
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        // bottomLeft
+                          offset: Offset(-outlineTitle, -outlineTitle),
+                          color: Colors.black),
+                      Shadow(
+                        // bottomRight
+                          offset: Offset(outlineTitle, -outlineTitle),
+                          color: Colors.black),
+                      Shadow(
+                        // topRight
+                          offset: Offset(outlineTitle, outlineTitle),
+                          color: Colors.black),
+                      Shadow(
+                        // topLeft
+                          offset: Offset(-outlineTitle, outlineTitle),
+                          color: Colors.black),
+                    ]),
+                gradientType: GradientType.linear,
+                gradientDirection: GradientDirection.ttb,
+                radius: 4.4,
+                colors: const [
+                  Color(0xff03BFE7),
+                  Color(0xff01419F),
+                ],
+              ),
+            ),
             const Spacer(
               flex: 4,
             ),
@@ -157,16 +194,18 @@ class _MainMenuState extends State<MainMenu> {
                           ]),
                       borderRadius: BorderRadius.circular(30)),
                   child: ElevatedButton(
-                    onPressed:() {
-                      if(isLoggedIn) {
+                    onPressed: () {
+                      if (isLoggedIn) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const Report()),
+                          MaterialPageRoute(
+                              builder: (context) => const Report()),
                         );
                       } else {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const ReportLogin()),
+                          MaterialPageRoute(
+                              builder: (context) => const ReportLogin()),
                         );
                       }
                     },
@@ -281,7 +320,7 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Icon(                            
+                              child: Icon(
                                 Icons.play_circle_fill,
                                 color: Colors.white,
                                 size: 45,
@@ -300,14 +339,18 @@ class _MainMenuState extends State<MainMenu> {
                         MaterialPageRoute(builder: (context) => const Login()));
                   },
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 CustomButton(
                   height: 40,
                   width: 150,
                   label: 'Cadastro',
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Register()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Register()));
                   },
                 ),
                 const Spacer(

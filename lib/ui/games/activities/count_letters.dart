@@ -39,6 +39,8 @@ class _CountLettersState extends State<CountLetters> {
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
   bool isAnswerIncorrect = false;
 
+  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+
   List<String> get questionText => [
         "Conte quantos ",
         widget.letter,
@@ -100,6 +102,7 @@ class _CountLettersState extends State<CountLetters> {
           solvedActivity = true;
           isAnswerIncorrect = false;
           dialogShown = true;  // Ensure the dialog is only shown once
+          var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
         });
         Future.delayed(const Duration(milliseconds: 50), () {
           // Replace with your navigation logic          

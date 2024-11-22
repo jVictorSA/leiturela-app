@@ -28,6 +28,9 @@ class _UpperLowerState extends State<UpperLower> {
   late List<String> maiusculas =  minusculas.map((str) => str.toUpperCase()).toList();
 
   List<Map<int, int>> matches = []; 
+  // Se essa atividade existisse, teria isso aqui no dialog do fim de atividade
+  // var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
+
 
   // @override
   // void initState() {
