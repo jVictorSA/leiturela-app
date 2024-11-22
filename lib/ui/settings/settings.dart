@@ -1,4 +1,6 @@
+import 'package:demo_app/main.dart';
 import 'package:demo_app/ui/custom_widgets/custom_button.dart';
+import 'package:demo_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widgets/audiomanager.dart';
@@ -35,6 +37,16 @@ class _SettingsState extends State<Settings> {
     off = _prefs.getBool('off') ?? false;
 
     setState(() {});
+  }
+
+  Future<void> _logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); 
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const MainMenu()), 
+    );
   }
 
   @override
@@ -317,9 +329,8 @@ class _SettingsState extends State<Settings> {
                             const Spacer()
                           ]),
                       Spacer(),
-                      CustomButton(label: "Sair da conta", onPressed: (){
-                        // To do: Lógica para sair da conta.
-                      },
+                      CustomButton(label: "Sair da conta", 
+                      onPressed: _logout,
                       width: 180,),
                       Spacer(),
                     ]),

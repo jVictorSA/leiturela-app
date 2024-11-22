@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
         "/minigames": (context) => const Minigames(),
         "/play": (context) => const Games(),
         "/report": (context) => const Report(),
+        // "report_login": (context) => const ReportLogin(),
       },
       home: const MainMenu(), // Use the new MainMenu widget
     );
@@ -78,10 +79,10 @@ class _MainMenuState extends State<MainMenu> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // await prefs.clear();
     String? token = prefs.getString('auth_token');
-    String? userId = prefs.getString('user_id');
+    // String? userId = prefs.getString('user_id');
     setState(() {
-      // isLoggedIn = token != null && token.isNotEmpty;
-      isLoggedIn = token != null && token.isNotEmpty && userId != null;
+      isLoggedIn = token != null && token.isNotEmpty;
+      // isLoggedIn = token != null && token.isNotEmpty && userId != null;
     });
   }
 
