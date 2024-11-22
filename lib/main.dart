@@ -12,6 +12,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:demo_app/ui/login/report_login.dart';
 
 const primaryColor = Color(0xFFAAE0F1);
 const outlineTitle = 1.0;
@@ -72,7 +73,7 @@ class _MainMenuState extends State<MainMenu> {
   }
   void _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // await prefs.remove('auth_token');
+    // await prefs.clear();
     String? token = prefs.getString('auth_token');
     String? userId = prefs.getString('user_id');
     setState(() {
@@ -163,27 +164,10 @@ class _MainMenuState extends State<MainMenu> {
                           MaterialPageRoute(builder: (context) => const Report()),
                         );
                       } else {
-                    //     Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (context) => const Login()),
-                    // );
-                     // Se não estiver logado, vai para a tela de login
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const Login()),
-                        ).then((_) async {
-                          // Após o login ser feito, verifica novamente o status de login
-                          _checkLoginStatus();
-                          if (isLoggedIn) {
-                            // Se o login for bem-sucedido, redireciona para o relatório
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const Report()),
-                            );
-                          }else{
-                            print("Login falhou");
-                          }
-                        });
+                          MaterialPageRoute(builder: (context) => const ReportLogin()),
+                        );
                       }
                     },
                     style: ButtonStyle(
