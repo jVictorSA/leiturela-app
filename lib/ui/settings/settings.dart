@@ -1,6 +1,7 @@
 import 'dart:async';
-
+import 'package:demo_app/main.dart';
 import 'package:demo_app/ui/custom_widgets/custom_button.dart';
+import 'package:demo_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widgets/audiomanager.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
   final bool isLoggedIn;
+
   const Settings({super.key, required this.isLoggedIn});
 
   @override
@@ -49,6 +51,16 @@ class _SettingsState extends State<Settings> {
     setState(() {});
   }
 
+  Future<void> _logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const MainMenu()),
+    );
+  }
+
   @override
   void dispose() {
     _timer.cancel();
@@ -62,7 +74,9 @@ class _SettingsState extends State<Settings> {
         children: [
           Positioned.fill(
             child: SvgPicture.asset(
-              _showFirstFrame ? "assets/imgs/backgrounds/settings_1.svg" : 'assets/imgs/backgrounds/settings_2.svg',
+              _showFirstFrame
+                  ? "assets/imgs/backgrounds/settings_1.svg"
+                  : 'assets/imgs/backgrounds/settings_2.svg',
               // Update with your SVG path
               fit: BoxFit.cover, // Same as the fit you used for PNG
             ),
@@ -256,10 +270,13 @@ class _SettingsState extends State<Settings> {
                             const Spacer(),
                           ]),
                       Spacer(),
-                      widget.isLoggedIn ? CustomButton(label: "Sair da conta", onPressed: (){
-                        // To do: Lógica para sair da conta.
-                      } ,
-                      width: 180,): SizedBox(),
+                      widget.isLoggedIn
+                          ? CustomButton(
+                              label: "Sair da conta",
+                              onPressed: _logout,
+                              width: 180,
+                            )
+                          : SizedBox(),
                       Spacer(),
                     ]),
               )
