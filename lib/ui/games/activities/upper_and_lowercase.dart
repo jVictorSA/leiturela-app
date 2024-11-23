@@ -35,6 +35,9 @@ class _UpperLowerState extends State<UpperLower> {
   // @override
   // void initState() {
   //   super.initState();
+
+  // timeStartActivity = DateTime.now();
+
   //   print(maiusculas);
   //   print(minusculas);
   //   for(int i = 0; i < maiusculas.length; i++){

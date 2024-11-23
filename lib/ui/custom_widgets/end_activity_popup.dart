@@ -92,7 +92,7 @@ class EndActivityPopup extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
               Container(
-                height: 500,
+                height: 275,
                 width: 750,
                 padding: const EdgeInsets.all(5),
                 child: Column(

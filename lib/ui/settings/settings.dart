@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:demo_app/ui/custom_widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,7 +8,8 @@ import '../custom_widgets/return_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
-  const Settings({super.key});
+  final bool isLoggedIn;
+  const Settings({super.key, required this.isLoggedIn});
 
   @override
   _SettingsState createState() => _SettingsState();
@@ -20,10 +23,19 @@ class _SettingsState extends State<Settings> {
   bool? on = true;
   bool? off = false;
 
+  bool _showFirstFrame = true; // Toggle between frames
+  late Timer _timer;
+
   @override
   void initState() {
     super.initState();
     initPrefs();
+
+    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      setState(() {
+        _showFirstFrame = !_showFirstFrame;
+      });
+    });
   }
 
   void initPrefs() async {
@@ -38,13 +50,19 @@ class _SettingsState extends State<Settings> {
   }
 
   @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
           Positioned.fill(
             child: SvgPicture.asset(
-              "assets/imgs/backgrounds/background.svg",
+              _showFirstFrame ? "assets/imgs/backgrounds/settings_1.svg" : 'assets/imgs/backgrounds/settings_2.svg',
               // Update with your SVG path
               fit: BoxFit.cover, // Same as the fit you used for PNG
             ),
@@ -237,90 +255,11 @@ class _SettingsState extends State<Settings> {
                             ),
                             const Spacer(),
                           ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Expanded(
-                              flex: 1,
-                              child: Text(
-                                "Vibrações",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                    fontFamily: 'Playpen-Sans',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: SizedBox(
-                                  width: 300,
-                                  child: Row(children: [
-                                    Wrap(
-                                      direction: Axis.vertical,
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                      spacing: -15,
-                                      children: [
-                                        Checkbox(
-                                          checkColor: Colors.green,
-                                          activeColor: Colors.transparent,
-                                          side: MaterialStateBorderSide
-                                              .resolveWith(
-                                                  (states) => const BorderSide(
-                                                        color: Colors.black,
-                                                        width: 2,
-                                                      )),
-                                          value: off,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              off = value!;
-                                              on = !on!;
-                                              _prefs.setBool('off', off!);
-                                              _prefs.setBool('on', on!);
-                                            });
-                                          },
-                                        ),
-                                        const Text("Off"),
-                                      ],
-                                    ),
-                                    Wrap(
-                                      direction: Axis.vertical,
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                      spacing: -15,
-                                      children: [
-                                        Checkbox(
-                                          checkColor: Colors.green,
-                                          activeColor: Colors.transparent,
-                                          side: MaterialStateBorderSide
-                                              .resolveWith(
-                                                  (states) => const BorderSide(
-                                                        color: Colors.black,
-                                                        width: 2,
-                                                      )),
-                                          value: on,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              on = value!;
-                                              off = !off!;
-                                              _prefs.setBool('on', on!);
-                                              _prefs.setBool('off', off!);
-                                            });
-                                          },
-                                        ),
-                                        const Text("On"),
-                                      ],
-                                    ),
-                                  ])),
-                            ),
-                            const Spacer()
-                          ]),
                       Spacer(),
-                      CustomButton(label: "Sair da conta", onPressed: (){
+                      widget.isLoggedIn ? CustomButton(label: "Sair da conta", onPressed: (){
                         // To do: Lógica para sair da conta.
-                      },
-                      width: 180,),
+                      } ,
+                      width: 180,): SizedBox(),
                       Spacer(),
                     ]),
               )

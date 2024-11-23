@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:demo_app/ui/custom_widgets/audiomanager.dart';
 import 'package:demo_app/ui/custom_widgets/custom_button.dart';
 import 'package:demo_app/ui/games/story_games_screen.dart';
@@ -36,10 +38,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        "/settings": (context) => const Settings(),
+       // "/settings": (context) => const Settings(isLoggedIn: isLoggedIn,),
         "/stories": (context) => Stories(),
         "/minigames": (context) => const Minigames(),
-        "/play": (context) => const Games(),
+        "/play": (context) => Games(),
         "/report": (context) => const Report(),
       },
       home: const MainMenu(), // Use the new MainMenu widget
@@ -58,19 +60,27 @@ class _MainMenuState extends State<MainMenu> {
   final AudioManager _audioManager = AudioManager();
   bool isLoggedIn = false;
 
-  String userName = "Default Name"; // Muda para "" depois de adicionar a integração com o back, para não aparecer caso não tenha login.
+  bool _showFirstFrame = true; // Toggle between frames
+  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
     _audioManager.playMainMenuMusic();
     _checkLoginStatus();
+
+    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      setState(() {
+        _showFirstFrame = !_showFirstFrame;
+      });
+    });
   }
 
   @override
   void dispose() {
     // Optional: Stop music if you want to stop it when navigating away.
     // _audioManager.stopMusic();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -93,46 +103,11 @@ class _MainMenuState extends State<MainMenu> {
         children: [
           Positioned.fill(
             child: SvgPicture.asset(
-              "assets/imgs/backgrounds/background.svg",
+              _showFirstFrame ? "assets/imgs/backgrounds/main_screen_1.svg" : 'assets/imgs/backgrounds/main_screen_2.svg',
               fit: BoxFit.cover,
             ),
           ),
           Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 60, top: 40.0),
-              child: GradientText(
-                '$userName',
-                style: const TextStyle(
-                    fontSize: 28,
-                    fontFamily: 'Playpen-Sans',
-                    fontWeight: FontWeight.bold,
-                    shadows: [
-                      Shadow(
-                        // bottomLeft
-                          offset: Offset(-outlineTitle, -outlineTitle),
-                          color: Colors.black),
-                      Shadow(
-                        // bottomRight
-                          offset: Offset(outlineTitle, -outlineTitle),
-                          color: Colors.black),
-                      Shadow(
-                        // topRight
-                          offset: Offset(outlineTitle, outlineTitle),
-                          color: Colors.black),
-                      Shadow(
-                        // topLeft
-                          offset: Offset(-outlineTitle, outlineTitle),
-                          color: Colors.black),
-                    ]),
-                gradientType: GradientType.linear,
-                gradientDirection: GradientDirection.ttb,
-                radius: 4.4,
-                colors: const [
-                  Color(0xff03BFE7),
-                  Color(0xff01419F),
-                ],
-              ),
-            ),
             const Spacer(
               flex: 4,
             ),
@@ -159,7 +134,7 @@ class _MainMenuState extends State<MainMenu> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Settings()),
+                            builder: (context) => Settings(isLoggedIn: isLoggedIn,)),
                       );
                     },
                     style: ButtonStyle(
@@ -287,7 +262,7 @@ class _MainMenuState extends State<MainMenu> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const Games()),
+                        MaterialPageRoute(builder: (context) => Games()),
                       );
                     },
                     style: ButtonStyle(

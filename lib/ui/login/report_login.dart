@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:demo_app/ui/report/report.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,6 +19,29 @@ class ReportLogin extends StatefulWidget {
 class _ReportLoginState extends State<ReportLogin> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
+
+  bool _showFirstFrame = true; // Toggle between frames
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      setState(() {
+        _showFirstFrame = !_showFirstFrame;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // Optional: Stop music if you want to stop it when navigating away.
+    // _audioManager.stopMusic();
+    _timer.cancel();
+    super.dispose();
+  }
+
+
 
   Future<void> _login() async {
     String email = controllerEmail.text;
@@ -87,7 +112,7 @@ class _ReportLoginState extends State<ReportLogin> {
         children: [
           Positioned.fill(
             child: SvgPicture.asset(
-              "assets/imgs/backgrounds/background.svg",
+              _showFirstFrame ? "assets/imgs/backgrounds/login_1.svg" : 'assets/imgs/backgrounds/login_2.svg',
               fit: BoxFit.cover,
             ),
           ),

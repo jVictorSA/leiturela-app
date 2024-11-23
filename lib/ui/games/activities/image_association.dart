@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
@@ -76,6 +78,9 @@ class _ImageAssociationState extends State<ImageAssociation> {
   @override
   void initState() {
     super.initState();
+
+    timeStartActivity = DateTime.now();
+
     _initializeImages();
   }
 
@@ -91,15 +96,34 @@ class _ImageAssociationState extends State<ImageAssociation> {
     numAnswer = cleanImagesString.where((word) => word.startsWith(letter)).length;
   }
 
+  void _playSounds(String sound) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    int? volumePref = _prefs.getInt('efeitos');
+    double volume = (volumePref ?? 5).toDouble() / 10; // Default to 5 if null
+
+    final AudioPlayer soundPlayer = AudioPlayer();
+
+    try {
+      await soundPlayer.setVolume(volume);
+      await soundPlayer.play(AssetSource('audio/sound_effects/$sound')); // Play each sound
+      await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+    } finally {
+      soundPlayer.dispose(); // Dispose of the player after sound finishes
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (numAnswer <= 0 && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        _playSounds("act_end_sound.wav");
         Future.delayed(const Duration(milliseconds: 500), () {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
             dialogShown = true; // Ensure the dialog is only shown once
             var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
+            print(activityDuration);
+
           });
 
           showDialog(
@@ -174,10 +198,12 @@ class _ImageAssociationState extends State<ImageAssociation> {
                       onPressed: () {
                         clicked[0] == false ? setState(() {
                           if (cleanImagesString[0][0] == letter) {
+                            _playSounds("correct_sound.wav");
                             borderColorOne = correctColor;
                             numAnswer -= 1;
                             clicked[0] == true;
                           } else {
+                            _playSounds("wrong_sound.wav");
                             borderColorOne = incorrectColor;
                           }
                         }) : null;
@@ -208,10 +234,12 @@ class _ImageAssociationState extends State<ImageAssociation> {
                       onPressed: () {
                         clicked[1] == false ? setState(() {
                           if (cleanImagesString[1][0] == letter) {
+                            _playSounds("correct_sound.wav");
                             borderColorTwo = correctColor;
                             numAnswer -= 1;
                             clicked[1] = true;
                           } else {
+                            _playSounds("wrong_sound.wav");
                             borderColorTwo = incorrectColor;
                           }
                         }) : null;
@@ -253,10 +281,12 @@ class _ImageAssociationState extends State<ImageAssociation> {
                       onPressed: () {
                         clicked[2] == false ? setState(() {
                            if (cleanImagesString[2][0] == letter) {
+                             _playSounds("correct_sound.wav");
                             borderColorThree = correctColor;
                             numAnswer -= 1;
                             clicked[2] = true;
                           } else {
+                             _playSounds("wrong_sound.wav");
                             borderColorThree = incorrectColor;
                           }
                         }) : null;
@@ -287,10 +317,12 @@ class _ImageAssociationState extends State<ImageAssociation> {
                       onPressed: () {
                         clicked[3] == false ? setState(() {
                           if (cleanImagesString[3][0] == letter) {
+                            _playSounds("correct_sound.wav");
                             borderColorFour = correctColor;
                             numAnswer -= 1;
                             clicked[3] = true;
                           } else {
+                            _playSounds("wrong_sound.wav");
                             borderColorFour = incorrectColor;
                           }
                         }) : null;

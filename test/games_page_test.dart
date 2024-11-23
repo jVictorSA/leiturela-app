@@ -37,8 +37,8 @@ void main() {
   });
 
   testWidgets('Test navigation from the Games page to Stories and Minigames page', (tester) async {   
-    const main =  Games();
-    await tester.pumpWidget(const MaterialApp(home: main));
+    var main =  Games();
+    await tester.pumpWidget(MaterialApp(home: main));
     expect(find.byType(Games), findsOneWidget);
     expect(find.byType(SelectedFrame), findsExactly(2));
 

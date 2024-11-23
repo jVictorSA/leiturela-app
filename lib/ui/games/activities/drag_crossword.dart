@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:demo_app/ui/games/activities/custom_widgets/golden_text.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/letter.dart';
@@ -56,6 +58,8 @@ class _DragSyllablesState extends State<DragSyllables> {
   @override
   void initState() {
     super.initState();
+
+    timeStartActivity = DateTime.now();
 
     if (widget.storyId != ""){
       fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
@@ -151,6 +155,22 @@ class _DragSyllablesState extends State<DragSyllables> {
         pos1.dy + boxHeight + minDistance > pos2.dy);
   }
 
+  void _playSounds(String sound) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    int? volumePref = _prefs.getInt('efeitos');
+    double volume = (volumePref ?? 5).toDouble() / 10; // Default to 5 if null
+
+    final AudioPlayer soundPlayer = AudioPlayer();
+
+    try {
+      await soundPlayer.setVolume(volume);
+      await soundPlayer.play(AssetSource('audio/sound_effects/$sound')); // Play each sound
+      await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+    } finally {
+      soundPlayer.dispose(); // Dispose of the player after sound finishes
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // Define the callback function for when a correct letter is found
@@ -166,6 +186,7 @@ class _DragSyllablesState extends State<DragSyllables> {
 
     if (isLoaded && letterBoxList.isEmpty && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        _playSounds("act_end_sound.wav");
         Future.delayed(const Duration(milliseconds: 500), () {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
@@ -250,7 +271,7 @@ class _DragSyllablesState extends State<DragSyllables> {
                           ],
                         ),
                         AudioButton(
-                          soundFiles: ['$originalWord.mp3'],
+                          soundFiles: ['word_sounds/$originalWord.mp3'],
                         ),
                       ],
                     )

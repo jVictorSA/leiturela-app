@@ -1,6 +1,8 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:demo_app/ui/games/activities/custom_widgets/audio_button.dart';
 import 'package:demo_app/ui/games/activities/custom_widgets/pressable_letters.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
@@ -76,8 +78,9 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
 
   @override
   void initState() {
-    super.initState();
+    timeStartActivity = DateTime.now();
     _initializeLetters();
+    super.initState();
   }
 
   void _initializeLetters() {
@@ -122,10 +125,12 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
       setState(() {
         if (chosenLetters.contains(letter.toUpperCase()) ||
             chosenLetters.contains(letter.toLowerCase())) {
+          _playSounds("correct_sound.wav");
           // Correct letter: green gradient
           buttonColors[letter] = [correctColor[0], correctColor[1]];
           letterAnswer -= 1;
         } else {
+          _playSounds("wrong_sound.wav");
           // Incorrect letter: red gradient
           buttonColors[letter] = [incorrectColor[0], incorrectColor[1]];
         }
@@ -133,10 +138,27 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
     }
   }
 
+  void _playSounds(String sound) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    int? volumePref = _prefs.getInt('efeitos');
+    double volume = (volumePref ?? 5).toDouble() / 10; // Default to 5 if null
+
+    final AudioPlayer soundPlayer = AudioPlayer();
+
+    try {
+      await soundPlayer.setVolume(volume);
+      await soundPlayer.play(AssetSource('audio/sound_effects/$sound')); // Play each sound
+      await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+    } finally {
+      soundPlayer.dispose(); // Dispose of the player after sound finishes
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (letterAnswer <= 0 && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        _playSounds("act_end_sound.wav");
         Future.delayed(const Duration(milliseconds: 500), () {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {

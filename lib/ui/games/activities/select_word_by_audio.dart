@@ -1,4 +1,6 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
@@ -29,9 +31,32 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
   late String letter = audioWord[0];
 
   @override
+  void initState() {
+    timeStartActivity = DateTime.now();
+    super.initState();
+  }
+
+  void _playSounds(String sound) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    int? volumePref = _prefs.getInt('efeitos');
+    double volume = (volumePref ?? 5).toDouble() / 10; // Default to 5 if null
+
+    final AudioPlayer soundPlayer = AudioPlayer();
+
+    try {
+      await soundPlayer.setVolume(volume);
+      await soundPlayer.play(AssetSource('audio/sound_effects/$sound')); // Play each sound
+      await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+    } finally {
+      soundPlayer.dispose(); // Dispose of the player after sound finishes
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (answerFound && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        _playSounds("act_end_sound.wav");
         Future.delayed(const Duration(milliseconds: 500), () {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
@@ -76,7 +101,7 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                   flex: 2,
                 ),
                 AudioButton(
-                  soundFiles: ['$audioWord.mp3'],
+                  soundFiles: ['word_sounds/$audioWord.mp3'],
                 ),
                 const Spacer(
                   flex: 2,
@@ -98,6 +123,8 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                                   .toLowerCase()
                                   == (letter.toLowerCase())) {
                                 answerFound = true;
+                              } else {
+                                _playSounds("wrong_sound.wav");
                               }
                             });
                           },
@@ -115,6 +142,8 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                                   .toLowerCase()
                                    == (letter.toLowerCase())) {
                                 answerFound = true;
+                              } else {
+                                _playSounds("wrong_sound.wav");
                               }
                             });
                           },
@@ -137,6 +166,8 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                                   .toLowerCase()
                                   == (letter.toLowerCase())) {
                                 answerFound = true;
+                              } else {
+                                _playSounds("wrong_sound.wav");
                               }
                             });
                           },
@@ -154,6 +185,8 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                                   .toLowerCase()
                                   ==(letter.toLowerCase())) {
                                 answerFound = true;
+                              } else{
+                                _playSounds("wrong_sound.wav");
                               }
                             });
                           },

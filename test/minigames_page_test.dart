@@ -21,8 +21,8 @@ void main() {
   });
 
   testWidgets('Navigates to Minigames page based on button tap', (WidgetTester tester) async {    
-    const main =  Games();
-    await tester.pumpWidget(const MaterialApp(home: main));
+    var main =  Games();
+    await tester.pumpWidget(MaterialApp(home: main));
 
 
     // Go to Minigames page    

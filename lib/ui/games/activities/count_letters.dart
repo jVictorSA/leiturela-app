@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
@@ -55,6 +57,8 @@ class _CountLettersState extends State<CountLetters> {
   void initState() {
     super.initState();
 
+    timeStartActivity = DateTime.now();
+
     if (widget.storyId != ""){
       fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
         setState(() {        
@@ -86,6 +90,22 @@ class _CountLettersState extends State<CountLetters> {
     });    
   }
 
+  void _playSounds(String sound) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    int? volumePref = _prefs.getInt('efeitos');
+    double volume = (volumePref ?? 5).toDouble() / 10; // Default to 5 if null
+
+    final AudioPlayer soundPlayer = AudioPlayer();
+
+    try {
+      await soundPlayer.setVolume(volume);
+      await soundPlayer.play(AssetSource('audio/sound_effects/$sound')); // Play each sound
+      await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+    } finally {
+      soundPlayer.dispose(); // Dispose of the player after sound finishes
+    }
+  }
+
   void checkAnswer() {
     print("nextActivityId: $nextActivityId");
     String userAnswer = controller.text;
@@ -104,6 +124,7 @@ class _CountLettersState extends State<CountLetters> {
           dialogShown = true;  // Ensure the dialog is only shown once
           var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
         });
+        _playSounds("act_end_sound.wav");
         Future.delayed(const Duration(milliseconds: 50), () {
           // Replace with your navigation logic          
           showDialog(
@@ -127,7 +148,8 @@ class _CountLettersState extends State<CountLetters> {
         setState(() {
           isAnswerIncorrect = true; // Answer is incorrect, flash red
         });
-        Future.delayed(const Duration(milliseconds: 50), () {
+        _playSounds("wrong_sound.wav");
+        Future.delayed(const Duration(milliseconds: 2000), () {
           setState(() {
             isAnswerIncorrect = false; // Reset red flash
           });

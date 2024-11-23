@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +22,29 @@ class _RegisterState extends State<Register> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
   TextEditingController controllerPasswordRepeat = TextEditingController();
+
+
+  bool _showFirstFrame = true; // Toggle between frames
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      setState(() {
+        _showFirstFrame = !_showFirstFrame;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+
 
   Future<void> registerUser() async {
     final name = controllerName.text;
@@ -114,7 +139,7 @@ class _RegisterState extends State<Register> {
         children: [
           Positioned.fill(
             child: SvgPicture.asset(
-              "assets/imgs/backgrounds/background.svg",
+              _showFirstFrame ? "assets/imgs/backgrounds/cadastro_1.svg" : 'assets/imgs/backgrounds/cadastro_2.svg',
               fit: BoxFit.cover,
             ),
           ),

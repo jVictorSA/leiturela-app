@@ -1,6 +1,8 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:demo_app/ui/games/activities/custom_widgets/audio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
@@ -43,14 +45,33 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
         " têm no áudio."
       ];
 
-  late List<String> audioList = ['${wordList[0]}.mp3', '${wordList[1]}.mp3', '${wordList[2]}.mp3'];
+  late List<String> audioList = ['word_sounds/${wordList[0]}.mp3', 'word_sounds/${wordList[1]}.mp3', 'word_sounds/${wordList[2]}.mp3'];
 
   bool solvedActivity = false;
 
   @override
   void initState() {
     super.initState();
+
+    timeStartActivity = DateTime.now();
+
     letterCount = countLetterInList(wordList, letter);
+  }
+
+  void _playSounds(String sound) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    int? volumePref = _prefs.getInt('efeitos');
+    double volume = (volumePref ?? 5).toDouble() / 10; // Default to 5 if null
+
+    final AudioPlayer soundPlayer = AudioPlayer();
+
+    try {
+      await soundPlayer.setVolume(volume);
+      await soundPlayer.play(AssetSource('audio/sound_effects/$sound')); // Play each sound
+      await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+    } finally {
+      soundPlayer.dispose(); // Dispose of the player after sound finishes
+    }
   }
 
   void checkAnswer() {
@@ -68,7 +89,8 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
           dialogShown = true; // Ensure the dialog is only shown once
           var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
         });
-        Future.delayed(Duration(seconds: 3), () {
+        _playSounds("act_end_sound.wav");
+        Future.delayed(Duration(milliseconds: 500), () {
           // Replace with your navigation logic
           showDialog(
             context: context,
@@ -87,6 +109,7 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
         });
       } else {
         setState(() {
+          _playSounds("wrong_sound.wav");
           isAnswerIncorrect = true; // Answer is incorrect, flash red
         });
         Future.delayed(Duration(milliseconds: 2000), () {

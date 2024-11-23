@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../custom_widgets/end_activity_popup.dart';
 import '../../custom_widgets/return_button.dart';
 import 'custom_widgets/activity_background.dart';
@@ -50,6 +52,8 @@ class _BuildWordState extends State<BuildWord> {
   @override
   void initState() {
     super.initState();
+
+    timeStartActivity = DateTime.now();
 
     if (widget.storyId != ""){
       fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
@@ -141,6 +145,22 @@ class _BuildWordState extends State<BuildWord> {
     return false;
   }
 
+  void _playSounds(String sound) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    int? volumePref = _prefs.getInt('efeitos');
+    double volume = (volumePref ?? 5).toDouble() / 10; // Default to 5 if null
+
+    final AudioPlayer soundPlayer = AudioPlayer();
+
+    try {
+      await soundPlayer.setVolume(volume);
+      await soundPlayer.play(AssetSource('audio/sound_effects/$sound')); // Play each sound
+      await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+    } finally {
+      soundPlayer.dispose(); // Dispose of the player after sound finishes
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (checkAllInvisible() && !dialogShown && isLoaded){
@@ -149,6 +169,7 @@ class _BuildWordState extends State<BuildWord> {
         var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
       });
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        _playSounds("act_end_sound.wav");
         Future.delayed(const Duration(milliseconds: 500), () {
           showDialog(
             context: context,
@@ -183,7 +204,7 @@ class _BuildWordState extends State<BuildWord> {
                 ),
                 const Spacer(),
                 AudioButton(
-                  soundFiles: ["$originalWord.mp3"],
+                  soundFiles: ["word_sounds/$originalWord.mp3"],
                 ),
                 const Spacer(),
                 Row(
@@ -205,8 +226,7 @@ class _BuildWordState extends State<BuildWord> {
                               : LetterSpace(
                                   expectedLetter: letter,
                                   correctLetterFound: (correct) {
-                                    // Your logic for correct letter found
-                                    return false; // Modify as needed
+                                    return false;
                                   },
                                 ),
                           // Add a SizedBox except for the last letter
@@ -236,11 +256,14 @@ class _BuildWordState extends State<BuildWord> {
                         : TextButton(
                             onPressed: () {
                               if (id == lastAddedId + 1) {
+                                _playSounds("correct_sound.wav");
                                 setState(() {
                                   invisibleIndices.add(
                                       id); // Add this specific ID to invisible set
                                   lastAddedId = id; // Update the last added ID
                                 });
+                              } else{
+                                _playSounds("wrong_sound.wav");
                               }
                             },
                             child: StaticLetterBox(

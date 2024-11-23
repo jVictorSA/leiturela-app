@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import '../../custom_widgets/custom_button.dart';
 import '../../custom_widgets/end_activity_popup.dart';
@@ -220,14 +222,32 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
       setState(() {
         if (chosenLetters.contains(letter.toUpperCase()) ||
             chosenLetters.contains(letter.toLowerCase())) {
+          _playSounds("correct_sound.wav");
           // Correct letter: green gradient
           buttonColors[letter] = [correctColor[0], correctColor[1]];
           letterAnswer -= 1;
         } else {
           // Incorrect letter: red gradient
+          _playSounds("wrong_sound.wav");
           buttonColors[letter] = [incorrectColor[0], incorrectColor[1]];
         }
       });
+    }
+  }
+
+  void _playSounds(String sound) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    int? volumePref = _prefs.getInt('efeitos');
+    double volume = (volumePref ?? 5).toDouble() / 10; // Default to 5 if null
+
+    final AudioPlayer soundPlayer = AudioPlayer();
+
+    try {
+      await soundPlayer.setVolume(volume);
+      await soundPlayer.play(AssetSource('audio/sound_effects/$sound')); // Play each sound
+      await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+    } finally {
+      soundPlayer.dispose(); // Dispose of the player after sound finishes
     }
   }
 
@@ -235,12 +255,14 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
   Widget build(BuildContext context) {
     if (isLoaded && letterAnswer <= 0 && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        _playSounds("act_end_sound.wav");
         Future.delayed(const Duration(milliseconds: 20), () {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
             dialogShown = true; // Ensure the dialog is only shown once
             var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
           });
+
 
           showDialog(
             context: context,
