@@ -60,7 +60,7 @@ class EndActivityPopup extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    
+
     final screenWidth = MediaQuery
         .of(context)
         .size
@@ -80,8 +80,8 @@ class EndActivityPopup extends StatelessWidget {
               border: Border.all(color: const Color(0xFF2CA7E4), width: 5),
               borderRadius: BorderRadius.circular(30),
             ),
-            width: 558,
-            height: 388,
+            width: 600,
+            height: 340,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
               child: Stack(
@@ -109,7 +109,7 @@ class EndActivityPopup extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         )),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(16.0),
                       // You can adjust the padding value
                       child: Container(
                         height: 56.0,
@@ -241,7 +241,7 @@ class EndActivityPopup extends StatelessWidget {
                     //   ),
                     // ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(16.0),
                       // You can adjust the padding value
                       child: Container(
                         height: 56.0,

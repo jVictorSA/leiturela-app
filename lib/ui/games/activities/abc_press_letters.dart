@@ -114,7 +114,10 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
         entireObject = response;
         Map activity = json.decode(entireObject);        
 
-        activityLetters = activity['body']['activity_letters'].cast<String>();        
+        activityLetters = activity['body']['activity_letters'].cast<String>();
+
+        activityLetters = (activityLetters..shuffle(random)).take(6).toList();
+
         chosenLetters = activity['body']['chosen_letters'].cast<String>();
         print(activityLetters);
 
