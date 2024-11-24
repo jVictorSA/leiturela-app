@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';// show utf8;
 
 String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2QyMTkyYjE5Y2M2ZWIwMjc5YWNhMiIsImV4cCI6MTczMjUyNDA1MH0.kn0hadPT4IlaYZLXj-dkR2d_bTrYQsmSTaZ2ylPrV50";
-String url = "https://leiturela-api-pedrovictor48-pedrovictor48s-projects.vercel.app/";
+String url = "https://leiturela-api-pedrovictor48-pedrovictor48s-projects.vercel.app";
 
 Future<String> fetchStories(http.Client client) async {
   var response = await client.get(Uri.parse('$url/atividade/stories'));
