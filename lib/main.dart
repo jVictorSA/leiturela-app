@@ -104,7 +104,7 @@ class _MainMenuState extends State<MainMenu> {
         children: [
           Positioned.fill(
             child: SvgPicture.asset(
-              _showFirstFrame ? "assets/imgs/backgrounds/main_screen_1.svg" : 'assets/imgs/backgrounds/main_screen_2.svg',
+              _showFirstFrame ? "assets/imgs/backgrounds/background.svg" : 'assets/imgs/backgrounds/background.svg',
               fit: BoxFit.cover,
             ),
           ),
