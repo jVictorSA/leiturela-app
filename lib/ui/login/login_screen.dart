@@ -46,11 +46,6 @@ class _LoginState extends State<Login> {
           await prefs.setString('user_id', userId);
           await prefs.setString('name', userName);
 
-        print('Login realizado com sucesso: ${data}');
-        print('toke, ${token}');
-        print('id user, ${userId}');
-        print('Nome, ${userName}');
-
         
         Navigator.pushReplacement(
           context,
