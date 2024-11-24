@@ -70,7 +70,7 @@ class _RegisterState extends State<Register> {
     }
 
     try {
-      const url = 'http://10.0.2.2:8000/user/register';
+      const url = 'https://leiturela-api-pedrovictor48-pedrovictor48s-projects.vercel.app/user/register';
 
       final response = await http.post(
         Uri.parse(url),

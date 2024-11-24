@@ -54,11 +54,11 @@ class _SettingsState extends State<Settings> {
   Future<void> _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
-    if (!mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const MainMenu()),
-    );
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MainMenu()),
+      );
   }
 
   @override
@@ -270,13 +270,11 @@ class _SettingsState extends State<Settings> {
                             const Spacer(),
                           ]),
                       Spacer(),
-                      widget.isLoggedIn
-                          ? CustomButton(
+                          CustomButton(
                               label: "Sair da conta",
                               onPressed: _logout,
                               width: 180,
-                            )
-                          : SizedBox(),
+                            ),
                       Spacer(),
                     ]),
               )

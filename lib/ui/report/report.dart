@@ -57,7 +57,7 @@ class _ReportState extends State<Report> {
 
 
   Future<void> _fetchReport() async {
-    const url = "http://10.0.2.2:8000/atividade/relatorio";
+    const url = "https://leiturela-api-pedrovictor48-pedrovictor48s-projects.vercel.app/atividade/relatorio";
 
     try {
 
