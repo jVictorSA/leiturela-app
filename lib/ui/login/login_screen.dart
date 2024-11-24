@@ -35,17 +35,17 @@ class _LoginState extends State<Login> {
       );
     
       if (response.statusCode == 200) {
+        
         var data = jsonDecode(response.body);
         String token = data['access_token'];
         String userId = data['user_id'];
+        String userName = data['name'];
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('auth_token', token);
           await prefs.setString('user_id', userId);
+          await prefs.setString('name', userName);
 
-        print('Login realizado com sucesso: ${data}');
-        print('toke, ${token}');
-        print('id user, ${userId}');
         
         Navigator.pushReplacement(
           context,

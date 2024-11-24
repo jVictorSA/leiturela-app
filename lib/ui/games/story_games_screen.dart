@@ -8,6 +8,8 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import '../../main.dart';
 import '../custom_widgets/return_button.dart';
 import '../custom_widgets/selected_frame.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 const primaryColor = Color(0xFFAAE0F1);
 
@@ -21,8 +23,8 @@ class Games extends StatefulWidget {
 }
 
 class _GamesState extends State<Games> {
-  String userName =
-      "Default Name"; // Muda para "" depois de adicionar a integração com o back, para não aparecer caso não tenha login.
+  String userName ="";
+   // Muda para "" depois de adicionar a integração com o back, para não aparecer caso não tenha login.
 
   bool _showFirstFrame = true; // Toggle between frames
   late Timer _timer;
@@ -36,6 +38,7 @@ class _GamesState extends State<Games> {
         _showFirstFrame = !_showFirstFrame;
       });
     });
+    _loadUserName();
   }
 
   @override
@@ -44,7 +47,12 @@ class _GamesState extends State<Games> {
     super.dispose();
   }
 
-
+  Future<void> _loadUserName() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('name') ?? '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

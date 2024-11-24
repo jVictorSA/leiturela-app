@@ -41,8 +41,6 @@ class _ReportLoginState extends State<ReportLogin> {
     super.dispose();
   }
 
-
-
   Future<void> _login() async {
     String email = controllerEmail.text;
     String password = controllerPassword.text;
@@ -63,14 +61,12 @@ class _ReportLoginState extends State<ReportLogin> {
         var data = jsonDecode(response.body);
         String token = data['access_token'];
         String userId = data['user_id'];
+        String userName = data['name'];
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('auth_token', token);
           await prefs.setString('user_id', userId);
-
-        print('Login realizado com sucesso: ${data}');
-        print('toke, ${token}');
-        print('id user, ${userId}');
+          await prefs.setString('name', userName);
         
         Navigator.pushReplacement(
           context,
