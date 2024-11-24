@@ -25,7 +25,11 @@ const bgHeight = 396.0;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
+  .then((_) {
+    runApp(const MyApp());
+  });
+  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

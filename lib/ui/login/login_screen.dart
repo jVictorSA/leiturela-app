@@ -4,9 +4,13 @@ import 'package:flutter/services.dart';
 import '../custom_widgets/custom_button.dart';
 import '../custom_widgets/return_button.dart';
 import 'package:http/http.dart' as http;
+import "package:demo_app/services/services.dart" as services;
 import 'dart:convert'; 
 import '../../ui/games/story_games_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+String servicesURL = services.url;
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -23,7 +27,7 @@ class _LoginState extends State<Login> {
     String password = controllerPassword.text;
 
     try {
-      const url = 'http://10.0.2.2:8000/user/login';
+      String url = '$servicesURL/user/login';
 
       var response = await http.post(
         Uri.parse(url),

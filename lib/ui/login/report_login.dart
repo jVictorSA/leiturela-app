@@ -9,6 +9,10 @@ import '../custom_widgets/return_button.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; 
 import 'package:shared_preferences/shared_preferences.dart';
+import "package:demo_app/services/services.dart" as services;
+
+String servicesURL = services.url;
+
 class ReportLogin extends StatefulWidget {
   const ReportLogin({super.key});
 
@@ -46,7 +50,7 @@ class _ReportLoginState extends State<ReportLogin> {
     String password = controllerPassword.text;
 
     try {
-      const url = 'http://10.0.2.2:8000/user/login';
+      String url = '$servicesURL/user/login';
 
       var response = await http.post(
         Uri.parse(url),
