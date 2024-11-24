@@ -171,19 +171,11 @@ class _MainMenuState extends State<MainMenu> {
                       borderRadius: BorderRadius.circular(30)),
                   child: ElevatedButton(
                     onPressed: () {
-                      if (isLoggedIn) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const Report()),
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ReportLogin()),
-                        );
-                      }
+                       );
                     },
                     style: ButtonStyle(
                       backgroundColor:

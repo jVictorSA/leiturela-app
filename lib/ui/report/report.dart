@@ -4,7 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
 import '../custom_widgets/return_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:demo_app/ui/login/login_screen.dart';
+import 'package:demo_app/ui/login/report_login.dart';
 class Report extends StatefulWidget {
   const Report({super.key});
 
@@ -30,6 +31,30 @@ class _ReportState extends State<Report> {
     super.initState();
     _fetchReport();
   }
+  void _showCustomDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Importante', style: TextStyle(fontWeight: FontWeight.bold)),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Fecha o popup
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Login()),
+                );
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+    }
+
 
   Future<void> _fetchReport() async {
     const url = "http://10.0.2.2:8000/atividade/relatorio";
@@ -56,7 +81,8 @@ class _ReportState extends State<Report> {
           meanTimeAtv = numAtv > 0 ? timeAtv / numAtv : 0.0;
         });
       } else {
-        _showError("Erro ao carregar o relatório: ${response.statusCode}");
+         _showCustomDialog("Precisa fazer login para acessar o relatório");
+
       }
     } catch (e) {
       _showError("Erro na conexão: $e");
