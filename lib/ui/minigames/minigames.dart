@@ -149,7 +149,7 @@ class _MinigamesState extends State<Minigames> {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: SelectWordAudio(storyId: "", subStoryId: 0),
+                            nextPage: SelectWordAudio(storyId: "", subStoryId: 0, activityId: getRandomActivity("select_word_by_audio")),
                             title: 'Selecionar Palavras Pelo Áudio',
                             svgs: 'assets/imgs/atv_button_svg/letter_sound.svg',
                             backgroundColor: Colors.pinkAccent,
@@ -192,7 +192,7 @@ class _MinigamesState extends State<Minigames> {
                           ),
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: CountLettersBySound(storyId: "", subStoryId: 0),
+                            nextPage: CountLettersBySound(storyId: "", subStoryId: 0, activityId: getRandomActivity("count_letter_by_sound")),
                             title: 'Contar Letras por Som',
                             svgs: 'assets/imgs/atv_button_svg/count_sound.svg',
                             backgroundColor: Colors.lightGreenAccent,
@@ -205,7 +205,7 @@ class _MinigamesState extends State<Minigames> {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: SoundLettersAssociation(storyId: '0', subStoryId: 0),
+                            nextPage: SoundLettersAssociation(storyId: "", subStoryId: 0, activityId: getRandomActivity("sound_letters_association")),
                             title: 'Asssociar Letra pelo Som',
                             svgs: 'assets/imgs/atv_button_svg/sound_letter_press.svg',
                             backgroundColor: Colors.pink,
@@ -214,7 +214,7 @@ class _MinigamesState extends State<Minigames> {
                           ),
                           SelectedFrame(
                             parentContext: context,                          
-                            nextPage: UpperLower(storyId: '', subStoryId: 0, activityId: getRandomActivity("upper_and_lowercase") ),
+                            nextPage: UpperLower(storyId: '', subStoryId: 0, activityId: getRandomActivity("upper_and_lowercase")),
                             title: 'Palavras maiúsculas e minúsculas',
                             svgs: 'assets/imgs/atv_button_svg/sound_letter_press.svg',
                             backgroundColor: Colors.pink,

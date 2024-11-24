@@ -9,12 +9,22 @@ import '../../custom_widgets/return_button.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import "package:demo_app/services/services.dart";
+
 class CountLettersBySound extends StatefulWidget {
   String storyId;
   int subStoryId;
+  String activityId;
+  String nextActivityId;
 
-  CountLettersBySound(
-      {super.key, required this.subStoryId, required this.storyId});
+  CountLettersBySound({super.key,
+                       required this.subStoryId,
+                       required this.storyId,
+                       this.activityId = "",
+                       this.nextActivityId = ""
+                      });
 
   @override
   _CountLettersBySoundState createState() => _CountLettersBySoundState();
@@ -29,33 +39,101 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
 
   List<String> wordList = ['computador', 'bolo', 'casa'];
 
-  static const String letter = 'C';
+  String letter = 'C';
 
   late int letterCount;
 
   late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
 
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
-
+  bool nextActivityLoaded = false;
+  bool isLoaded = false;
   bool isAnswerIncorrect = false;
-
-  List<String> get questionText => [
-        "Conte quantos ",
-        letter,
-        " têm no áudio."
-      ];
-
-  late List<String> audioList = ['word_sounds/${wordList[0]}.mp3', 'word_sounds/${wordList[1]}.mp3', 'word_sounds/${wordList[2]}.mp3'];
-
   bool solvedActivity = false;
+
+  List<String> questionText = [];        
+  late List<String> audioList;
+
+  TextSpan printedText = TextSpan();
+
 
   @override
   void initState() {
     super.initState();
-
     timeStartActivity = DateTime.now();
 
-    letterCount = countLetterInList(wordList, letter);
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          widget.nextActivityId = response;        
+          nextActivityLoaded = true;
+          var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
+
+          nextActivityLoaded = true;
+        })
+      });
+
+    }else{}
+
+    fetchActivity(http.Client(), widget.activityId).then((response) => {
+      setState(() {
+        String entireObject;        
+        entireObject = response;
+        Map activity = json.decode(entireObject);
+
+        print(activity);
+
+        wordList = activity["body"]["words"].cast<String>();
+        letter = activity["body"]["letter"];
+
+        audioList = ['word_sounds/${wordList[0]}.mp3', 'word_sounds/${wordList[1]}.mp3', 'word_sounds/${wordList[2]}.mp3'];
+
+        letterCount = countLetterInList(wordList, letter);
+
+        questionText.add("Conte quantos ");
+        questionText.add(letter);
+        questionText.add(" têm no áudio.");
+
+        printedText = TextSpan(
+          children: [
+            WidgetSpan(
+              child: GoldenTextSpecial(
+                text: questionText[0],
+                textSize: 20,
+                // Adjust as needed
+                borderColor: 0xFF012480,
+                // Adjust as needed
+                borderWidth: 3,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            TextSpan(
+              text: questionText[1],
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontFamily: 'Playpen-Sans', // Fixed font family
+                fontWeight: FontWeight.bold,
+              ), // Style for normal text
+            ),
+            WidgetSpan(
+              child: GoldenTextSpecial(
+                text: questionText[2],
+                textSize: 20,
+                // Adjust as needed
+                borderColor: 0xFF012480,
+                // Adjust as needed
+                borderWidth: 3,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        );
+      
+        isLoaded = true;
+      })
+    });
+
   }
 
   void _playSounds(String sound) async {
@@ -82,7 +160,7 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
       int? answerAsInt = int.tryParse(userAnswer);
 
       if (answerAsInt == null) {
-      } else if (answerAsInt == letterCount && !dialogShown) {
+      } else if (isLoaded && answerAsInt == letterCount && !dialogShown) {
         setState(() {
           solvedActivity = true;
           isAnswerIncorrect = false;
@@ -133,135 +211,106 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
 
   @override
   Widget build(BuildContext context) {
-    TextSpan printedText = TextSpan(
-      children: [
-        WidgetSpan(
-          child: GoldenTextSpecial(
-            text: questionText[0],
-            textSize: 20,
-            // Adjust as needed
-            borderColor: 0xFF012480,
-            // Adjust as needed
-            borderWidth: 3,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        TextSpan(
-          text: questionText[1],
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            fontFamily: 'Playpen-Sans', // Fixed font family
-            fontWeight: FontWeight.bold,
-          ), // Style for normal text
-        ),
-        WidgetSpan(
-          child: GoldenTextSpecial(
-            text: questionText[2],
-            textSize: 20,
-            // Adjust as needed
-            borderColor: 0xFF012480,
-            // Adjust as needed
-            borderWidth: 3,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
+    
 
     return Scaffold(
       body: ActivityBackground(
-          child: Column(
-        children: [
-          Row(
-            children: [
-              ReturnButton(parentContext: context),
-            ],
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: isLoaded ? Column(
+          children: [
+            Row(
               children: [
-                RichText(
-                  text: printedText,
-                ),
-                AudioButton(
-                  soundFiles: audioList,
-                ),
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            height: 56.0,
-                            width: 120.0,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFD1E9F6),
-                              border: Border.all(
-                                  color: isAnswerIncorrect
-                                      ? const Color(0xFFA90C0C)
-                                      : solvedActivity
-                                          ? const Color(0xFF3AAB28)
-                                          : const Color(0xFF03BFE7)),
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: TextField(
-                              controller: controller,
-                              textAlign: TextAlign.center,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 16.0),
-                              ),
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                            )),
-                        const SizedBox(
-                          width: 36,
-                        ),
-                        CustomButton(
-                          label: 'Enviar',
-                          onPressed: () {
-                            checkAnswer();
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          solvedActivity
-                              ? 'Resposta Correta!'
-                              : isAnswerIncorrect
-                                  ? 'Resposta Incorreta'
-                                  : '',
-                          style: TextStyle(
-                            color: solvedActivity
-                                ? const Color(0xFF3AAB28)
-                                : const Color(0xFFA90C0C),
-                            // You can customize the color or other styles as needed
-                            fontFamily: 'Playpen-Sans',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(
-                          width: 156.0,
-                        )
-                      ],
-                    ),
-                  ],
-                )
+                ReturnButton(parentContext: context),
               ],
             ),
-          ),
-        ],
-      )),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  RichText(
+                    text: printedText,
+                  ),
+                  AudioButton(
+                    soundFiles: audioList,
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              height: 56.0,
+                              width: 120.0,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFD1E9F6),
+                                border: Border.all(
+                                    color: isAnswerIncorrect
+                                        ? const Color(0xFFA90C0C)
+                                        : solvedActivity
+                                            ? const Color(0xFF3AAB28)
+                                            : const Color(0xFF03BFE7)),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: TextField(
+                                controller: controller,
+                                textAlign: TextAlign.center,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 16.0),
+                                ),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                              )),
+                          const SizedBox(
+                            width: 36,
+                          ),
+                          CustomButton(
+                            label: 'Enviar',
+                            onPressed: () {
+                              checkAnswer();
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            solvedActivity
+                                ? 'Resposta Correta!'
+                                : isAnswerIncorrect
+                                    ? 'Resposta Incorreta'
+                                    : '',
+                            style: TextStyle(
+                              color: solvedActivity
+                                  ? const Color(0xFF3AAB28)
+                                  : const Color(0xFFA90C0C),
+                              // You can customize the color or other styles as needed
+                              fontFamily: 'Playpen-Sans',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            width: 156.0,
+                          )
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        )
+        : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Center(child: CircularProgressIndicator(),)]
+                ),
+      ),
     );
   }
 }

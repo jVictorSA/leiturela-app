@@ -8,11 +8,22 @@ import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/audio_button.dart';
 import 'custom_widgets/golden_text.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import "package:demo_app/services/services.dart";
+
 class SelectWordAudio extends StatefulWidget {
   String storyId;
   int subStoryId;
+  String activityId;
+  String nextActivityId;
 
-  SelectWordAudio({super.key, required this.subStoryId, required this.storyId});
+  SelectWordAudio({super.key,
+                  required this.subStoryId,
+                  required this.storyId,
+                  this.activityId = "",
+                  this.nextActivityId = ""
+                  });
 
   @override
   _SelectWordAudioState createState() => _SelectWordAudioState();
@@ -21,6 +32,8 @@ class SelectWordAudio extends StatefulWidget {
 class _SelectWordAudioState extends State<SelectWordAudio> {
   bool answerFound = false;
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
+  bool nextActivityLoaded = false;
+  bool isLoaded = false;
 
   late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
 
@@ -32,8 +45,37 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
 
   @override
   void initState() {
-    timeStartActivity = DateTime.now();
     super.initState();
+    timeStartActivity = DateTime.now();
+
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          widget.nextActivityId = response;        
+          nextActivityLoaded = true;
+          var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
+
+          nextActivityLoaded = true;
+        })
+      });      
+
+    }else{}
+
+    fetchActivity(http.Client(), widget.activityId).then((response) => {
+      setState(() {
+        String entireObject;        
+        entireObject = response;
+        Map activity = json.decode(entireObject);
+
+        print(activity);
+
+        originalWord = activity["body"]["words"].cast<String>();
+        audioWord = activity["body"]["word"];
+
+        isLoaded = true;
+      })
+    });
+
   }
 
   void _playSounds(String sound) async {
@@ -54,7 +96,7 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
 
   @override
   Widget build(BuildContext context) {
-    if (answerFound && !dialogShown) {
+    if (isLoaded && answerFound && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _playSounds("act_end_sound.wav");
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -83,7 +125,7 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
 
     return Scaffold(
       body: ActivityBackground(
-        child: Stack(
+        child: isLoaded ? Stack(
           children: [
             Column(
               children: [
@@ -206,7 +248,11 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
               ],
             ),
           ],
-        ),
+        )
+        : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Center(child: CircularProgressIndicator(),)]
+              ),
       ),
     );
   }
