@@ -87,12 +87,9 @@ class _MainMenuState extends State<MainMenu> {
 
   void _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // await prefs.clear();
     String? token = prefs.getString('auth_token');
-    // String? userId = prefs.getString('user_id');
     setState(() {
       isLoggedIn = token != null && token.isNotEmpty;
-      // isLoggedIn = token != null && token.isNotEmpty && userId != null;
     });
   }
 
