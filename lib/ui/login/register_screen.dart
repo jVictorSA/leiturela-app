@@ -75,6 +75,7 @@ class _RegisterState extends State<Register> {
     try {
       String url = '$servicesURL/user/register';
 
+
       final response = await http.post(
         Uri.parse(url),
         headers: {'Content-Type': 'application/json'},

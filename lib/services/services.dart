@@ -18,7 +18,6 @@ _loadCounter() async {
 
 Future<String> fetchStories(http.Client client) async {
   // _loadCounter();
-
   var response = await client.get(Uri.parse('$url/atividade/stories'));
   // print(id);
   // print(response.body);
@@ -37,6 +36,7 @@ Future<String> fetchStory(id) async {
   await _loadCounter();
   print("finish await");
   print("Token = " + tok);
+
   var response = await http.get(Uri.parse('$url/atividade/story:$id'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
