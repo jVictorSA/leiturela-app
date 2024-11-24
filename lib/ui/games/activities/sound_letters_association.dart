@@ -10,12 +10,22 @@ import '../../custom_widgets/return_button.dart';
 import 'custom_widgets/activity_background.dart';
 import 'custom_widgets/golden_text_special_case.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import "package:demo_app/services/services.dart";
+
 class SoundLettersAssociation extends StatefulWidget {
   String storyId;
   int subStoryId;
+  String activityId;
+  String nextActivityId;
 
-  SoundLettersAssociation(
-      {super.key, required this.storyId, required this.subStoryId});
+  SoundLettersAssociation({super.key,
+                           required this.storyId,
+                           required this.subStoryId,
+                           this.activityId = "",
+                           this.nextActivityId = ""
+                          });
 
   @override
   _SoundLettersAssociationState createState() =>
@@ -24,6 +34,8 @@ class SoundLettersAssociation extends StatefulWidget {
 
 class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
+  bool nextActivityLoaded = false;
+  bool isLoaded = false;
 
   Random random = Random();
 
@@ -73,23 +85,45 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
     const Color(0xFFFF2F2F)
   ];
 
-  List<String> get questionText =>
-      ["Ouça o áudio e escolha as letras que você ouviu."];
+  List<String> get questionText => ["Ouça o áudio e escolha as letras que você ouviu."];
 
   @override
   void initState() {
-    timeStartActivity = DateTime.now();
-    _initializeLetters();
     super.initState();
+
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          widget.nextActivityId = response;        
+          nextActivityLoaded = true;
+          var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
+
+          nextActivityLoaded = true;
+        })
+      });
+
+    }else{}
+
+    fetchActivity(http.Client(), widget.activityId).then((response) => {
+      setState(() {
+        String entireObject;        
+        entireObject = response;
+        Map activity = json.decode(entireObject);
+
+        print(activity);
+
+        activityLetters = activity["body"]["activity_letters"].cast<String>();
+        chosenLetters = activity["body"]["chosen_letters"].cast<String>();
+      _initializeLetters();
+
+        isLoaded = true;
+      })
+    });
+
+    timeStartActivity = DateTime.now();
   }
 
-  void _initializeLetters() {
-    // Choose 6 unique random letters for activityLetters
-    activityLetters = (allLetters..shuffle(random)).take(6).toList();
-
-    // From those, pick 3 unique random letters for chosenLetters
-    chosenLetters = (activityLetters..shuffle(random)).take(3).toList();
-
+  void _initializeLetters() {    
     // Randomly convert some letters to lowercase
     activityLetters = activityLetters.map((letter) {
       return random.nextBool() ? letter.toLowerCase() : letter;
@@ -100,14 +134,12 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
       return random.nextBool() ? letter.toLowerCase() : letter;
     }).toList();
 
-    chosenLetters =
-        audioChosenLetters.map((str) => str.replaceAll('.mp3', '')).toList();
+    chosenLetters = audioChosenLetters.map((str) => str.replaceAll('.mp3', '')).toList();
 
     // Shuffle activityLetters to randomize their order
     activityLetters.shuffle(random);
 
-    activityLetters =
-        activityLetters.map((str) => str.replaceAll('.mp3', '')).toList();
+    activityLetters = activityLetters.map((str) => str.replaceAll('.mp3', '')).toList();
 
     activityLetters = activityLetters.map((letter) {
       return random.nextBool() ? letter.toUpperCase() : letter;
@@ -156,7 +188,7 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
 
   @override
   Widget build(BuildContext context) {
-    if (letterAnswer <= 0 && !dialogShown) {
+    if (isLoaded && letterAnswer <= 0 && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _playSounds("act_end_sound.wav");
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -199,7 +231,7 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
 
     return Scaffold(
       body: ActivityBackground(
-        child: Stack(
+        child: isLoaded ? Stack(
           children: [
             Column(
               children: [
@@ -213,7 +245,7 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
                 ),
                 AudioButton(
                   soundFiles: audioChosenLetters
-                      .map((file) => 'letter_sounds/$file')
+                      .map((file) => 'letter_sounds/$file.mp3')
                       .toList(),
                 ),
                 const SizedBox(
@@ -260,7 +292,11 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
               ],
             ),
           ],
-        ),
+        )
+        : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Center(child: CircularProgressIndicator(),)]
+                ),
       ),
     );
   }

@@ -70,9 +70,27 @@ class GetActivities{
                             storyId: storyId,
                             activityId: nextActivityId);
     }
-    // else if(activityType == "abc_press_letters"){
-      
-    // }
+    else if(activityType == "select_word_by_audio"){
+      return SelectWordAudio(subStoryId: subStoryId,
+                            storyId: storyId,
+                            activityId: nextActivityId);
+    }
+    else if(activityType == "image_association"){      
+      return ImageAssociation(subStoryId: subStoryId,
+                                storyId: storyId,
+                                activityId: nextActivityId);
+    }
+    else if(activityType == "count_letter_by_sound"){
+      return CountLettersBySound(subStoryId: subStoryId,
+                                storyId: storyId,
+                                activityId: nextActivityId);
+    }
+    else if(activityType == "sound_letters_association"){
+      return SoundLettersAssociation(subStoryId: subStoryId,
+                                    storyId: storyId,
+                                    activityId: nextActivityId);
+    }
+    
 
     // Caso base apenas para não dar erro de Null-Safety
     else{

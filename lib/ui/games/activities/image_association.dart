@@ -8,12 +8,22 @@ import 'custom_widgets/golden_text_special_case.dart';
 import '../../custom_widgets/return_button.dart';
 import 'dart:math';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import "package:demo_app/services/services.dart";
+
 class ImageAssociation extends StatefulWidget {
   String storyId;
   int subStoryId;
+  String activityId;
+  String nextActivityId;
 
-  ImageAssociation(
-      {super.key, required this.storyId, required this.subStoryId});
+  ImageAssociation({super.key,
+                    required this.storyId,
+                    required this.subStoryId,
+                    this.activityId = "",
+                    this.nextActivityId = ""
+                   });
 
   @override
   _ImageAssociationState createState() => _ImageAssociationState();
@@ -56,6 +66,8 @@ class _ImageAssociationState extends State<ImageAssociation> {
   ];
 
   bool dialogShown = false; // Add a flag to check if the dialog has been shown
+  bool nextActivityLoaded = false;
+  bool isLoaded = false;
 
   late List<String> usedImages;
 
@@ -78,6 +90,18 @@ class _ImageAssociationState extends State<ImageAssociation> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.storyId != ""){
+      fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
+        setState(() {        
+          widget.nextActivityId = response;        
+          nextActivityLoaded = true;
+          var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
+        })
+      });
+
+    }else{}
+
 
     timeStartActivity = DateTime.now();
 
