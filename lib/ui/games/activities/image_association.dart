@@ -32,10 +32,7 @@ class ImageAssociation extends StatefulWidget {
 class _ImageAssociationState extends State<ImageAssociation> {
   Random random = Random();
 
-  List<String> get questionText => [
-        "Escolha a imagem que começa com",
-        letter,
-      ];
+  List<String> questionText = [];
 
   late String letter;
 
@@ -87,9 +84,12 @@ class _ImageAssociationState extends State<ImageAssociation> {
 
   int numAnswer = 999;
 
+  TextSpan printedText = const TextSpan();
+
   @override
   void initState() {
     super.initState();
+    timeStartActivity = DateTime.now();
 
     if (widget.storyId != ""){
       fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
@@ -102,14 +102,63 @@ class _ImageAssociationState extends State<ImageAssociation> {
 
     }else{}
 
+    fetchActivity(http.Client(), widget.activityId).then((response) => {
+      setState(() {
+        String entireObject;        
+        entireObject = response;
+        Map activity = json.decode(entireObject);
 
-    timeStartActivity = DateTime.now();
+        print(activity);
 
-    _initializeImages();
+        usedImages = activity['body']['palavras'].cast<String>();
+        letter = activity['body']['letra'];
+
+        for (int i = 0; i < usedImages.length; i++){
+          usedImages[i] = 'assets/imgs/atv_imgs/' + usedImages[i] + ".svg";
+        }
+
+        questionText.add("Escolha a imagem que começa com");
+        questionText.add(letter);
+
+        printedText = TextSpan(
+          children: [
+            WidgetSpan(
+              child: GoldenTextSpecial(
+                text: questionText[0],
+                textSize: 20,
+                // Adjust as needed
+                borderColor: 0xFF012480,
+                // Adjust as needed
+                borderWidth: 3,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const WidgetSpan(
+              child: SizedBox(width: 8), // Adjust the width for desired spacing
+            ),
+            TextSpan(
+              text: questionText[1],
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontFamily: 'Playpen-Sans', // Fixed font family
+                fontWeight: FontWeight.bold,
+              ), // Style for normal text
+            ),
+          ],
+        );
+
+        _initializeImages();
+
+        Future.delayed(const Duration(milliseconds: 100));
+        isLoaded = true;
+      })
+    });
+
   }
 
   _initializeImages() {
-    usedImages = (atvImages..shuffle(random)).take(4).toList();
+    // usedImages = (atvImages..shuffle(random)).take(4).toList();
 
     cleanImagesString = usedImages
         .map((str) => str.replaceAll('assets/imgs/atv_imgs/', ''))
@@ -138,10 +187,10 @@ class _ImageAssociationState extends State<ImageAssociation> {
 
   @override
   Widget build(BuildContext context) {
-    if (numAnswer <= 0 && !dialogShown) {
+    if (isLoaded && numAnswer <= 0 && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _playSounds("act_end_sound.wav");
-        Future.delayed(const Duration(milliseconds: 500), () {
+        Future.delayed(const Duration(milliseconds: 50), () {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
             dialogShown = true; // Ensure the dialog is only shown once
@@ -167,37 +216,11 @@ class _ImageAssociationState extends State<ImageAssociation> {
       });
     }
 
-    TextSpan printedText = TextSpan(
-      children: [
-        WidgetSpan(
-          child: GoldenTextSpecial(
-            text: questionText[0],
-            textSize: 20,
-            // Adjust as needed
-            borderColor: 0xFF012480,
-            // Adjust as needed
-            borderWidth: 3,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const WidgetSpan(
-          child: SizedBox(width: 8), // Adjust the width for desired spacing
-        ),
-        TextSpan(
-          text: questionText[1],
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            fontFamily: 'Playpen-Sans', // Fixed font family
-            fontWeight: FontWeight.bold,
-          ), // Style for normal text
-        ),
-      ],
-    );
+    
 
     return Scaffold(
       body: ActivityBackground(
-        child: Stack(
+        child: isLoaded ? Stack(
           children: [
             Column(
               children: [
@@ -383,7 +406,11 @@ class _ImageAssociationState extends State<ImageAssociation> {
               ],
             ),
           ],
-        ),
+        )
+        : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Center(child: CircularProgressIndicator(),)]
+                ),
       ),
     );
   }

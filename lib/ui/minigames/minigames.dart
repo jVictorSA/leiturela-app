@@ -141,7 +141,7 @@ class _MinigamesState extends State<Minigames> {
                         children: [
                           SelectedFrame(
                             parentContext: context,
-                            nextPage: ImageAssociation(storyId: "", subStoryId: 0),
+                            nextPage: ImageAssociation(storyId: "", subStoryId: 0, activityId: getRandomActivity("image_association")),
                             title: 'Associar Imagem',
                             svgs: 'assets/imgs/atv_button_svg/image_icon.svg',
                             backgroundColor: Colors.lightGreenAccent,
