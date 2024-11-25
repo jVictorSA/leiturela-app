@@ -207,8 +207,7 @@ class _PressSyllableState extends State<PressSyllable> {
                                                     : false,
                                                 storyId: widget.storyId,
                                                 subStoryId: widget.subStoryId,
-                                                nextActivityId:
-                                                    widget.nextActivityId,
+                                                nextActivityId: widget.nextActivityId,
                                                 ctx: context);
                                           },
                                           barrierDismissible: false,

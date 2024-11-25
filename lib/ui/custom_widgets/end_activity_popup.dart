@@ -45,7 +45,7 @@ class EndActivityPopup extends StatelessWidget {
                   storyId: storyId!,
                   subStoryId: subStoryId! + 1,
                   storyTitle: "História",
-                  storyContent: "Olá",
+                  storyContent: "",
                   nextPage: GetActivities(subStoryId!+1,
                                           storyId!,
                                           

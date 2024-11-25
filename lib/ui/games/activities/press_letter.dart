@@ -66,10 +66,9 @@ class _PressLetterState extends State<PressLetter> {
 
   void _decrementNumbersFound() {
     setState(() {
-      if (_foundCount > 0) {
+      if (_foundCount >= 0) {
         _playSounds("correct_sound.wav");
-        _foundCount -= 1;  // Decrement the count directly
-        print(_foundCount);
+        _foundCount -= 1;  // Decrement the count directly      
       }
     });
   }
@@ -111,7 +110,7 @@ class _PressLetterState extends State<PressLetter> {
         numbersFound = result
                       .expand((wordMaps) => wordMaps)
                       .where((map) => map.values.first)
-                      .length;        
+                      .length;
 
         printedText = TextSpan(
           children: [
@@ -161,7 +160,6 @@ class _PressLetterState extends State<PressLetter> {
           ],
         );
 
-        print(numbersFound);
         _foundCount = numbersFound - 1;
 
         isLoaded = true;
@@ -188,7 +186,7 @@ class _PressLetterState extends State<PressLetter> {
   @override
   Widget build(BuildContext context) {
 
-    if (isLoaded && _foundCount <= 0 && !dialogShown) {
+    if (isLoaded && _foundCount < 0 && !dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _playSounds("act_end_sound.wav");
         Future.delayed(const Duration(milliseconds: 30), () {
@@ -206,6 +204,7 @@ class _PressLetterState extends State<PressLetter> {
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
                   subStoryId: widget.subStoryId,
+                  nextActivityId: widget.nextActivityId,
                   ctx: context
               );
             },
