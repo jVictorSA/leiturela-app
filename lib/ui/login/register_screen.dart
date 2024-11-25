@@ -9,6 +9,9 @@ import '../custom_widgets/return_button.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../ui/login/login_screen.dart';
+import "package:demo_app/services/services.dart" as services;
+
+String servicesURL = services.url;
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -70,7 +73,8 @@ class _RegisterState extends State<Register> {
     }
 
     try {
-      const url = 'http://10.0.2.2:8000/user/register';
+      String url = '$servicesURL/user/register';
+
 
       final response = await http.post(
         Uri.parse(url),

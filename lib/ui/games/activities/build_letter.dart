@@ -190,7 +190,7 @@ class _BuildWordState extends State<BuildWord> {
     }
     return Scaffold(
       body: ActivityBackground(
-        child: Stack(
+        child: isLoaded ? Stack(
           children: [
             Column(
               children: [
@@ -276,7 +276,11 @@ class _BuildWordState extends State<BuildWord> {
               ],
             ),
           ],
-        ),
+        )
+        : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Center(child: CircularProgressIndicator(),)]
+                ),
       ),
     );
   }

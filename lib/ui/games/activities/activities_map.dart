@@ -36,20 +36,17 @@ class GetActivities{
                        storyId: storyId,
                        activityId: nextActivityId
                       );
-    }
-      
+    } 
     else if(activityType == "complete_word"){
       return CompleteWord(subStoryId: subStoryId,
                           storyId: storyId,
                           activityId: nextActivityId);
     }
-    
     else if(activityType == "mark_the_word"){
       return PressSyllable(subStoryId: subStoryId,
                            storyId: storyId,
                            activityId: nextActivityId);
     }
-
     else if(activityType == "abc_press_letters"){
       return ABCPressLetter(subStoryId: subStoryId,
                             storyId: storyId,
@@ -91,7 +88,6 @@ class GetActivities{
                                     activityId: nextActivityId);
     }
     
-
     // Caso base apenas para não dar erro de Null-Safety
     else{
       return Container();

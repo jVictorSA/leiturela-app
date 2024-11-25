@@ -1,10 +1,24 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';// show utf8;
+import 'package:shared_preferences/shared_preferences.dart';
 
-String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2QyMTkyYjE5Y2M2ZWIwMjc5YWNhMiIsImV4cCI6MTczMjUyNDA1MH0.kn0hadPT4IlaYZLXj-dkR2d_bTrYQsmSTaZ2ylPrV50";
+// SharedPreferences prefs = await SharedPreferences.getInstance();
+// String tok = await prefs.getString('auth_token', token);
+
+// String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2QyMTkyYjE5Y2M2ZWIwMjc5YWNhMiIsImV4cCI6MTczMjUyNDA1MH0.kn0hadPT4IlaYZLXj-dkR2d_bTrYQsmSTaZ2ylPrV50";
+String url = "https://leiturela-api-pedrovictor48-pedrovictor48s-projects.vercel.app";
+
+String tok = '';
+_loadCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // setState(() {
+      tok = (prefs.getString('auth_token') ?? '');
+    // });
+  }
 
 Future<String> fetchStories(http.Client client) async {
-  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/stories'));
+  // _loadCounter();
+  var response = await client.get(Uri.parse('$url/atividade/stories'));
   // print(id);
   // print(response.body);
 
@@ -18,10 +32,15 @@ Future<String> fetchStories(http.Client client) async {
 }
 
 Future<String> fetchStory(id) async {
-  var response = await http.get(Uri.parse('http://10.0.2.2:8000/atividade/story:$id'), headers: {
+  print("init await");
+  await _loadCounter();
+  print("finish await");
+  print("Token = " + tok);
+
+  var response = await http.get(Uri.parse('$url/atividade/story:$id'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': token,
+      'Authorization': tok,
     });
   print("fetch story id: " + id);  
 
@@ -34,10 +53,14 @@ Future<String> fetchStory(id) async {
 }
 
 Future<String> fetchNextActivity(storyId, curentSubstory) async {
-  var response = await http.get(Uri.parse('http://10.0.2.2:8000/atividade/story:$storyId'), headers: {
+  print("init await");
+  await _loadCounter();
+  print("finish await");
+  print("Token = " + tok);
+  var response = await http.get(Uri.parse('$url/atividade/story:$storyId'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': token,
+      'Authorization': tok,
     });
 
   if (response.statusCode == 200) {
@@ -56,7 +79,7 @@ Future<String> fetchNextActivity(storyId, curentSubstory) async {
 }
 
 Future<String> fetchActivity(http.Client client, activityId) async {
-  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/atividade:$activityId'));  
+  var response = await client.get(Uri.parse('$url/atividade/atividade:$activityId'));  
 
   if (response.statusCode == 200) {
   var decoded = utf8.decode(response.bodyBytes);  
@@ -67,7 +90,7 @@ Future<String> fetchActivity(http.Client client, activityId) async {
 }
 
 Future<String> fetchActivities(http.Client client) async {
-  var response = await client.get(Uri.parse('http://10.0.2.2:8000/atividade/atividades'));  
+  var response = await client.get(Uri.parse('$url/atividade/atividades'));  
 
   if (response.statusCode == 200) {
   var decoded = utf8.decode(response.bodyBytes);  
