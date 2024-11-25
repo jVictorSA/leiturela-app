@@ -52,6 +52,7 @@ class _CountLettersState extends State<CountLetters> {
       ];
 
   bool solvedActivity = false;
+  bool isLoaded = false;
 
   @override
   void initState() {
@@ -86,6 +87,8 @@ class _CountLettersState extends State<CountLetters> {
         widget.answer = activity["answer"]["num"];
         widget.letter = activity["body"]["letra"];
         widget.text = activity["body"]["frase"];        
+
+        isLoaded = true;
       })
     });    
   }
@@ -226,7 +229,7 @@ class _CountLettersState extends State<CountLetters> {
 
     return Scaffold(
       body: ActivityBackground(
-          child: Column(
+          child: isLoaded ? Column(
         children: [
           Row(
             children: [
@@ -322,7 +325,12 @@ class _CountLettersState extends State<CountLetters> {
             ),
           ),
         ],
-      )),
+      )
+      : const Column(mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Center(child: CircularProgressIndicator(),)]
+                ),
+      ),
     );
   }
 }

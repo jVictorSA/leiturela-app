@@ -77,8 +77,8 @@ class _MinigamesState extends State<Minigames> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: isLoaded ? Stack(
+      body: isLoaded ?SingleChildScrollView(
+        child: Stack(
           children: [
             Positioned.fill(
               child: SvgPicture.asset(
@@ -230,11 +230,11 @@ class _MinigamesState extends State<Minigames> {
             ),
           ],
         )
+      )
         : const Column(mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [Center(child: CircularProgressIndicator(),)]
               ),
-      ),
     );
   }
 }
