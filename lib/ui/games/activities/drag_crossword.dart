@@ -64,8 +64,7 @@ class _DragSyllablesState extends State<DragSyllables> {
     if (widget.storyId != ""){
       fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
         setState(() {        
-          widget.nextActivityId = response;        
-          
+          widget.nextActivityId = response;         
         })
       });
 
@@ -93,13 +92,8 @@ class _DragSyllablesState extends State<DragSyllables> {
             .addPostFrameCallback((_) => generateRandomPositions());
 
         isLoaded = true;
-
       })
-    
-    
     });
-
-    
   }
 
   void generateRandomPositions() {
@@ -205,6 +199,7 @@ class _DragSyllablesState extends State<DragSyllables> {
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
                   subStoryId: widget.subStoryId,
+                  nextActivityId: widget.nextActivityId,
                   ctx: context);
             },
             barrierDismissible: false,
@@ -224,6 +219,7 @@ class _DragSyllablesState extends State<DragSyllables> {
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
                   subStoryId: widget.subStoryId,
+                  nextActivityId: widget.nextActivityId,
                   ctx: context); // Call your custom popup
             },
             barrierDismissible: false,

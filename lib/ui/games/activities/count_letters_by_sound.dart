@@ -179,6 +179,7 @@ class _CountLettersBySoundState extends State<CountLettersBySound> {
                 story: widget.subStoryId != 0 ? true : false,
                 storyId: widget.storyId,
                 subStoryId: widget.subStoryId,
+                nextActivityId: widget.nextActivityId,
                 ctx: context,
               ); // Call your custom popup
             },

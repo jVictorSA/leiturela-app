@@ -17,11 +17,13 @@ class CompleteWord extends StatefulWidget {
   String storyId;
   int subStoryId;
   String activityId;
+  String nextActivityId;
 
   CompleteWord({super.key,
                 required this.subStoryId,
                 required this.storyId,
-                this.activityId = ""
+                this.activityId = "",
+                this.nextActivityId = ""
                });
 
   @override
@@ -50,7 +52,7 @@ class _CompleteWordState extends State<CompleteWord> {
   late List<Map<String, dynamic>> letterBoxList;
   late List<Widget> letterSpaceList;
 
-  String nextActivityId = "";
+  
   bool isLoaded = false;
 
   late List<String> updatedWords;
@@ -75,7 +77,7 @@ class _CompleteWordState extends State<CompleteWord> {
     if (widget.storyId != ""){
       fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
         setState(() {
-          nextActivityId = response;
+          widget.nextActivityId = response;
 
         })
       });
@@ -83,7 +85,7 @@ class _CompleteWordState extends State<CompleteWord> {
     }else{}
 
     fetchActivity(http.Client(), widget.activityId).then((response) => {
-      setState(() {
+      setState(() {        
         String entireObject;
         int index;
         List<dynamic> palavra;
@@ -243,6 +245,7 @@ class _CompleteWordState extends State<CompleteWord> {
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
                   subStoryId: widget.subStoryId,
+                  nextActivityId: widget.nextActivityId,
                   ctx: context); // Call your custom popup
             },
             barrierDismissible: false,

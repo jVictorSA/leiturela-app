@@ -104,6 +104,7 @@ class _ImageAssociationState extends State<ImageAssociation> {
 
     fetchActivity(http.Client(), widget.activityId).then((response) => {
       setState(() {
+        print("Story|Substory " + widget.subStoryId.toString() + " " + widget.storyId);
         String entireObject;        
         entireObject = response;
         Map activity = json.decode(entireObject);
@@ -158,13 +159,11 @@ class _ImageAssociationState extends State<ImageAssociation> {
   }
 
   _initializeImages() {
-    // usedImages = (atvImages..shuffle(random)).take(4).toList();
-
     cleanImagesString = usedImages
         .map((str) => str.replaceAll('assets/imgs/atv_imgs/', ''))
         .toList();
 
-    letter = cleanImagesString[random.nextInt(cleanImagesString.length)][0];
+    print(cleanImagesString);
 
     numAnswer = cleanImagesString.where((word) => word.startsWith(letter)).length;
   }
@@ -208,6 +207,7 @@ class _ImageAssociationState extends State<ImageAssociation> {
                   story: widget.subStoryId != 0 ? true : false,
                   storyId: widget.storyId,
                   subStoryId: widget.subStoryId,
+                  nextActivityId: widget.nextActivityId,
                   ctx: context);
             },
             barrierDismissible: false,
