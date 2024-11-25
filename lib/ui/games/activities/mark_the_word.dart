@@ -130,7 +130,6 @@ class _PressSyllableState extends State<PressSyllable> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: ActivityBackground(
         child: isLoaded

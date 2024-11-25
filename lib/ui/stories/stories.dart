@@ -82,13 +82,13 @@ class StoriesState extends State<Stories>{
                                          )
                 ),
                 title: widget.titles![firstIndex],
-                svgs: 'assets/imgs/apartment.svg',
+                svgs: 'assets/imgs/${widget.titles![firstIndex]}.svg',
                 textSize: widget.titles![firstIndex].length < maxTextLength ? 28 : smallTextSize.toDouble()
               )
       );
       list.add(SelectedFrame(
                 parentContext: context,
-                backgroundColor: Colors.blueGrey,
+                backgroundColor: Colors.orange,
                 nextPage: ShowStory(
                   parentContext: context,
                   storyId: widget.ids[firstIndex + 1],
@@ -102,14 +102,13 @@ class StoriesState extends State<Stories>{
                                          )
                 ),
                 title: widget.titles![firstIndex+1],
-                svgs: 'assets/imgs/electric_bolt.svg',
+                svgs: 'assets/imgs/${widget.titles![firstIndex]}.svg',
                 textSize: widget.titles![firstIndex+1].length < maxTextLength ? 28 : smallTextSize.toDouble(),
               )
       );
     }else{
-
       list.add(SelectedFrame(
-                backgroundColor: Colors.blueGrey,
+                backgroundColor: Colors.teal,
                 parentContext: context,
                 nextPage: ShowStory(
                   parentContext: context,
@@ -124,7 +123,7 @@ class StoriesState extends State<Stories>{
                                          )
                 ),
                 title: widget.titles![firstIndex],
-                svgs: 'assets/imgs/domino_mask.svg',
+                svgs: 'assets/imgs/${widget.titles![firstIndex]}.svg',
                 textSize: widget.titles![firstIndex].length < maxTextLength ? 28 : smallTextSize.toDouble(),
               ));
     }
