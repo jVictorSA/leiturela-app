@@ -35,6 +35,13 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
   bool nextActivityLoaded = false;
   bool isLoaded = false;
 
+  List<Color> defaultColor = [const Color(0xFFFBB631), const Color(0xFFF7FB31)];
+  List<Color> correctColor = [const Color(0xFF03A603), const Color(0xFF45FF2D)];
+  List<Color> incorrectColor = [
+    const Color(0xFF991C1C),
+    const Color(0xFFFF2F2F)
+  ];
+
   late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
 
   List<String> originalWord = ['Computador', 'Casa', 'Bolo', 'Macieira'];
@@ -170,7 +177,12 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                               }
                             });
                           },
-                          width: 160,
+                          colorEnd: defaultColor[0],
+                          colorStart: defaultColor[1],
+                          letterColor: Colors.black,
+                          strokeColor: Colors.black,
+                          hasStroke: true,
+                          width: 180,
                           height: 56,
                         ),
                         const SizedBox(
@@ -189,7 +201,12 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                               }
                             });
                           },
-                          width: 160,
+                          colorEnd: defaultColor[0],
+                          colorStart: defaultColor[1],
+                          letterColor: Colors.black,
+                          strokeColor: Colors.black,
+                          hasStroke: true,
+                          width: 180,
                           height: 56,
                         ),
                       ],
@@ -213,7 +230,12 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                               }
                             });
                           },
-                          width: 160,
+                          colorEnd: defaultColor[0],
+                          colorStart: defaultColor[1],
+                          letterColor: Colors.black,
+                          strokeColor: Colors.black,
+                          hasStroke: true,
+                          width: 180,
                           height: 56,
                         ),
                         const SizedBox(
@@ -232,7 +254,12 @@ class _SelectWordAudioState extends State<SelectWordAudio> {
                               }
                             });
                           },
-                          width: 160,
+                          colorEnd: defaultColor[0],
+                          colorStart: defaultColor[1],
+                          letterColor: Colors.black,
+                          strokeColor: Colors.black,
+                          hasStroke: true,
+                          width: 180,
                           height: 56,
                         )
                       ],

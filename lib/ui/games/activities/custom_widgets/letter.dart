@@ -87,47 +87,46 @@ class StaticLetterBox extends StatelessWidget {
   final String text; // The letter this box represents
   final double borderRadius; // The border radius of the box
   final double width; // The width of the box
-  // List<Color> colors;
-  Color boxShadowColor;  
+  final List<Color> colors;
+  final Color boxShadowColor;
 
   StaticLetterBox({
     super.key,
     required this.text,
     this.borderRadius = 15.0,
     this.width = 67.0,
-    // this.colors = const [Color(0xFFFFF3B8), Color(0xFFF7FB31), Color(0xFFFBB631)],
-    this.boxShadowColor = const Color(0xFFFBB631),    
-  });
+    List<Color>? colors, // Accept null values here
+    this.boxShadowColor = const Color(0xFFFBB631),
+  }) : colors = colors ?? const [Color(0xFFFFF3B8), Color(0xFFF7FB31), Color(0xFFFBB631)];
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        // boxShadow: [
-        //   BoxShadow(
-        //     // color: boxShadowColor.withOpacity(0.5), // Shadow color
-        //     spreadRadius: 0, // How much the shadow spreads
-        //     blurRadius: 15, // How soft the shadow appears
-        //     offset: const Offset(0, 0), // Offset for the shadow (x, y)
-        //   ),
-        // ],
+        boxShadow: [
+          BoxShadow(
+             color: boxShadowColor.withOpacity(0.5), // Shadow color
+             spreadRadius: 0, // How much the shadow spreads
+             blurRadius: 15, // How soft the shadow appears
+             offset: const Offset(0, 0), // Offset for the shadow (x, y)
+           ),
+         ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
         child:
-        //  ShaderMask(
-        //   shaderCallback: (bounds) => LinearGradient(
-        //     // colors: colors,
-        //     begin: Alignment.topRight,
-        //     end: Alignment.bottomLeft,
-        //     stops: const [0, 0.25, 1.0],
-        //   ).createShader(bounds),
-        //   child: 
-          Container(
+          ShaderMask(
+           shaderCallback: (bounds) => LinearGradient(
+             colors: colors,
+             begin: Alignment.topRight,
+             end: Alignment.bottomLeft,
+             stops: const [0, 0.25, 1.0],
+           ).createShader(bounds),
+           child: Container(
             width: width,
             height: 43,
-            // color: Colors.white,
-            // Make placeholder transparent
+            color: Colors.white,
+            // ake placeholder transparent
             child: Center(
               child: Text(
                 text,
@@ -140,7 +139,7 @@ class StaticLetterBox extends StatelessWidget {
             ),
           ),
         ),
-      // ),
+       ),
     );
   }
 }

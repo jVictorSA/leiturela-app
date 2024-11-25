@@ -37,7 +37,7 @@ class _CompleteWordState extends State<CompleteWord> {
   late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
 
   // The list for LetterSpace stays intact; it doesn't get removed
-  final String originalWord = "computador";
+  late String originalWord;
   late final List<String> letterSpaceKeys = ['com', 'pu', 'ta', 'dor'];
   final List<String> randomSyllablesList = ['ma', 'pe', 'ti', 'po'];
 
@@ -52,6 +52,8 @@ class _CompleteWordState extends State<CompleteWord> {
 
   String nextActivityId = "";
   bool isLoaded = false;
+
+  late List<String> updatedWords;
 
   // Define the callback function for when a correct letter is found
   void onCorrectLetterFound(bool correct, String key) {
@@ -93,12 +95,22 @@ class _CompleteWordState extends State<CompleteWord> {
         palavra = activity["body"]["palavra"];
         index = activity["body"]["missing"];
 
+        updatedWords = palavra.cast<String>().map((silaba) {
+          return silaba == "_" ? faltante : silaba;
+        }).toList();
+
+        originalWord = updatedWords.join();
+
+
         palavra[index] = faltante;
 
         List<String> letterSpaceKeys = palavra.cast<String>();
 
         final randomIndex = index;
         final randomKey = letterSpaceKeys[randomIndex];
+
+        print(randomIndex);
+        print(randomKey);
 
         letterBoxList = [
           {
@@ -126,7 +138,7 @@ class _CompleteWordState extends State<CompleteWord> {
               correctLetterFound: (correct) => onCorrectLetterFound(correct, key),
             );
           } else {
-            return StaticLetterBox(text: key);
+            return StaticLetterBox(text: key,colors: const [Color(0xFFFFF3B8), Color(0xFFF7FB31), Color(0xFFFBB631)],);
           }
         }).toList();
 
@@ -136,13 +148,6 @@ class _CompleteWordState extends State<CompleteWord> {
         isLoaded = true;
       })
     });
-
-    // fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
-    //   setState(() {
-    //     nextActivityId = response;
-    //   })
-    // });
-
   }
 
   void generateRandomPositions() {
@@ -219,6 +224,7 @@ class _CompleteWordState extends State<CompleteWord> {
 
   @override
   Widget build(BuildContext context) {
+
     if (isLoaded && letterBoxList.isEmpty && !dialogShown) {
       setState(() {
         dialogShown = true;

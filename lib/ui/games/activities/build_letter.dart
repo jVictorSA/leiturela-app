@@ -39,7 +39,7 @@ class _BuildWordState extends State<BuildWord> {
   final Set<int> invisibleIndices = {}; // Track syllables to hide
   int lastAddedId = 0; // Track the last added ID
 
-  String originalWord = "";
+  late String originalWord;
 
   List<String> stringSyllables = [];
 
@@ -78,6 +78,9 @@ class _BuildWordState extends State<BuildWord> {
         // print("atividade:\n" + activity.toString());
 
         ordenado = activity["answer"]["ordenado"];
+
+        originalWord = ordenado.join();
+
         desordenado = activity["body"]["desordenado"];
         stringSyllables = ordenado.cast<String>();
 

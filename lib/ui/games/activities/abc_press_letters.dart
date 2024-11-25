@@ -118,8 +118,23 @@ class _ABCPressLetterState extends State<ABCPressLetter> {
 
         activityLetters = (activityLetters..shuffle(random)).take(6).toList();
 
+        activityLetters = activityLetters.map((letter) {
+          if (random.nextBool()) {
+            return letter.toUpperCase(); // Return uppercase if true
+          } else {
+            return letter; // Return original letter if false
+          }
+        }).toList();
+
         chosenLetters = activity['body']['chosen_letters'].cast<String>();
-        print(activityLetters);
+
+        chosenLetters = chosenLetters.map((letter) {
+          if (random.nextBool()) {
+            return letter.toUpperCase(); // Return uppercase if true
+          } else {
+            return letter; // Return original letter if false
+          }
+        }).toList();
 
         buttonColors = {
           for (var letter in activityLetters) letter: defaultColor,

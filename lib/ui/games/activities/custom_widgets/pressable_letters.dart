@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PressableLetters extends StatefulWidget {
   final VoidCallback onTap;
@@ -17,6 +19,22 @@ class PressableLetters extends StatefulWidget {
   _PressableLettersState createState() => _PressableLettersState();
 }
 
+void _playSounds(String sound) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  int? volumePref = _prefs.getInt('efeitos');
+  double volume = (volumePref ?? 5).toDouble() / 10; // Default to 5 if null
+
+  final AudioPlayer soundPlayer = AudioPlayer();
+
+  try {
+    await soundPlayer.setVolume(volume);
+    await soundPlayer.play(AssetSource('audio/sound_effects/$sound')); // Play each sound
+    await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+  } finally {
+    soundPlayer.dispose(); // Dispose of the player after sound finishes
+  }
+}
+
 class _PressableLettersState extends State<PressableLetters> {
   bool solved = false; // Moved to the state class
 
@@ -32,7 +50,10 @@ class _PressableLettersState extends State<PressableLetters> {
           ? null // Disable onTap if solved is true
           : () {
         if (widget.isAnswer == true) {
+
           widget.onTap(); // Actually invoke the parent's callback function
+        } else {
+          _playSounds("wrong_sound.wav");
         }
         setState(() {
           solved = true;

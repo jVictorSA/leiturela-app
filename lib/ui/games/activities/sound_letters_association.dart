@@ -20,12 +20,12 @@ class SoundLettersAssociation extends StatefulWidget {
   String activityId;
   String nextActivityId;
 
-  SoundLettersAssociation({super.key,
-                           required this.storyId,
-                           required this.subStoryId,
-                           this.activityId = "",
-                           this.nextActivityId = ""
-                          });
+  SoundLettersAssociation(
+      {super.key,
+      required this.storyId,
+      required this.subStoryId,
+      this.activityId = "",
+      this.nextActivityId = ""});
 
   @override
   _SoundLettersAssociationState createState() =>
@@ -39,7 +39,8 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
 
   Random random = Random();
 
-  late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
+  late final DateTime
+      timeStartActivity; // Será utilizado para calcula tempo para o relatório.
 
   late int letterAnswer;
 
@@ -85,45 +86,47 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
     const Color(0xFFFF2F2F)
   ];
 
-  List<String> get questionText => ["Ouça o áudio e escolha as letras que você ouviu."];
+  List<String> get questionText =>
+      ["Ouça o áudio e escolha as letras que você ouviu."];
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.storyId != ""){
+    if (widget.storyId != "") {
       fetchNextActivity(widget.storyId, widget.subStoryId).then((response) => {
-        setState(() {        
-          widget.nextActivityId = response;        
-          nextActivityLoaded = true;
-          var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
+            setState(() {
+              widget.nextActivityId = response;
+              nextActivityLoaded = true;
+              var activityDuration = DateTime.now().difference(
+                  timeStartActivity); // Mandar essa variável para o back do relatório.
 
-          nextActivityLoaded = true;
-        })
-      });
-
-    }else{}
+              nextActivityLoaded = true;
+            })
+          });
+    } else {}
 
     fetchActivity(http.Client(), widget.activityId).then((response) => {
-      setState(() {
-        String entireObject;        
-        entireObject = response;
-        Map activity = json.decode(entireObject);
+          setState(() {
+            String entireObject;
+            entireObject = response;
+            Map activity = json.decode(entireObject);
 
-        print(activity);
+            print(activity);
 
-        activityLetters = activity["body"]["activity_letters"].cast<String>();
-        chosenLetters = activity["body"]["chosen_letters"].cast<String>();
-      _initializeLetters();
+            activityLetters =
+                activity["body"]["activity_letters"].cast<String>();
+            chosenLetters = activity["body"]["chosen_letters"].cast<String>();
+            _initializeLetters();
 
-        isLoaded = true;
-      })
-    });
+            isLoaded = true;
+          })
+        });
 
     timeStartActivity = DateTime.now();
   }
 
-  void _initializeLetters() {    
+  void _initializeLetters() {
     // Randomly convert some letters to lowercase
     activityLetters = activityLetters.map((letter) {
       return random.nextBool() ? letter.toLowerCase() : letter;
@@ -134,12 +137,14 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
       return random.nextBool() ? letter.toLowerCase() : letter;
     }).toList();
 
-    chosenLetters = audioChosenLetters.map((str) => str.replaceAll('.mp3', '')).toList();
+    chosenLetters =
+        audioChosenLetters.map((str) => str.replaceAll('.mp3', '')).toList();
 
     // Shuffle activityLetters to randomize their order
     activityLetters.shuffle(random);
 
-    activityLetters = activityLetters.map((str) => str.replaceAll('.mp3', '')).toList();
+    activityLetters =
+        activityLetters.map((str) => str.replaceAll('.mp3', '')).toList();
 
     activityLetters = activityLetters.map((letter) {
       return random.nextBool() ? letter.toUpperCase() : letter;
@@ -179,8 +184,10 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
 
     try {
       await soundPlayer.setVolume(volume);
-      await soundPlayer.play(AssetSource('audio/sound_effects/$sound')); // Play each sound
-      await soundPlayer.onPlayerComplete.first; // Wait until the current sound finishes
+      await soundPlayer
+          .play(AssetSource('audio/sound_effects/$sound')); // Play each sound
+      await soundPlayer
+          .onPlayerComplete.first; // Wait until the current sound finishes
     } finally {
       soundPlayer.dispose(); // Dispose of the player after sound finishes
     }
@@ -195,7 +202,8 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
           // To avoid multiple calls to showDialog, we set a flag
           setState(() {
             dialogShown = true; // Ensure the dialog is only shown once
-            var activityDuration = DateTime.now().difference(timeStartActivity); // Mandar essa variável para o back do relatório.
+            var activityDuration = DateTime.now().difference(
+                timeStartActivity); // Mandar essa variável para o back do relatório.
           });
 
           showDialog(
@@ -231,72 +239,78 @@ class _SoundLettersAssociationState extends State<SoundLettersAssociation> {
 
     return Scaffold(
       body: ActivityBackground(
-        child: isLoaded ? Stack(
-          children: [
-            Column(
-              children: [
-                Row(
-                  children: [
-                    ReturnButton(parentContext: context),
-                  ],
-                ),
-                RichText(
-                  text: printedText,
-                ),
-                AudioButton(
-                  soundFiles: audioChosenLetters
-                      .map((file) => 'letter_sounds/$file.mp3')
-                      .toList(),
-                ),
-                const SizedBox(
-                  height: 32,
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+        child: isLoaded
+            ? Stack(
+                children: [
+                  Column(
                     children: [
-                      const Spacer(),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: activityLetters.take(3).map((letter) {
-                          return CustomButton(
-                            label: letter,
-                            onPressed: () => _handleButtonPress(letter),
-                            colorEnd: buttonColors[letter]![0],
-                            colorStart: buttonColors[letter]![1],
-                            letterColor: Colors.black,
-                            hasStroke: true,
-                            strokeColor: Colors.black,
-                          );
-                        }).toList(),
+                        children: [
+                          ReturnButton(parentContext: context),
+                        ],
                       ),
-                      const Spacer(flex: 2), // Space between rows
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: activityLetters.skip(3).take(3).map((letter) {
-                          return CustomButton(
-                            label: letter,
-                            onPressed: () => _handleButtonPress(letter),
-                            colorEnd: buttonColors[letter]![0],
-                            colorStart: buttonColors[letter]![1],
-                            letterColor: Colors.black,
-                            hasStroke: true,
-                            strokeColor: Colors.black,
-                          );
-                        }).toList(),
+                      RichText(
+                        text: printedText,
                       ),
-                      const Spacer(),
+                      AudioButton(
+                        soundFiles: audioChosenLetters
+                            .map((file) => 'letter_sounds/$file.mp3')
+                            .toList(),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Spacer(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: activityLetters.take(3).map((letter) {
+                                return CustomButton(
+                                  label: letter,
+                                  onPressed: () => _handleButtonPress(letter),
+                                  colorEnd: buttonColors[letter]![0],
+                                  colorStart: buttonColors[letter]![1],
+                                  letterColor: Colors.black,
+                                  hasStroke: true,
+                                  strokeColor: Colors.black,
+                                );
+                              }).toList(),
+                            ),
+                            const Spacer(flex: 2), // Space between rows
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children:
+                                  activityLetters.skip(3).take(3).map((letter) {
+                                return CustomButton(
+                                  label: letter,
+                                  onPressed: () => _handleButtonPress(letter),
+                                  colorEnd: buttonColors[letter]![0],
+                                  colorStart: buttonColors[letter]![1],
+                                  letterColor: Colors.black,
+                                  hasStroke: true,
+                                  strokeColor: Colors.black,
+                                );
+                              }).toList(),
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ],
-        )
-        : const Column(mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Center(child: CircularProgressIndicator(),)]
-                ),
+                ],
+              )
+            : const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                    Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  ]),
       ),
     );
   }

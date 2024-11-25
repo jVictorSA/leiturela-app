@@ -102,7 +102,7 @@ class StoriesState extends State<Stories>{
                                          )
                 ),
                 title: widget.titles![firstIndex+1],
-                svgs: 'assets/imgs/${widget.titles![firstIndex]}.svg',
+                svgs: 'assets/imgs/${widget.titles![firstIndex+1]}.svg',
                 textSize: widget.titles![firstIndex+1].length < maxTextLength ? 28 : smallTextSize.toDouble(),
               )
       );

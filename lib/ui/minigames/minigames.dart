@@ -13,7 +13,7 @@ import '../games/activities/abc_press_letters.dart';
 import '../games/activities/select_word_by_audio.dart';
 import '../games/activities/mark_the_word.dart';
 import '../games/activities/sound_letters_association.dart';
-import '../games/activities/upper_and_lowercase.dart';
+import '../games/activities/upper_and_lowercase_update.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';

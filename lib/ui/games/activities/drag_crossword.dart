@@ -46,7 +46,7 @@ class _DragSyllablesState extends State<DragSyllables> {
 
   late final DateTime timeStartActivity; // Será utilizado para calcula tempo para o relatório.
 
-  String originalWord = 'computador';
+  late String originalWord;
   List<String> letterSpaceKeys = ['com', 'pu', 'ta', 'dor'];
 
   // List of LetterBox widgets with unique keys
@@ -80,6 +80,8 @@ class _DragSyllablesState extends State<DragSyllables> {
         Map activity = json.decode(entireObject);
 
         letterSpaceKeys = activity["body"]["silabas"].cast<String>();
+
+        originalWord = letterSpaceKeys.join();
 
         letterBoxList = letterSpaceKeys.map((key) {
           return {
