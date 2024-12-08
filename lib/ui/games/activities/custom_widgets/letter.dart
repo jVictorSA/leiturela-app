@@ -105,7 +105,7 @@ class StaticLetterBox extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-             color: boxShadowColor.withOpacity(0.5), // Shadow color
+             color: boxShadowColor.withOpacity(0.2), // Shadow color
              spreadRadius: 0, // How much the shadow spreads
              blurRadius: 15, // How soft the shadow appears
              offset: const Offset(0, 0), // Offset for the shadow (x, y)
@@ -114,18 +114,18 @@ class StaticLetterBox extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
-        child:
-          ShaderMask(
-           shaderCallback: (bounds) => LinearGradient(
-             colors: colors,
-             begin: Alignment.topRight,
-             end: Alignment.bottomLeft,
-             stops: const [0, 0.25, 1.0],
-           ).createShader(bounds),
+        // child:
+          // ShaderMask(
+          //  shaderCallback: (bounds) => LinearGradient(
+          //    colors: colors,
+          //    begin: Alignment.topRight,
+          //    end: Alignment.bottomLeft,
+          //    stops: const [0, 0.25, 1.0],
+          //  ).createShader(bounds),
            child: Container(
             width: width,
             height: 43,
-            color: Colors.white,
+            // color: Colors.white,
             // ake placeholder transparent
             child: Center(
               child: Text(
@@ -139,7 +139,7 @@ class StaticLetterBox extends StatelessWidget {
             ),
           ),
         ),
-       ),
+      //  ),
     );
   }
 }
